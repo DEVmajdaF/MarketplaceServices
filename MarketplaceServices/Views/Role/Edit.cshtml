@@ -1,0 +1,28 @@
+﻿
+<div class="container">
+    <h1 class=" text-black-50">Update The Role</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form asp-action="Edit" asp-controller="Role" method="post">
+
+
+        <div>
+            <h3>@ViewBag.message </h3>
+        </div>
+        <div class="form-group">
+            <label hidden for="id"> </label>
+            <input hidden id="id" name="id" value="@ViewBag.id" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="roleName"> </label>
+            <input id="roleName"  name="roleName" value="@ViewBag.RoleName" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>
+
+
+
+

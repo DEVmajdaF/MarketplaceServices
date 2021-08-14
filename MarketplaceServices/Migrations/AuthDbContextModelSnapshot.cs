@@ -32,6 +32,28 @@ namespace MarketplaceServices.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("MarketplaceServices.Models.Languages", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LanguageLevel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LanguageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Languages");
+                });
+
             modelBuilder.Entity("MarketplaceServices.Models.Photos", b =>
                 {
                     b.Property<string>("Id")
@@ -113,6 +135,28 @@ namespace MarketplaceServices.Migrations
                     b.HasIndex("SubCategoryId");
 
                     b.ToTable("Services");
+                });
+
+            modelBuilder.Entity("MarketplaceServices.Models.Skills", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SkillLevel")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SkillName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("MarketplaceServices.Models.SubCategory", b =>
@@ -346,8 +390,20 @@ namespace MarketplaceServices.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsOnline")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(100)");
@@ -356,6 +412,15 @@ namespace MarketplaceServices.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("MarketplaceServices.Models.Languages", b =>
+                {
+                    b.HasOne("MarketplaceServices.Models.ApplicationUser", "User")
+                        .WithMany("Language")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MarketplaceServices.Models.Photos", b =>
@@ -389,6 +454,15 @@ namespace MarketplaceServices.Migrations
                         .HasForeignKey("SubCategoryId");
 
                     b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("MarketplaceServices.Models.Skills", b =>
+                {
+                    b.HasOne("MarketplaceServices.Models.ApplicationUser", "User")
+                        .WithMany("Skills")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MarketplaceServices.Models.SubCategory", b =>
@@ -461,6 +535,13 @@ namespace MarketplaceServices.Migrations
                     b.Navigation("Photos");
 
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("MarketplaceServices.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Language");
+
+                    b.Navigation("Skills");
                 });
 #pragma warning restore 612, 618
         }

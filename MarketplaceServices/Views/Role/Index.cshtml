@@ -29,9 +29,8 @@
                     @role.Name
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@role.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@role.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@role.Id">Delete</a>
+                    <a class="btn btn-info" asp-action="Edit" asp-route-id="@role.Id">Edit</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@role.Id">Delete</a>
                 </td>
             </tr>
         }

@@ -11,11 +11,24 @@ namespace MarketplaceServices.Models
     {
 
         [PersonalData]
+        
         [Column(TypeName = "nvarchar(100)")]
         public string FirstName { get; set; }
         [Column(TypeName = "nvarchar(100)")]
         public string LastName { get; set; }
-        public DateTime MemberDate { get; set; }
 
+        public string Image { get; set; }
+
+        public bool IsOnline { get; set; }
+
+        public string Address { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime MemberDate { get; set; }
+        public List<Languages> Language { get; set; }
+        public List<Skills> Skills { get; set; }
+        
     }
 }
+

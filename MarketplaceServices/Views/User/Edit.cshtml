@@ -1,0 +1,35 @@
+﻿@model MarketplaceServices.Models.ApplicationUser;
+
+
+
+<div class="container">
+    <h1 class=" text-black-50">Update User</h1>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <form asp-action="Edit" asp-controller="User" method="post">
+        <div class="form-group">
+            <label asp-for="Id"></label>
+            <input asp-for="Id" class="form-control" disabled />
+        </div>
+        <div class="form-group">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName"  class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="PhoneNumber"></label>
+            <input asp-for="PhoneNumber" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a asp-action="ManageUserRoles" asp-route-userId="@Model.Id" asp-controller="User" style="width:auto" class="btn btn-primary">
+            Manage Roles
+        </a>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>

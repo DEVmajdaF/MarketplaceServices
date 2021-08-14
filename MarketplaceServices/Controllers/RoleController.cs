@@ -42,52 +42,74 @@ namespace MarketplaceServices.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(IdentityRole  role)
         {
-            await RoleManager.CreateAsync(role);
-            return RedirectToAction(nameof(Index));
+            var result = await RoleManager.CreateAsync(role);
+            if (result.Succeeded)
+            {
+                TempData["save"] = "Role Has Been Created Succefully";
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
 
 
         }
 
         // GET: RoleController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(string id)
         {
-            return View();
+            var role = await RoleManager.FindByIdAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            ViewBag.Id = role.Id;
+            ViewBag.RoleName = role.Name;
+            return View(role);
         }
 
         // POST: RoleController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(string id, string roleName)
         {
-            try
+            var role = await RoleManager.FindByIdAsync(id);
+            role.Name = roleName;
+            var isExist = await RoleManager.RoleExistsAsync(role.Name);
+            if (isExist)
             {
-                return RedirectToAction(nameof(Index));
+                ViewBag.message = "This role is Already Exist";
+                ViewBag.name = roleName;
             }
-            catch
+            var result = await RoleManager.UpdateAsync(role);
+            if (result.Succeeded)
             {
-                return View();
+                ViewBag.message = "Role has been updated successfully";
+                return RedirectToAction("Index");
             }
+            return View();
+
+
         }
 
         // GET: RoleController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
+            var role = await RoleManager.FindByIdAsync(id);
+            ViewBag.RoleName = role.Name;
             return View();
         }
 
         // POST: RoleController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(string id, string name)
         {
-            try
+            var role = await RoleManager.FindByIdAsync(id);
+            var result = await RoleManager.DeleteAsync(role);
+            if (result.Succeeded)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using MarketplaceServices.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -74,7 +75,7 @@ namespace MarketplaceServices.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, MemberDate = DateTime.Today};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -91,12 +92,13 @@ namespace MarketplaceServices.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    string [] roles = { "Buyer", "Seller" };
-                    foreach(var role in roles)
-                    {
-                        await _userManager.AddToRoleAsync(user, role);
-                    }
-             
+                    //string [] roles = { "Buyer", "Seller" };
+                    //foreach(var role in roles)
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, role);
+                    //}
+                    await _userManager.AddToRoleAsync(user, "User");
+
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

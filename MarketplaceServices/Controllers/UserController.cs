@@ -1,4 +1,5 @@
 ﻿using MarketplaceServices.Data;
+using MarketplaceServices.Models;
 using MarketplaceServices.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -41,7 +42,9 @@ namespace MarketplaceServices.Controllers
 
                                 }
 
-                               );;
+                               );
+
+        
 
             return View(userwithrole);
         }
@@ -74,45 +77,145 @@ namespace MarketplaceServices.Controllers
         }
 
         // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string Id)
         {
-            return View();
+            if (Id == null)
+            {
+                return NotFound();
+            }
+            var user =  Context.ApplicationUsers.Find(Id);
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+
+            return View(user);
         }
 
         // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(string Id, ApplicationUser user)
         {
-            try
+            if(Id != user.Id)
             {
+                return NotFound();
+            }
+
+            var users =  Context.ApplicationUsers.FirstOrDefault(u =>u.Id == user.Id);
+            if (ModelState.IsValid)
+            {
+                users.FirstName = user.FirstName;
+                users.LastName = user.LastName;
+                users.PhoneNumber = user.PhoneNumber;
+                users.Email = user.Email;
+
+                Context.ApplicationUsers.Update(users);
+                await Context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            
+            return View();
+
         }
 
         // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(string Id)
         {
-            return View();
+            var User = await Context.ApplicationUsers.FindAsync(Id);
+            if (User == null)
+            {
+                return NotFound();
+            }
+            return View(User);
         }
 
         // POST: UserController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task <ActionResult> Delete(string Id, IFormCollection collection)
         {
-            try
+            var User = await Context.ApplicationUsers.FindAsync(Id);
+            if (User == null)
             {
-                return RedirectToAction(nameof(Index));
+                return NotFound();
             }
-            catch
+
+            var result = await userManager.DeleteAsync(User);
+            if (!result.Succeeded)
             {
-                return View();
+                return NotFound();
             }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        // GET: UserController/Delete/5
+        public async Task<ActionResult> ManageUserRoles(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+         
+            if (user == null)
+            {
+                return NotFound();
+            }
+            ViewBag.userId = userId;
+            //Declarer Une Liste qui se compose de RoleId, RoleName, IsSelected
+            var model = new List<EditUserRoleViewModel>();
+
+            foreach (var role in roleManager.Roles.ToList())
+            {
+                var EditUserRoleViewModel = new EditUserRoleViewModel()
+                {
+                    RoleId = role.Id,
+                    RoleName = role.Name
+                };
+
+                if ( await userManager.IsInRoleAsync(user,role.Name))
+                {
+                    EditUserRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    EditUserRoleViewModel.IsSelected = false;
+                }
+
+                model.Add(EditUserRoleViewModel);
+            };
+            return View(model);
+        }
+
+        // POST: UserController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ManageUserRoles(string userId, List<EditUserRoleViewModel> model)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+         
+            if (user == null)
+            {
+                return NotFound();
+            }
+         
+            var roles = await userManager.GetRolesAsync(user);
+            var result = await userManager.RemoveFromRolesAsync(user, roles);
+            if (!result.Succeeded)
+            {
+                return View(model);
+            }
+
+            result = await userManager.AddToRolesAsync(user, model.Where(x=>x.IsSelected).Select(y=>y.RoleName));
+
+            if (!result.Succeeded)
+            {
+                return View(model);
+            }
+            return RedirectToAction("Edit", new { id=userId});
+
         }
     }
 }
