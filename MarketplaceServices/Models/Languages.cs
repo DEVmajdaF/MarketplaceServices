@@ -16,7 +16,7 @@ namespace MarketplaceServices.Models
         public string Id { get; set; }
         public string LanguageName { get; set; }
         public string LanguageLevel { get; set; }
-       
+        public string UserId { get; set; }
         public ApplicationUser User { get; set; }
     }
 }

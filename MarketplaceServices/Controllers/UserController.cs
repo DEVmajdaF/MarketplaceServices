@@ -39,7 +39,7 @@ namespace MarketplaceServices.Controllers
                                     Id = user.Id,
                                     Email = user.UserName,
                                     RoleName = role.Name,
-
+                                    
                                 }
 
                                );
@@ -83,7 +83,7 @@ namespace MarketplaceServices.Controllers
             {
                 return NotFound();
             }
-            var user =  Context.ApplicationUsers.Find(Id);
+            var user =  Context.ApplicationUser.Find(Id);
             if(user == null)
             {
                 return NotFound();
@@ -103,7 +103,7 @@ namespace MarketplaceServices.Controllers
                 return NotFound();
             }
 
-            var users =  Context.ApplicationUsers.FirstOrDefault(u =>u.Id == user.Id);
+            var users =  Context.ApplicationUser.FirstOrDefault(u =>u.Id == user.Id);
             if (ModelState.IsValid)
             {
                 users.FirstName = user.FirstName;
@@ -111,7 +111,7 @@ namespace MarketplaceServices.Controllers
                 users.PhoneNumber = user.PhoneNumber;
                 users.Email = user.Email;
 
-                Context.ApplicationUsers.Update(users);
+                Context.ApplicationUser.Update(users);
                 await Context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -124,7 +124,7 @@ namespace MarketplaceServices.Controllers
         // GET: UserController/Delete/5
         public async Task<ActionResult> Delete(string Id)
         {
-            var User = await Context.ApplicationUsers.FindAsync(Id);
+            var User = await Context.ApplicationUser.FindAsync(Id);
             if (User == null)
             {
                 return NotFound();
@@ -137,7 +137,7 @@ namespace MarketplaceServices.Controllers
         [ValidateAntiForgeryToken]
         public async Task <ActionResult> Delete(string Id, IFormCollection collection)
         {
-            var User = await Context.ApplicationUsers.FindAsync(Id);
+            var User = await Context.ApplicationUser.FindAsync(Id);
             if (User == null)
             {
                 return NotFound();

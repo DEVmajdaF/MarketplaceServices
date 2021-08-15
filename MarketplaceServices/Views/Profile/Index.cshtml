@@ -1,1 +1,137 @@
-﻿
+﻿@model MarketplaceServices.ViewModel.ProfileViewModel
+
+@{
+    var userId = ViewBag.userId;
+}
+
+@{ 
+    List<SelectListItem> level = new List<SelectListItem>()
+{
+                new SelectListItem() { Text="Basic"},
+                new SelectListItem() { Text="Intermediaire"},
+                new SelectListItem() { Text="Advanced"},
+            };
+}
+
+    <aside class="sidebar">
+        <div class="side-inner">
+
+            <div class="profile">
+                <img src="images/front-view-burger-on-stand.jpg" alt="Image" class="img-fluid">
+                <h3 class="name mb-0">@Html.DisplayFor(x => x.Profile.FirstName) @Html.DisplayFor(x => x.Profile.LastName)<span class="icon-check_circle verified"></span></h3>
+
+                <div class="activity">
+                    <p>@Html.DisplayFor(x => x.Profile.Address)</p>
+                </div>
+
+                <div class="counter d-flex">
+                    <div class="col p-0">
+                        <strong class="number">8</strong>
+                        <span class="number-label">Services</span>
+                    </div>
+                    <div class="col p-0">
+                        <strong class="number">100</strong>
+                        <span class="number-label">Followers</span>
+                    </div>
+                </div>
+                <div class="bio">
+                    <h3 style="font-size:17px">Description</h3>
+                    <p>@Html.DisplayFor(x => x.Profile.Description)</p>
+                </div>
+
+            </div>
+            @*SkillSection*@
+        <div class="ProfileSkill">
+            <div class="tags">
+                <div class="d-flex tagsdiv">
+                    <h3>Skills</h3>
+                    <button class="addnew" id="addnew" onclick="viewskills()">AddNew</button>
+
+                </div>
+                <ul>
+                    @foreach (var user in Model.Skills)
+                    {
+                        <li><a href="#">@user.SkillName</a></li>
+                    }
+                </ul>
+
+            </div>
+            <div style="display:none" id="Addskill">
+
+                <form method="post">
+
+                    <div class="d-flex flex-column">
+
+                        <label for="SkillName" id="skill">Skill</label>
+                        <Input name="SkillName" id="SkillName" />
+                        @*<label for="SkillLevel" id="SkillLevel">Level</label>
+                        <Input name="SkillLevel" />*@
+                        <select required="required"  name="SkillLevel" asp-items="@level" id="level" class="form-control custom-select">
+                            <option disabled selected>- Level -</option>
+                        </select>
+                        <Input hidden name="UserId" value="@userId" />
+
+                        <button asp-action="Addskills" asp-controller="Profile">Add Skill</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+          
+
+
+
+
+
+
+
+            @*Languagesection*@
+        <div class="profileLangage">
+
+             
+            <div class="tags">
+                <div class="d-flex tagsdiv">
+                    <h3>Languages</h3>
+                    <button class="addnew" onclick="viewlanguage() ">AddNew</button>
+
+                </div>
+                <ul>
+                    @foreach (var user in Model.Language)
+                    {
+                        <li><a href="#">@user.LanguageName</a></li>
+                    }
+                </ul>
+
+            </div>
+
+
+            <div style="display:none" id="AddLanguage">
+
+                <form method="post">
+
+                    <div class="d-flex flex-column">
+
+                        <label for="LanguageName" id="skill">Language</label>
+                        <Input name="LanguageName" id="LanguageName" />
+                        @*<label for="LanguageLevel" id="LanguageLevel">Level</label>
+                        <Input name="LanguageLevel" />*@
+
+                        <select required="required" name="LanguageLevel" asp-items="@level" id="level" class="form-control custom-select">
+                            <option disabled selected>- Level -</option>
+                        </select>
+                        <Input hidden name="UserId" value="@userId" />
+
+                        <button asp-action="AddLanguage" asp-controller="Profile">Add Language</button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        </div>
+
+    </aside>
+   
+
