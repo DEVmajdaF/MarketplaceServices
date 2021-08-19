@@ -27,4 +27,4 @@ namespace MarketplaceServices.Models
         public string SubCategoryId { get; set; }
         public SubCategory SubCategory { get; set; }
     }
-}
+} 

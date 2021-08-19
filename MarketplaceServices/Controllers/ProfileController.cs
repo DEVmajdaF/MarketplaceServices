@@ -1,11 +1,14 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
 using MarketplaceServices.ViewModel;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -16,59 +19,22 @@ namespace MarketplaceServices.Controllers
     {
         private readonly AuthDbContext Context;
         private readonly UserManager<IdentityUser> UserManager;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public ProfileController(AuthDbContext context, UserManager<IdentityUser> userManager )
+        public ProfileController(AuthDbContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment hostEnvironment)
         {
             Context = context;
             UserManager = userManager;
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: Profile
         public ActionResult Index()
         {
-            //Information
-            //userId = Context.ApplicationUsers.FirstOrDefault().Id;
-           //var  userId = UserManager.GetUserId(User);
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewBag.userId = userId;
-            var userinfo = (from us in Context.ApplicationUser
-                            where us.Id == userId
-                            select    new ApplicationUser
-                            {
-
-                                FirstName = us.FirstName,
-                                LastName = us.LastName,
-                                MemberDate = us.MemberDate,
-                                Description = us.Description
-                                
-                            }).SingleOrDefault();
-
-            var SkillInfo = (from S in Context.Skills
-                             where S.User.Id == userId
-                             select new Skills
-                             { SkillName = S.SkillName, 
-                               SkillLevel=S.SkillLevel
-                             }).ToList();
-
-
-            var LanguageInfo = (from L in Context.Languages
-                             where L.User.Id == userId
-                             select new Languages
-                             {
-                                 LanguageName = L.LanguageName,
-                                 LanguageLevel = L.LanguageLevel
-                             }).ToList();
-
-            ProfileViewModel profileViewModel = new ProfileViewModel()
-            {
-                Profile = userinfo,
-                Skills = SkillInfo,
-                Language= LanguageInfo
-            };
-
-
-
-            return View(profileViewModel);
+            var posts = Context.ApplicationUser.Include(s => s.Skills).Include(L=>L.Language).Where(x => x.Id == userId).SingleOrDefault();
+            return View(posts);
         }
 
 
@@ -86,6 +52,114 @@ namespace MarketplaceServices.Controllers
             await Context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> addimage(IFormFile filename, string  UserId )
+        {
+           
+                string fileName = null;
+                if (filename != null)
+                {
+                    //The Root Of the folder (physical path )  wwwroot
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                //fileName = Path.GetFileNameWithoutExtension(filename.FileName);
+                fileName = Path.GetFileName(filename.FileName);
+                string filepath = Path.Combine(wwwRootPath +"/images/", fileName);
+                filename.CopyTo(new FileStream(filepath, FileMode.Create));
+
+                var app = Context.ApplicationUser.FirstOrDefault(x => x.Id == UserId);
+
+                app.Image = fileName;
+                await Context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+
+            }
+
+            return View("Index");
+
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> updateName( string UserId , string UserName )
+        {
+            if (UserName != null)
+            {
+                var app = Context.ApplicationUser.FirstOrDefault(x => x.Id == UserId);
+
+                app.FirstName = UserName;
+                await Context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View("Index");
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> updateDescription(string UserId, string Description)
+        {
+            if (Description != null)
+            {
+                var app = Context.ApplicationUser.FirstOrDefault(x => x.Id == UserId);
+
+                app.Description = Description;
+                await Context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View("Index");
+        }
+        // POST: Profile/deleteSkill/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> deleteSkill(string Id , Skills skill)
+        {
+
+                if (Id != null)
+                {
+                    var result = Context.Skills.Where(x => x.Id == Id).SingleOrDefault();
+
+                    Context.Skills.Remove(result);
+                    await Context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            
+           
+            return View("Index");
+
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> deleteLang(string Id)
+        {
+
+
+            if (Id != null)
+            {
+
+
+                var result = Context.Languages.Where(x => x.Id == Id).SingleOrDefault();
+
+                Context.Languages.Remove(result);
+                await Context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            return View("Index");
+
+        }
+
+
+
+
+
 
 
 

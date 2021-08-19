@@ -22,6 +22,7 @@ namespace MarketplaceServices.Migrations
             modelBuilder.Entity("MarketplaceServices.Models.Categories", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryName")
@@ -39,9 +40,11 @@ namespace MarketplaceServices.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LanguageLevel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LanguageName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -144,9 +147,11 @@ namespace MarketplaceServices.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SkillLevel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SkillName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -162,10 +167,8 @@ namespace MarketplaceServices.Migrations
             modelBuilder.Entity("MarketplaceServices.Models.SubCategory", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CatgoriesId")
                         .HasColumnType("nvarchar(450)");

@@ -1,4 +1,6 @@
 ﻿using MarketplaceServices.Data;
+using MarketplaceServices.Models;
+using MarketplaceServices.ViewModel.subcategory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,15 +13,34 @@ namespace MarketplaceServices.Controllers
     public class CategoryController : Controller
     {
 
-        AuthDbContext _context;
+        AuthDbContext Context;
         public CategoryController(AuthDbContext context)
         {
-            _context = context;
+            Context = context;
         }
         // GET: CategoryController
         public ActionResult Index()
         {
-            var result =_context.Categories.ToList();
+
+            var result = (from c in Context.Categories
+
+                          select new Categories
+                          {
+                              Id=c.Id,
+                              CategoryName = c.CategoryName,
+                              subCategories = (from subCatgory in Context.SubCategory
+                                               where subCatgory.CatgoriesId == c.Id
+                                               select new SubCategory
+                                               {
+                                                   Id= subCatgory.Id,
+                                                   SubCategoryName = subCatgory.SubCategoryName,
+                                                   CatgoriesId= c.Id
+                                               }
+                                               ).ToList()
+
+                          }
+
+                         ).ToList();
             return View(result);
         }
 
@@ -38,37 +59,33 @@ namespace MarketplaceServices.Controllers
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task< ActionResult> Create(Categories category)
         {
-            try
+            if (!ModelState.IsValid)
             {
+                Context.Categories.Add(category);
+                await Context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CategoryController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
+            return View("Index");
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit( SubCategory subcat)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+           
+                if (!ModelState.IsValid)
+                {
+                    Context.SubCategory.Add(subcat);
+                    await Context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+              
+          
+                return View("Index");
+          
         }
 
         // GET: CategoryController/Delete/5

@@ -146,7 +146,25 @@ aside {
         border-radius: 12px;
         padding: 3px 9px;
         margin-bottom:3px;
+      
+
+
     }
+.trash {
+    position: relative;
+    left: 0px;
+    transition: .3s;
+    transform: rotate(20deg);
+    opacity: .8;
+    cursor:pointer;
+   
+}
+
+/*aside .side-inner .ProfileSkill .tags ul li:hover .trash {
+    left: 0px;
+   
+}*/
+
 
     aside .side-inner .profileLangage .tags ul  {
         display:flex;
