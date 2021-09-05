@@ -33,8 +33,10 @@ namespace MarketplaceServices.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewBag.userId = userId;
-            var posts = Context.ApplicationUser.Include(s => s.Skills).Include(L=>L.Language).Where(x => x.Id == userId).SingleOrDefault();
-            return View(posts);
+            var user = Context.ApplicationUser.Include(s => s.Skills).Include(L=>L.Language).Where(x => x.Id == userId).SingleOrDefault();
+            return View(user);
+
+
         }
 
 

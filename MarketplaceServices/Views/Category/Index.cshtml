@@ -38,7 +38,7 @@
             <td>
                 <form method="post" id="form" >
                     <input name="SubCategoryName" />
-                    <input name="CatgoriesId" value="@item.Id" />
+                    <input hidden name="CatgoriesId" value="@item.Id" />
                     <input type="submit"  asp-action="Edit" asp-controller="Category" />
                 </form>
             </td>

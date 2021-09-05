@@ -1,0 +1,176 @@
+﻿@model MarketplaceServices.Models.Services;
+
+
+@*<div class="container">*@
+    <h1>@ViewData["Title"]</h1>
+
+    @{ 
+        var result = ViewBag.subCat;
+    }
+
+   
+
+    @*<div class="row">
+        <div class="col-md-4">
+            <form method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price"></label>
+                    <input asp-for="Price" class="form-control" />
+                </div>
+                <select required="required" asp-for="@Model.SubCategoryId" id="subcategory" asp-items="@(new SelectList(result,"Id","SubCategoryName"))" class="form-control custom-select">
+                    <option disabled selected>- SubCategory -</option>
+                </select>
+                <button type="submit" asp-action="Create" class="btn btn-primary">Create Service</button>
+                <a asp-action="Index" class="btn btn-dark">Back to List</a>
+
+            </form>
+
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Photos"></label>
+                    <input class="imageuploade" type="file" name="photos" accept="image/*" multiple="multiple" />
+                    <button type="submit" asp-action="createPhotos" class="btn btn-primary">Create Service</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="multisteps-form">
+    <!--progress bar-->
+    <div class="row">
+        <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+            <div class="multisteps-form__progress">
+                <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">OverView</button>
+                <button class="multisteps-form__progress-btn" type="button" title="Address">Pricing</button>
+                <button class="multisteps-form__progress-btn" type="button" title="Order Info">Description</button>
+                <button class="multisteps-form__progress-btn" type="button" title="Comments">Gallery</button>
+                <button class="multisteps-form__progress-btn" type="button" title="Comments">Publish</button>
+            </div>
+        </div>
+    </div>
+    <!--form panels-->
+    <div class="row">
+        <div class="col-12 col-lg-8 m-auto">
+            <form method="post" class="multisteps-form__form" enctype="multipart/form-data">
+                <!--single form panel-->
+                <div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="scaleIn">
+                    <h3 class="multisteps-form__title">OverView</h3>
+                    <div class="multisteps-form__content">
+                        <div class="form-row mt-4">
+                            <div class="col-12 col-sm-6">
+                                <input class="multisteps-form__input form-control" asp-for="Title" type="text" placeholder="TitleName" />
+                            </div>
+
+                        </div>
+                        <div class="form-row mt-4">
+                            <div class="col-6 col-sm-3 mt-4 mt-sm-0">
+                                @*<select class="multisteps-form__select form-control">
+                                    <option selected="selected">Category</option>
+                                    <option>...</option>
+                                </select>*@
+
+                                <select class="multisteps-form__select form-control custom-select  " required="required" asp-for="@Model.SubCategoryId" id="subcategory" asp-items="@(new SelectList(result,"Id","SubCategoryName"))" >
+                                    <option disabled selected>- SubCategory -</option>
+                                </select>
+                            </div>
+
+                        </div>  
+                        <div class="form-row mt-4">
+                            <div class="col-12 col-sm-6">
+                                <input class="multisteps-form__input form-control" type="password" placeholder="Search Tags" />
+                            </div>
+
+                        </div>
+                        <div class="button-row d-flex mt-4">
+                            <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <!--single form panel-->
+                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
+                    <h3 class="multisteps-form__title">Pricing</h3>
+                    <div class="multisteps-form__content">
+                        <div class="form-row mt-4">
+                            <div class="col">
+                                <input class="multisteps-form__input form-control" asp-for="Price" type="text" placeholder="Price" />
+                            </div>
+                        </div>
+
+                        <div class="button-row d-flex mt-4">
+                            <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+                            <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <!--single form panel-->
+                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
+                    <h3 class="multisteps-form__title">Description</h3>
+                    <div class="multisteps-form__content">
+
+                        <div class="form-row mt-4">
+                            <div class="col">
+                                <textarea class="multisteps-form__textarea form-control" asp-for="Description"  rows="7" cols="33" type="text" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="button-row d-flex mt-4">
+                            <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+                            <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <!--single form panel-->
+                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
+                    <h3 class="multisteps-form__title">Catalogue</h3>
+                    <div class="multisteps-form__content">
+                        <div class="form-group">
+                            <label asp-for="Photos">Adding Catalogue to your service</label>
+                            <input class="imageuploade" type="file" name="photos" accept="image/*" multiple="multiple" />
+                        </div>
+
+                        <div class="button-row d-flex mt-4">
+                            <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+                            <button class="btn btn-primary ml-auto js-btn-next" type="button" title="Next">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!--single form panel-->
+                <div class="multisteps-form__panel shadow p-4 rounded bg-white" data-animation="scaleIn">
+                    <h3 class="multisteps-form__title">Publish</h3>
+                    <div class="multisteps-form__content">
+                        <p>
+                            Hello, You finisher All Steps Please click publish if you are ready to publish your gigs!
+                        </p>
+                        <div class="button-row d-flex mt-4">
+                            <button class="btn btn-primary js-btn-prev" type="button" title="Prev">Prev</button>
+                            <button class="btn btn-primary ml-auto js-btn-next" type="submit" asp-action="Create" title="Publish">Publish</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

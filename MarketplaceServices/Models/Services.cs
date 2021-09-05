@@ -20,11 +20,12 @@ namespace MarketplaceServices.Models
         public string Description { get; set; }
         public double Price { get; set; }
         public int SalesNumber { get; set; }
-        public List<Reviews> Reviews { get; set; }
-        [Required]
         public int Rating { get; set; }
+        public List<Reviews> Reviews { get; set; }
         public List<Photos> Photos { get; set; }
         public string SubCategoryId { get; set; }
         public SubCategory SubCategory { get; set; }
+        public string userId { get; set; }
+        public ApplicationUser user { get; set; }
     }
 } 

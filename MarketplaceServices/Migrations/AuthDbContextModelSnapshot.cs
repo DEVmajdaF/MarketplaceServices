@@ -133,9 +133,14 @@ namespace MarketplaceServices.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("userId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("Services");
                 });
@@ -456,7 +461,13 @@ namespace MarketplaceServices.Migrations
                         .WithMany()
                         .HasForeignKey("SubCategoryId");
 
+                    b.HasOne("MarketplaceServices.Models.ApplicationUser", "user")
+                        .WithMany()
+                        .HasForeignKey("userId");
+
                     b.Navigation("SubCategory");
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("MarketplaceServices.Models.Skills", b =>

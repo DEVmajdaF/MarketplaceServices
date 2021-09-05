@@ -280,3 +280,15 @@ main {
 
 .burger:focus {
   outline: none; }
+
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    bottom: 0;
+    width: 400px;
+    left: 0;
+    z-index: 1030;
+    border-right: 1px solid #ddd;
+}

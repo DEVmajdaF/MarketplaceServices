@@ -1,5 +1,6 @@
 ﻿@model MarketplaceServices.Models.ApplicationUser;
 
+
 @{
     var userId = ViewBag.userId;
 }
@@ -15,7 +16,7 @@
 
 <div class="d-flex">
 
-    <aside class="sidebar">
+    <div class="sidebar">
         <div class="side-inner">
 
             <div class="profile">
@@ -30,7 +31,7 @@
                 <div class="d-flex align-items-center">
                     @* Update Name *@
                     <form method="post">
-                        <h3 id="text" class="name mb-0">@Html.DisplayFor(x => x.FirstName)<span class="icon-check_circle verified"></span></h3>
+                        <h3 id="text" class="name mb-0">@Html.DisplayFor(x => x.UserName)<span class="icon-check_circle verified"></span></h3>
                         <Input hidden name="UserId" value="@userId" />
                         <input id="update" style="display:none" type="submit" asp-action="updateName" asp-controller="Profile" value="Update" />
                     </form>
@@ -144,9 +145,9 @@
 
                                     <input hidden value="@lang.Id" name="Id" />
                                     <a href="#">@lang.LanguageName - @lang.LanguageLevel </a>
-                                    <a type="submit" asp-action="deleteLang" asp-controller="Profile">
+                                    <button type="submit" asp-action="deleteLang" asp-controller="Profile">
                                         <img class="trash" src="~/Icons/trash-alt-regular.svg" style="width:15px ; height:20px " />
-                                    </a>
+                                    </button>
 
                                 </form>
 
@@ -183,11 +184,11 @@
 
         </div>
 
-    </aside>
+    </div>
 
     <div>
         <p>Do You Want To Make a "s/ce "</p>
-        <a asp-action="Index" asp-controller="Services">Click Here</a>
+        <a asp-action="Create" asp-controller="Services">Click Here</a>
     </div>
 </div>
 <script>
