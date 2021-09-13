@@ -1,0 +1,37 @@
+﻿@model List<MarketplaceServices.Models.Message>;
+
+<style>
+    div.panel-body {
+        overflow: scroll;
+        background: url('http://subtlepatterns.com/patterns/geometry2.png');
+    }
+</style>
+@{
+    var Userid = ViewBag.currentUserName;
+}
+<h2>ChatBox</h2>
+<div class="chat-panel panel panel-default">
+    <div class="panel-heading">
+        ChatBox using SingalR
+        <i class="fa fa-paper-plane fa-fw"></i>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body" id="chat" style="height:250px;">
+        <input type="hidden" id="displayname" />
+        <ul id="list">
+            @foreach (var message in Model)
+            {
+
+                <li id="discussion">@message.UserName Says:  @message.Text</li>
+            }
+        </ul>
+
+    </div>
+    <form method="post">
+        <input id="txtuser" value="@Userid" hidden />
+        <input id="txtmessage" type="text" name="text" class="form-control input-sm" placeholder="Type your message here..." />
+        <input type="submit" asp-controller="Chat" asp-action="Create" class="btn btn-warning btn-sm" id="submitButton" value="Send" />
+
+    </form>
+</div>
+

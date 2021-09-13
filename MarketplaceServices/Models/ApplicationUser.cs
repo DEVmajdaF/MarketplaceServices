@@ -30,11 +30,11 @@ namespace MarketplaceServices.Models
         [NotMapped]
         [Display(Name = "Profile Picture")]
         public IFormFile ProfileImage { get; set; }
-
-    public DateTime MemberDate { get; set; }
+        public DateTime MemberDate { get; set; }
         public List<Languages> Language { get; set; }
         public List<Skills> Skills { get; set; }
-        
+        public List<Message> Messages { get; set; }
+
     }
 }
 

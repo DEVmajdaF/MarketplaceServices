@@ -105,43 +105,39 @@ namespace MarketplaceServices.Controllers
             }
             return View("Index");
         }
-        // POST: ServicesController/Edit/5
+
+        // GET: ServicesController/Edit/5
+        public async Task<ActionResult> Edit(string id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var service = await Context.Services.SingleOrDefaultAsync(m=>m.Id==id);
+
+
+            return View(service);
+        }
+
+
+        //// POST: ServicesController/Edit/5
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> createPhotos(IFormFile[] photos)
+        //public ActionResult Delete(int id, IFormCollection collection)
         //{
-
-        //    if(photos.Length == 0 || photos == null)
+        //    try
         //    {
-        //        return Content("File(s) not selected");
-        //    }
-        //    else
-        //    {
-        //        foreach (IFormFile photo in photos)
-        //        {
-        //            //The Root Of the folder (physical path )  wwwroot
-        //            string wwwRootPath = _hostEnvironment.WebRootPath;
-        //            //fileName = Path.GetFileNameWithoutExtension(filename.FileName);
-        //            var aaa = Path.GetFileName(photo.FileName);
-        //            string filepath = Path.Combine(wwwRootPath + "/imageSce/", aaa);
-        //            photo.CopyTo(new FileStream(filepath, FileMode.Create));
-
-        //            Photos ph = new Photos()
-        //            {
-        //                ImageUrl = aaa,
-        //                ServiceId = "9c464402-831d-453c-9921-ead00de55212"
-        //            };
-
-        //            Context.Add(ph);
-        //            await Context.SaveChangesAsync();
-                   
-        //        }
         //        return RedirectToAction(nameof(Index));
         //    }
-
-
-        //    return View();
+        //    catch
+        //    {
+        //        return View();
+        //    }
         //}
+
+
+
 
         // GET: ServicesController/Delete/5
         public ActionResult Delete(int id)

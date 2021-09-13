@@ -25,6 +25,7 @@ namespace MarketplaceServices.Data
         public DbSet<SubCategory> SubCategory { get; set; }
         public DbSet<Skills> Skills { get; set; }
         public DbSet<Languages> Languages { get; set; }
-       
+        public DbSet<Message> Message { get; set; }
+      
     }
 }

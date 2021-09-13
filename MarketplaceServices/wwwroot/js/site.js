@@ -1,4 +1,6 @@
-﻿function viewskills() {
+﻿const { signalR } = require("../lib/microsoft/signalr/dist/browser/signalr");
+
+function viewskills() {
     var x = document.getElementById("Addskill");
     if (x.style.display === "none") {
         x.style.display = "block";
@@ -187,4 +189,10 @@ window.addEventListener('load', setFormHeight, false);
 
 //SETTING PROPER FORM HEIGHT ONRESIZE
 window.addEventListener('resize', setFormHeight, false);
+
+
+//....................................................;
+
+
+
 

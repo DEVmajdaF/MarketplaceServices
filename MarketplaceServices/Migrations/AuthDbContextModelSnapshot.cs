@@ -57,6 +57,33 @@ namespace MarketplaceServices.Migrations
                     b.ToTable("Languages");
                 });
 
+            modelBuilder.Entity("MarketplaceServices.Models.Message", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Message");
+                });
+
             modelBuilder.Entity("MarketplaceServices.Models.Photos", b =>
                 {
                     b.Property<string>("Id")
@@ -431,6 +458,15 @@ namespace MarketplaceServices.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MarketplaceServices.Models.Message", b =>
+                {
+                    b.HasOne("MarketplaceServices.Models.ApplicationUser", "User")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MarketplaceServices.Models.Photos", b =>
                 {
                     b.HasOne("MarketplaceServices.Models.Services", "Service")
@@ -554,6 +590,8 @@ namespace MarketplaceServices.Migrations
             modelBuilder.Entity("MarketplaceServices.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Language");
+
+                    b.Navigation("Messages");
 
                     b.Navigation("Skills");
                 });

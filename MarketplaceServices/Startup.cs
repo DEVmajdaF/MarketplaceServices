@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MarketplaceServices.Hubs;
 
 namespace MarketplaceServices
 {
@@ -44,7 +46,7 @@ namespace MarketplaceServices
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                           .AddRoles<IdentityRole>()
                           .AddEntityFrameworkStores<AuthDbContext>();
-    
+            services.AddSignalR();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -69,8 +71,6 @@ namespace MarketplaceServices
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -80,6 +80,8 @@ namespace MarketplaceServices
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapRazorPages();
+                //Le Nom du fichier Hub.
+                endpoints.MapHub<ChatHub>("/chatter");
             });
         }
     }
