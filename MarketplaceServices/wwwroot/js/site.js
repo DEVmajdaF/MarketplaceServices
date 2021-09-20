@@ -1,4 +1,4 @@
-﻿const { signalR } = require("../lib/microsoft/signalr/dist/browser/signalr");
+﻿
 
 function viewskills() {
     var x = document.getElementById("Addskill");

@@ -1,22 +1,31 @@
-﻿var connection = new signalR.HubConnectionBuilder().withUrl("/chatter").build();
+﻿"use strict";
 
 
+var connection = new signalR.HubConnectionBuilder().withUrl("/Chatter").build();
+
+var message = document.getElementById("txtmessage")
 connection.on("receiveMessage", function (txtuser, message) {
 
-    var msg = txtuser + ":" + message;
+
     var li = document.createElement("li");
-    li.textContent = msg;
-    $("#list").prepend(li);
-
-
-
+    li.textContent = txtuser + ":" + message;
+    document.getElementById("list").prepend(li);
+  /*  message.tntent = "";*/
+   
 });
 connection.start();
-$("#submitButton").on("click", function () {
+var submit = document.getElementById("submitButton");
+submit.addEventListener("click", function (e) {
 
-    var txtuser = $("#txtuser").val();
-    var message = $("#txtmessage").val();
-    connection.invoke("SendMessage", txtuser, message);
-});
+    var txtuser = document.getElementById("txtuser").value;
+    var txtmsg = message.value;
+    connection.invoke("SendMessage", txtuser, txtmsg).catch(function(err) {
+       
+        return console.error(err.toString());
+    });
+e.preventDefault();
+
+    });
+
 
 

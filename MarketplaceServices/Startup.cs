@@ -46,7 +46,12 @@ namespace MarketplaceServices
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                           .AddRoles<IdentityRole>()
                           .AddEntityFrameworkStores<AuthDbContext>();
-            services.AddSignalR();
+
+
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -71,7 +76,7 @@ namespace MarketplaceServices
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseAuthorization();
+        
 
             app.UseEndpoints(endpoints =>
             {
@@ -81,7 +86,8 @@ namespace MarketplaceServices
 
                 endpoints.MapRazorPages();
                 //Le Nom du fichier Hub.
-                endpoints.MapHub<ChatHub>("/chatter");
+                //make this hub available for the clients 
+                endpoints.MapHub<ChatHub>("/Chatter");
             });
         }
     }

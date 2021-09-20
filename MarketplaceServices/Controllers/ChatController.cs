@@ -1,8 +1,10 @@
 ﻿using MarketplaceServices.Data;
+using MarketplaceServices.Hubs;
 using MarketplaceServices.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,21 +17,29 @@ namespace MarketplaceServices.Controllers
 
 
         private readonly AuthDbContext _Context;
+        private readonly IHubContext<ChatHub> _hubContext;
+
+
         private readonly UserManager<IdentityUser> _userManager;
-        public ChatController(AuthDbContext Context, UserManager<IdentityUser> userManager)
+        public ChatController(AuthDbContext Context, UserManager<IdentityUser> userManager, IHubContext<ChatHub> hubContext)
         {
+           
             _Context = Context;
             _userManager = userManager;
+            _hubContext = hubContext;
         }
+
 
 
         // GET: ChatController
         public async  Task<ActionResult> Index()
         {
+
             var currentUser = await _userManager.GetUserAsync(User);
             ViewBag.currentUserName = currentUser.UserName;
             var messages = _Context.Message.ToList();
             return View(messages);
+          
 
         }
 
@@ -39,16 +49,10 @@ namespace MarketplaceServices.Controllers
             return View();
         }
 
-        // GET: ChatController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ChatController/Create
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task< ActionResult> Create(string text)
+        public async Task<ActionResult> Create(string text)
         {
             if (text != null)
             {
@@ -64,6 +68,7 @@ namespace MarketplaceServices.Controllers
 
             }
             return NotFound();
+           
         }
 
         // GET: ChatController/Edit/5

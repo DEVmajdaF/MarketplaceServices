@@ -1,14 +1,10 @@
 ﻿@model List<MarketplaceServices.Models.Message>;
 
-<style>
-    div.panel-body {
-        overflow: scroll;
-        background: url('http://subtlepatterns.com/patterns/geometry2.png');
-    }
-</style>
 @{
     var Userid = ViewBag.currentUserName;
 }
+
+
 <h2>ChatBox</h2>
 <div class="chat-panel panel panel-default">
     <div class="panel-heading">
@@ -27,11 +23,15 @@
         </ul>
 
     </div>
-    <form method="post">
+    <form method="post"  >
+
+
         <input id="txtuser" value="@Userid" hidden />
         <input id="txtmessage" type="text" name="text" class="form-control input-sm" placeholder="Type your message here..." />
-        <input type="submit" asp-controller="Chat" asp-action="Create" class="btn btn-warning btn-sm" id="submitButton" value="Send" />
-
+        <input type="submit" class="btn btn-warning btn-sm" id="submitButton" value="Send" />
     </form>
 </div>
 
+<script>
+
+</script>
