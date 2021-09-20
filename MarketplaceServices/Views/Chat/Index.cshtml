@@ -23,15 +23,11 @@
         </ul>
 
     </div>
-    <form method="post"  >
-
+    <form method="post" asp-action="Create" asp-controller="Chat"  >
 
         <input id="txtuser" value="@Userid" hidden />
         <input id="txtmessage" type="text" name="text" class="form-control input-sm" placeholder="Type your message here..." />
-        <input type="submit" class="btn btn-warning btn-sm" id="submitButton" value="Send" />
+        <input type="submit" class="btn btn-warning btn-sm" id="submitbutton" value="Send" />
     </form>
 </div>
 
-<script>
-
-</script>

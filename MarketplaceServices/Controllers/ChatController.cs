@@ -63,6 +63,7 @@ namespace MarketplaceServices.Controllers
                 msg.Text = text;
                 await _Context.Message.AddAsync(msg);
                 await _Context.SaveChangesAsync();
+                await _hubContext.Clients.All.SendAsync("receiveMessage", sender.UserName, text);
                 return RedirectToAction(nameof(Index));
 
 
