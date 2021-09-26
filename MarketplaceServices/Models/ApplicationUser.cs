@@ -12,6 +12,12 @@ namespace MarketplaceServices.Models
     public class ApplicationUser : IdentityUser
     {
 
+        public ApplicationUser()
+        {
+            this.Rooms = new List<RoomUser>();
+            
+        }
+
         [PersonalData]
         
         [Column(TypeName = "nvarchar(100)")]
@@ -34,6 +40,7 @@ namespace MarketplaceServices.Models
         public List<Languages> Language { get; set; }
         public List<Skills> Skills { get; set; }
         public List<Message> Messages { get; set; }
+        public List<RoomUser> Rooms { get; set; }
 
     }
 }

@@ -98,7 +98,13 @@
                 <div class="card mb-4">
                     <div class="card-header">Contact Seller</div>
                     <div class="card-body">You can send a message to the seller to ask him anything about the services, but before you have to activate your Profile!</div>
-                    <a class="btn btn-dark" asp-action="Index" asp-controller="Chat" asp-route-id="@Model.userId"> Contact Seller </a>
+                    <form asp-action="CreateRoom" asp-controller="Chat" asp-route-id="@Model.userId" method="post">
+                       @* <input id="connectionId" name="connid" value="" hidden />*@
+                     <input name="connid" id="connectionId"   />
+                        <input class="btn btn-dark" type="submit" value=" Contact Seller " />
+
+                    </form>
+
                 </div>
             </div>
         </div>

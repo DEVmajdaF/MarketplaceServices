@@ -1,0 +1,40 @@
+﻿@model MarketplaceServices.Models.ChatRooms ;
+
+@{
+//var Username = ViewBag.currentUserName;
+}
+
+
+<h2>ChatBox</h2>
+<div class="chat-panel panel panel-default">
+    <div class="panel-heading">
+        ChatBox using SingalR
+        <i class="fa fa-paper-plane fa-fw"></i>
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body" id="chat" style="height:250px;">
+        <input type="hidden" id="displayname" />
+        <ul id="list">
+            @foreach (var message in Model.Messages)
+            {
+                <li id="discussion">@message.Name Says: @message.Text ............@message.time</li>
+            }
+
+
+        </ul>
+
+    </div>
+    <form method="post" onsubmit="SendMessage(event)">
+
+        @*asp-action="onetoone" asp-controller="Chat"*@
+
+        @*<input type="text" id="receiverId" value="" />*@
+
+        <input hidden name="roomid" value="@Model.Id" />
+        <input name="connid" id="connectionId" hidden />
+        <input id="txtmessage" type="text" name="text" class="form-control input-sm" placeholder="Type your message here..." />
+        <input type="submit" class="btn btn-warning btn-sm" value="submitMessage" />
+        @*<input type="submit" class="btn btn-warning btn-sm" id="submitbutton" value="Send" />
+        <input type="submit" class="btn btn-warning btn-sm" id="submitbutton2" value="SendTo a specific user" />*@
+    </form>
+</div>

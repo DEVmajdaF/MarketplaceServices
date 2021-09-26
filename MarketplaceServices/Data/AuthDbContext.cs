@@ -26,6 +26,22 @@ namespace MarketplaceServices.Data
         public DbSet<Skills> Skills { get; set; }
         public DbSet<Languages> Languages { get; set; }
         public DbSet<Message> Message { get; set; }
-      
+        public DbSet<ChatMessages> Messages { get; set; }
+        public DbSet<ChatRooms> chatrooms { get; set; }
+        public DbSet<RoomUser> roomUsers { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<RoomUser>()
+               .HasKey(x => new { x.roomsId, x.UsersId });
+
+
+        }
+
     }
+
+    
 }

@@ -15,19 +15,23 @@
     <div class="panel-body" id="chat" style="height:250px;">
         <input type="hidden" id="displayname" />
         <ul id="list">
-            @foreach (var message in Model)
+            @foreach (var message in Model )
             {
 
-                <li id="discussion">@message.UserName Says:  @message.Text</li>
+                <li id="discussion">@message.UserName Says:  @message.Text</li>             
             }
         </ul>
 
     </div>
-    <form method="post" asp-action="Create" asp-controller="Chat"  >
+    <form method="post">
 
         <input id="txtuser" value="@Userid" hidden />
+        <div class="col-6"><span id="connectionId" /></div>
+        <input type="text" id="receiverId" />
         <input id="txtmessage" type="text" name="text" class="form-control input-sm" placeholder="Type your message here..." />
         <input type="submit" class="btn btn-warning btn-sm" id="submitbutton" value="Send" />
+        <input type="submit" class="btn btn-warning btn-sm" id="submitbutton2" value="SendTo a specific user" />
     </form>
 </div>
+
 
