@@ -10,21 +10,13 @@ namespace MarketplaceServices.Hubs
     public class ChatHub : Hub
     {
 
+        public async Task JoinGroup(string roomName)
+        {
 
-
-        //public Task LeaveRoom(string roomId)
-        //{
-        //    return Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId);
-        //}
-        //Clients call this to send a message to the hub
-        //method to send message to the hub. it will be invoke by the clients 
-        //public async Task SendMessageToUser(string Sender, string receiver, string message)
-        //{
-        //    //Hub then broadcasts the message to all the connected clients
-        //    //send messages to all clients.
-
-        //    await Clients.Client(receiver).SendAsync("receiveMessage", Sender, message);
-        //}
+          
+            await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
+           await  Clients.Group(roomName).SendAsync(Context.User.Identity.Name + " joined.");
+        }
 
         public string GetConnectionId() => Context.ConnectionId;
 

@@ -1,6 +1,7 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Hubs;
 using MarketplaceServices.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,9 +16,11 @@ using System.Threading.Tasks;
 namespace MarketplaceServices.Controllers
 {
 
+
+
+    [Authorize]
     public class ChatController : Controller
     {
-
 
         private readonly AuthDbContext _Context;
         private readonly IHubContext<ChatHub> _hubContext;
@@ -58,53 +61,56 @@ namespace MarketplaceServices.Controllers
 
         //}
 
-        // GET: ChatController
-
-        public async Task<ActionResult> CreateRoom(string id, string connid)
+        //// GET: ChatController
+       
+        public async Task<ActionResult> CreateRoom(string id)
         {
 
-            if (connid == null)
-            {
-                Console.WriteLine("ma fi connectionId");
-                return NotFound();
-            }
+            var thisUser = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            //var result = from p in _Context.roomUsers
+            //             group p.UsersId by p.roomsId into newGroup
+            //             select newGroup;
+
+
+            //foreach (var item in result)
+            //{
+            //    foreach (var p in item)
+            //    {
+            //        Console.WriteLine($"{p.}{p.roomsId}");
+            //    }
+                
+            //}
             ChatRooms room = new ChatRooms()
-            {
-                Type = ChatType.Private,
+                {
+                    Type = ChatType.Private,
 
-            };
-            room.Users.Add(new RoomUser {
+                };
+                room.Users.Add(new RoomUser
+                {
 
-                UsersId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
-            });
+                    UsersId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                });
 
-            room.Users.Add(new RoomUser
-            {
+                room.Users.Add(new RoomUser
+                {
 
-                UsersId = id,
-            });
-
-          
-            _Context.chatrooms.Add(room);
-            await _Context.SaveChangesAsync();
-            Console.WriteLine(connid);
-             await _hubContext.Groups.AddToGroupAsync(connid, room.Id);
-
-            return RedirectToAction("Room", new { id = room.Id });
-
-
-
-           }
-
-
-        public async Task<ActionResult> Room(string id)
-        {
-           var room = await _Context.chatrooms.Include(x => x.Messages).FirstOrDefaultAsync(x => x.Id == id);
+                    UsersId = id,
+                });
+                _Context.chatrooms.Add(room);
+                await _Context.SaveChangesAsync();
+                return RedirectToAction("Room", new { id = room.Id });
            
+        }
+
+
+        public async  Task<ActionResult> Room(string id)
+        {
+            var room = _Context.chatrooms
+                .Include(x => x.Messages)
+                .SingleOrDefault(x => x.Id == id);
+
             return View(room);
-
-
         }
 
 
@@ -148,33 +154,17 @@ namespace MarketplaceServices.Controllers
                 ChatMessages msg = new ChatMessages();
                 msg.Name = User.Identity.Name;
                 var sender = await _userManager.GetUserAsync(User);
-                msg.RoomId = roomid;
                 msg.Text = text;
+                msg.RoomId = roomid;
                 msg.time = DateTime.Now;
-
                 await _Context.Messages.AddAsync(msg);
                 await _Context.SaveChangesAsync();
-                await _hubContext.Clients.Group(roomid).SendAsync("ReceiveMessage", msg.Text, sender.UserName, msg.time);
-               
+                await _hubContext.Clients.Group(roomid).SendAsync("ReceiveMessage", sender.UserName, msg.Text,  msg.time);
                 return RedirectToAction("Room", new { id = roomid });
-
-
-
             }
             return NotFound();
 
         }
-
-
-
-        //[HttpPost("[action]/{ConnectionId}/{roomid}")]
-        //public async Task<IActionResult> joinRoom(string ConnectionId , string roomid)
-        //{
-
-
-        //    await  _hubContext.Groups.AddToGroupAsync(ConnectionId, roomid);
-        //    return Ok();
-        //}
 
         // GET: ChatController/Edit/5
         public ActionResult Edit(int id)

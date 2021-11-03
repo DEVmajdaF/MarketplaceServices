@@ -1,11 +1,11 @@
-﻿@model MarketplaceServices.Models.ApplicationUser;
+﻿@model MarketplaceServices.ViewModel.Profile.ProfileViewModel;
 
 
 @{
     var userId = ViewBag.userId;
 }
 
-@{ 
+@{
     List<SelectListItem> level = new List<SelectListItem>()
 {
                 new SelectListItem() { Text="Basic"},
@@ -14,13 +14,14 @@
             };
 }
 
-<div class="d-flex">
+<!--<div class="d-flex">
+<!--<div class="d-flex">
 
     <div class="sidebar">
         <div class="side-inner">
 
             <div class="profile">
-                <img src="images/@Model.Image" alt="Image" class="img-fluid" />
+                <img src="images/@Model.User.Image" alt="Image" class="img-fluid" />
                 <form method="post" enctype="multipart/form-data">
 
                     <input class="imageuploade" type="file" name="filename" accept="image/*" />
@@ -29,9 +30,9 @@
                 </form>
 
                 <div class="d-flex align-items-center">
-                    @* Update Name *@
+                     Update Name 
                     <form method="post">
-                        <h3 id="text" class="name mb-0">@Html.DisplayFor(x => x.UserName)<span class="icon-check_circle verified"></span></h3>
+                        <h3 id="text" class="name mb-0">@Html.DisplayFor(x => x.User.UserName)<span class="icon-check_circle verified"></span></h3>
                         <Input hidden name="UserId" value="@userId" />
                         <input id="update" style="display:none" type="submit" asp-action="updateName" asp-controller="Profile" value="Update" />
                     </form>
@@ -40,7 +41,7 @@
 
 
                 <div class="activity">
-                    <p>@Html.DisplayFor(x => x.Address)</p>
+                    <p>@Html.DisplayFor(x => x.User.Address)</p>
                 </div>
 
                 <div class="counter d-flex">
@@ -53,20 +54,20 @@
                         <span class="number-label">Followers</span>
                     </div>
                 </div>
-                @* Update Description *@
-                <form method="post">
+                 Update Description--> 
+                @*<form method="post">
                     <div class="bio">
                         <h3 style="font-size:17px">Description</h3>
                         <p id="description">@Html.DisplayFor(x => x.Description)</p>
                     </div>
                     <Input hidden name="UserId" value="@userId" />
                     <input id="updateD" style="display:none" type="submit" asp-action="updateDescription" asp-controller="Profile" value="Update" />
-                </form>
-                <img class="m-0" src="~/Icons/pencil.svg" style="width:40px; height:20px" onclick="changeDescription()" />
+                </form>*@
+                <!--<img class="m-0" src="~/Icons/pencil.svg" style="width:40px; height:20px" onclick="changeDescription()" />
 
 
             </div>
-            @*SkillSection*@
+            SkillSection
             <div class="ProfileSkill">
                 <div class="tags">
                     <div class="d-flex tagsdiv">
@@ -75,7 +76,7 @@
 
                     </div>
                     <ul>
-                        @foreach (var skill in Model.Skills)
+                        @foreach (var skill in Model.User.Skills)
                         {
 
                             <li class="">
@@ -101,13 +102,13 @@
 
                             <label for="SkillName" id="skill">Skill</label>
                             <Input name="SkillName" id="SkillName" />
-                            <span asp-validation-for="@Model.Skills[0].SkillName" class="text-danger"></span>
-                            @*<label for="SkillLevel" id="SkillLevel">Level</label>
-                                <Input name="SkillLevel" />*@
+                            <span asp-validation-for="@Model.User.Skills[0].SkillName" class="text-danger"></span>
+                            <label for="SkillLevel" id="SkillLevel">Level</label>
+                                <Input name="SkillLevel" />
                             <select required="required" name="SkillLevel" asp-items="@level" id="level" class="form-control custom-select">
                                 <option disabled selected>- Level -</option>
                             </select>
-                            <span asp-validation-for="@Model.Skills[0].SkillLevel" class="text-danger"></span>
+                            <span asp-validation-for="@Model.User.Skills[0].SkillLevel" class="text-danger"></span>
                             <Input hidden name="UserId" value="@userId" />
 
                             <button asp-action="Addskills" asp-controller="Profile">Add Skill</button>
@@ -125,7 +126,7 @@
 
 
 
-            @*Languagesection*@
+            Languagesection
             <div class="profileLangage">
 
 
@@ -136,7 +137,7 @@
 
                     </div>
                     <ul>
-                        @foreach (var lang in Model.Language)
+                        @foreach (var lang in Model.User.Language)
                         {
                             <li>
                                 <form method="post">
@@ -166,8 +167,8 @@
 
                             <label for="LanguageName" id="skill">Language</label>
                             <Input name="LanguageName" id="LanguageName" />
-                            @*<label for="LanguageLevel" id="LanguageLevel">Level</label>
-                                <Input name="LanguageLevel" />*@
+                            <label for="LanguageLevel" id="LanguageLevel">Level</label>
+                                <Input name="LanguageLevel" />
 
                             <select required="required" name="LanguageLevel" asp-items="@level" id="level" class="form-control custom-select">
                                 <option disabled selected>- Level -</option>
@@ -190,7 +191,185 @@
         <p>Do You Want To Make a "s/ce "</p>
         <a asp-action="Create" asp-controller="Services">Click Here</a>
     </div>
+</div>-->
+
+
+
+@* Proooooooofile *@
+
+
+<div class="main-page second py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 left">
+                <div class="profile_info">
+                    <div class="seller-card">
+                        <div>
+                            <div class="user-online-indicator is-online " data-user-id="1152855">
+                                <i class="fa fa-circle"></i>online
+                            </div>
+                        </div>
+                        @*<div><a href="#" class="ambassadors-badge">Ambassador</a></div>*@
+                        <div class="user-profile-info">
+                            <div>
+                                <div class="user-profile-image">
+                                    <label class="user-pict">
+                                        <img src="images/@Model.User.Image"
+                                             class="img-fluid user-pict-img" alt="Askbootstrap">
+                                        <a href="#"
+                                           class="user-badge-round user-badge-round-med locale-en-us top-rated-seller"></a>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="user-profile-label">
+                                <div class="username-line">
+                                    <a href="#" class="seller-link">@Html.DisplayFor(x => x.User.UserName)</a>
+                                </div>
+                                <div class="oneliner-wrapper">
+                                    <small class="oneliner">Professional Voice Actress</small>
+                                </div>
+                            </div>
+                        </div>
+                        @*
+                    Upload Images
+                        *@
+                        <div class="p-4">
+                            <form method="post" enctype="multipart/form-data">
+                                <label class=" btn btn-info m-0">
+                                    <i class="mdi mdi-image"></i> Choose file
+                                    <input class="imageuploade d-none" type="file" name="filename" accept="image/*" />
+                                </label>
+                                <Input hidden name="UserId" value="@userId" />
+                                <input type="submit" asp-action="addimage" asp-controller="Profile" class="add btn btn-success m-0" value="Upload" />
+                            </form>
+                        </div>
+                        @*
+                    ***************Information****************
+                        *@
+                        <div class="user-stats-desc">
+                            <ul class="user-stats">
+                                <li class="location">From<strong>@Html.DisplayFor(x => x.User.Address)</strong></li>
+                                <li class="member-since">Member since<strong>Dec 2012</strong></li>
+                                <li class="response-time">Avg. Response Time<strong>2 hours</strong></li>
+                                <li class="recent-delivery">Recent Delivery<strong>about&nbsp;15</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                @*
+            *************Description**********
+                *@
+                <div class="seller-profile">
+
+                    <div class="description">
+
+                        <h3 class="d-flex row justify-content-between">
+                            Description
+                            <a onclick="changeDescription()"> Edit Description</a>
+                        </h3>
+
+
+                        <form method="post">
+
+                            <p id="descriptions">
+                                @Html.DisplayFor(x => x.User.Description)
+                            </p>
+                            <Input hidden name="UserId" value="@userId" />
+                            <input id="updateD" class="btn btn-success" style="display:none" type="submit" asp-action="updateDescription" asp-controller="Profile" value="Update" />
+                        </form>
+
+                    </div>
+
+                    @*
+                *************Language**********
+                    *@
+                    <div class="languages">
+                        <h3 class="d-flex row justify-content-between">
+                            Languages
+                            <a class="addnew" onclick="viewlanguage()">Add Language</a>
+                        </h3>
+                        <div style="display:none" id="AddLanguage">
+
+                            <form method="post">
+
+                                <div class="d-flex flex-column">
+                                    <div class="">
+                                        <label for="LanguageName" id="skill">Language</label>
+                                        <Input class="form-control " name="LanguageName" id="LanguageName" />
+                                        <span></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <select required="required" name="LanguageLevel" asp-items="@level" id="level" class="form-control custom-select">
+                                            <option disabled selected>- Level -</option>
+                                        </select>
+                                        <span></span>
+                                    </div>
+                                    <Input hidden name="UserId" value="@userId" />
+
+                                    <button asp-action="AddLanguage" class="btn btn-primary mb-2" asp-controller="Profile">Add Language</button>
+
+                                </div>
+                            </form>
+                        </div>
+                        <ul>
+                            @foreach (var language in Model.User.Language)
+                            {
+                                <li>@language.LanguageName - <span>@language.LanguageLevel</span></li>
+                            }
+
+
+                        </ul>
+                    </div>
+
+                    @*
+                *************Skils**********
+                    *@
+                    <div class="skills">
+                        <h3 class="d-flex row justify-content-between">
+                            Skills
+                            <a class="addnew" id="addnew" onclick="viewskills()">Add Skills</a>
+
+                        </h3>
+                        <div style="display:none" id="Addskill">
+                            <form method="post">
+                                <div class="d-flex flex-column">
+                                    <div class="form-group">
+                                        <label for="SkillName" id="skill">Skill</label>
+                                        <Input class="form-control" name="SkillName" id="SkillName" />
+                                        <span asp-validation-for="@Model.User.Skills[0].SkillName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <select required="required" name="SkillLevel" asp-items="@level" id="level" class="form-control custom-select">
+                                            <option disabled selected>- Level -</option>
+                                        </select>
+                                        <span asp-validation-for="@Model.User.Skills[0].SkillLevel" class="text-danger"></span>
+                                    </div>
+                                    <Input hidden name="UserId" value="@userId" />
+                                    <button asp-action="Addskills" class="btn btn-primary mb-2" asp-controller="Profile">Add Skill</button>
+                                </div>
+                            </form>
+                        </div>
+                        @* ***ListSkills*** *@
+                        <ul>
+                            @foreach (var skill in Model.User.Skills)
+                            {
+                                <li class=""><a href="#">@skill.SkillName</a></li>
+
+                            }
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 right">
+                <h3>Make YourService</h3>
+                <a asp-action="Create" asp-controller="Services">Click Here</a>
+            </div>
+            </div>
+        </div>
 </div>
+
+      
 <script>
 
     function changetext() {
@@ -204,16 +383,36 @@
     }
 
     function changeDescription() {
-        const text = document.getElementById("description");
+        const text = document.getElementById("descriptions");
         const area = document.createElement("textarea");
         area.setAttribute("name", "Description");
+        area.setAttribute("class", "form-control");
+        area.setAttribute("rows", "4");
         area.innerHTML = text.textContent;
         /*area.setAttribute("Value", text.textContent);*/
         text.replaceWith(area);
         const update = document.getElementById("updateD");
-        update.style.display = "block"; 
+        update.style.display = "block";
+    }
+
+    function viewskills() {
+        var x = document.getElementById("Addskill");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function viewlanguage() {
+        var x = document.getElementById("AddLanguage");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
     }
 
 </script>
-   
+
 

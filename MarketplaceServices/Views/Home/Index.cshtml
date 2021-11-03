@@ -3,33 +3,210 @@
     ViewData["Title"] = "Home Page";
 }
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
- 
+<style>
+    .carousel-item {
+        height: 700px;
+        background: black;
+    }
+</style>
 
-<div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-        @foreach (var item in Model.categories)
-        {
-        <li class="nav-item active">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                @item.CategoryName
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                @foreach (var i in item.subCategories)
-                {
-                    <a class="dropdown-item" href="#">@i.SubCategoryName</a>
-                }
+
+
+<!-- Begin Page Content -->
+<section class="py-5 homepage-search-block text-center homepage-search-block-2 bg-dark position-relative">
+    <div class="container">
+        <div class="row py-lg-5">
+            <div class="col-lg-8 mx-auto">
+                <div class="homepage-search-title">
+                    <h1 class="mb-3 text-shadow text-white font-weight-bold">Find The Perfect Freelance Services For Your Business</h1>
+                    <h5 class="mb-5 text-shadow text-white-50 font-weight-normal">
+                        Millions of people use miver to turn their ideas into reality.
+                    </h5>
+                </div>
+                <div class="homepage-search-form">
+                    <form class="form-noborder">
+                        <div class="form-row">
+                            <div class="col-lg-3 col-md-3 col-sm-12 form-group">
+                                <div class="location-dropdown text-left">
+                                    <i class="icofont-location-arrow"></i>
+                                    @* 
+
+                                        List Of Categories On The website
+                                        
+                                    *@
+                                    <select class="custom-select form-control border-0 shadow-sm form-control-lg">
+                                        <option> All </option>
+                                        <option> Graphics & Design </option>
+                                        <option> Digital Marketing </option>
+                                        <option> Writing & Translation </option>
+                                        <option> Video & Animation </option>
+                                        <option> Music & Audio </option>
+                                        <option> Programming & Tech </option>
+                                        <option> Business </option>
+                                        <option> Lifestyle </option>
+                                        <option> Industries </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-12 form-group">
+                                <input type="text" placeholder="Find Services..."
+                                       class="form-control border-0 form-control-lg shadow-sm">
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12 form-group">
+                                @*  
+
+                                    A form OF SEARCHING
+                                    
+                                *@
+                                <button type="submit"
+                                        class="btn btn-success btn-block btn-lg btn-gradient shadow-sm">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <h6 class="mb-0 mt-1 text-shadow text-center text-white-50 font-weight-normal">
+                    E.g. Voice over,
+                    translation, logo design, Articles, Blog Posts &amp; more...
+                </h6>
             </div>
-        </li>
-        }
-           
-        </ul>
-</div>
-  
+        </div>
+    </div>
+</section>
 
-</nav>
+
+
+
+
+
+
+
+
+@* Latest Services  *@
+<div class="latest-products">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-heading">
+                    <h2>Latest Services</h2>
+                    <a href="products.html">view all products <i class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="product-item">
+                    <a href="#"><img src="/images/sweet-crepe-with-powder-and-strawberries.jpg" alt=""></a>
+                    <div class="down-content">
+                        <a href="#"><h4>Tittle goes here</h4></a>
+                        <h6>$25.75</h6>
+                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
+                        <ul class="stars">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                        </ul>
+                        <span>Reviews (24)</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="product-item">
+                    <a href="#"><img src="/images/sweet-crepe-with-powder-and-strawberries.jpg" alt=""></a>
+                    <div class="down-content">
+                        <a href="#"><h4>Tittle goes here</h4></a>
+                        <h6>$25.75</h6>
+                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
+                        <ul class="stars">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                        </ul>
+                        <span>Reviews (24)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="product-item">
+                    <a href="#"><img src="/images/sweet-crepe-with-powder-and-strawberries.jpg" alt=""></a>
+                    <div class="down-content">
+                        <a href="#"><h4>Tittle goes here</h4></a>
+                        <h6>$25.75</h6>
+                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
+                        <ul class="stars">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                        </ul>
+                        <span>Reviews (24)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+    $('.carousel').carousel()
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </nav>*@
+
+
+
+
+<!-- Header Bottom Area End Here -->
+@*<div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            @foreach (var item in Model.categories)
+            {
+                <li class="nav-item active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @item.CategoryName
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @foreach (var i in item.subCategories)
+                        {
+                            <a class="dropdown-item" href="#">@i.SubCategoryName</a>
+                        }
+                    </div>
+                </li>
+            }
+
+        </ul>
+    </div>*@
+
+

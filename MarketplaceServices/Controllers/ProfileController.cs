@@ -1,6 +1,7 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
 using MarketplaceServices.ViewModel;
+using MarketplaceServices.ViewModel.Profile;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -33,10 +34,18 @@ namespace MarketplaceServices.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewBag.userId = userId;
-            var user = Context.ApplicationUser.Include(s => s.Skills).Include(L=>L.Language).Where(x => x.Id == userId).SingleOrDefault();
-            return View(user);
+            var user = Context.ApplicationUser.Include(s => s.Skills).Include(L => L.Language).Where(x => x.Id == userId).SingleOrDefault();
 
 
+            var service = Context.Services.Include(s => s.SubCategory).Include(p => p.Photos).Where(x=>x.userId==userId).ToList();
+
+            ProfileViewModel profile = new ProfileViewModel()
+            {
+                User = user,
+                Services = service
+
+            };
+            return View(profile);
         }
 
 

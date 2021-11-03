@@ -9,6 +9,7 @@ namespace MarketplaceServices.ViewModel.Home
     public class HomeViewModel
     {
         public List<Categories> categories { get; set; }
+        //public List<SubCategory> subcategory { get; set; }
         public List<Services> Services { get; set; }
     }
 }

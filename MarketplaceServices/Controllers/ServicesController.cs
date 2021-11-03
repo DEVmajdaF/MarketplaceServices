@@ -114,7 +114,8 @@ namespace MarketplaceServices.Controllers
                 return NotFound();
             }
 
-            var service = await Context.Services.SingleOrDefaultAsync(m=>m.Id==id);
+            var service = await Context.Services.Include(x=>x.user).SingleOrDefaultAsync(m=>m.Id==id);
+          
 
 
             return View(service);

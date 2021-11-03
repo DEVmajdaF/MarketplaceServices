@@ -6,12 +6,15 @@
     <title>@ViewData["Title"] - MarketplaceServices</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/profile.css"/>
+    <link rel="stylesheet" href="~/css/fontawesome.css" />
+
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="~/css/Nav.css" />
     @*<link rel="stylesheet" href="/fonts/icomoon/style.css">*@
 
     <link rel="stylesheet" href="/css/owl.carousel.min.css">
@@ -25,47 +28,34 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow py-3 ">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MarketplaceServices</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><h2>Service <em>KOM</em></h2></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-
-
                     </ul>
                     <partial name="_LoginPartial" />
 
                 </div>
             </div>
         </nav>
+        <partial name="_NavPartial" />
     </header>
-    <div class="container">
+    <div class="">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
-    @*<footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2021 - MarketplaceServices - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     @*<script src="~/js/site.js" asp-append-version="true"></script>*@
     <script src="~/js/chat.js"></script>
- 
+    <script src="~/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

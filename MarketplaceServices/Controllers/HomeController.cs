@@ -2,6 +2,7 @@
 using MarketplaceServices.Models;
 using MarketplaceServices.ViewModel.Home;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace MarketplaceServices.Controllers
                           }
 
                        ).ToList();
+            //var result = Context.Categories.Include(x => x.subCategories).Where(c=>x.).ToList();
 
             HomeViewModel Home = new HomeViewModel()
             {

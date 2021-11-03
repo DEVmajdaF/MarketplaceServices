@@ -1,5 +1,6 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
+using MarketplaceServices.ViewModel.Home;
 using MarketplaceServices.ViewModel.subcategory;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace MarketplaceServices.Controllers
         public ActionResult Index()
         {
 
-            var result = (from c in Context.Categories
+            var cat = (from c in Context.Categories
 
                           select new Categories
                           {
@@ -41,7 +42,13 @@ namespace MarketplaceServices.Controllers
                           }
 
                          ).ToList();
-            return View(result);
+
+            HomeViewModel Home = new HomeViewModel()
+            {
+                categories = cat
+            };
+            return View(Home);
+          
         }
 
         // GET: CategoryController/Details/5

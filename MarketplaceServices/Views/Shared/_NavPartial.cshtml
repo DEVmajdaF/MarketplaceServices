@@ -1,0 +1,51 @@
+﻿@model MarketplaceServices.ViewModel.Home.HomeViewModel
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white osahan-nav-mid px-0 border-top shadow-sm">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav">
+                @foreach (var item in Model.categories)
+                {
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @item.CategoryName
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownPortfolio">
+                        @foreach (var i in item.subCategories)
+                        {
+                            <a class="dropdown-item" href="index.html">@i.SubCategoryName</a>
+                        }
+
+                        </div>
+
+                    
+
+                    </li>
+                }
+            </ul>
+        </div>
+        <ul class="navbar-nav ml-auto">
+            @*<li class="nav-item">
+                <a class="nav-link" href="become-a-seller.html">
+                    <i class="fa fa-fw fa-trophy"></i>
+                    <span>Become A Seller</span>
+                </a>
+            </li>*@
+            <li class="nav-item">
+                <a class="nav-link">
+                    <img class="country-flag img-fluid" src="images/flag/india.png">
+                    <span>English</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
