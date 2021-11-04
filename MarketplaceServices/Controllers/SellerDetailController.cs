@@ -1,10 +1,12 @@
 ﻿using MarketplaceServices.Data;
+using MarketplaceServices.ViewModel.SellerProfile;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MarketplaceServices.Controllers
@@ -21,12 +23,20 @@ namespace MarketplaceServices.Controllers
            
         }
         // GET: SellerDetailController
-        public async Task<ActionResult> Index(string id)
+        public  ActionResult Index(string id)
         {
             var userinfo = Context.ApplicationUser.Include(s => s.Skills).Include(L => L.Language).Where(x => x.Id == id).SingleOrDefault();
+            var services = Context.Services.Include(p=>p.Photos).Where(x=>x.userId==id).ToList();
+
          
 
-            return View(userinfo);
+            SellerDetailViewModel selerdetail = new SellerDetailViewModel()
+            {
+                Services= services,
+                user=userinfo
+            };
+
+            return View(selerdetail);
         }
 
         // GET: SellerDetailController/Details/5

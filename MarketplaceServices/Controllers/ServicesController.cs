@@ -53,10 +53,29 @@ namespace MarketplaceServices.Controllers
             return View();
         }
 
-        // GET: ServicesController/Create
-        public ActionResult Create()
+
+        public async Task<ActionResult> CreateReview(string comment, string userid, string serviceid)
+        {
+            Reviews review = new Reviews()
+            {
+                UserId = userid,
+                Comment = comment,
+                ServiceId = serviceid,
+                PublishDate = DateTime.Now,
+                rating = 5,
+
+            };
+             Context.Reviews.Add(review);
+            await Context.SaveChangesAsync();
+            return RedirectToAction("Edit", new { id = serviceid });
+        
+        }
+
+            // GET: ServicesController/Create
+            public ActionResult Create()
         {
             var result = Context.SubCategory.Select(s => new { s.Id, s.SubCategoryName }).ToList();
+
             ViewBag.subCat = result;
             return View();
         }   
@@ -114,32 +133,13 @@ namespace MarketplaceServices.Controllers
                 return NotFound();
             }
 
-            var service = await Context.Services.Include(x=>x.user).SingleOrDefaultAsync(m=>m.Id==id);
-          
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.userId = userId;
 
+            var service = await Context.Services.Include(x=>x.user).SingleOrDefaultAsync(m=>m.Id==id);
 
             return View(service);
         }
-
-
-        //// POST: ServicesController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(int id, IFormCollection collection)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-
-
-
         // GET: ServicesController/Delete/5
         public ActionResult Delete(int id)
         {

@@ -1,4 +1,4 @@
-﻿@model MarketplaceServices.Models.ApplicationUser;
+﻿@model MarketplaceServices.ViewModel.SellerProfile.SellerDetailViewModel;
 
 
 @* Proooooooofile *@
@@ -20,8 +20,8 @@
                             <div>
                                 <div class="user-profile-image">
                                     <label class="user-pict">
-                                        <img src="images/@Model.Image"
-                                             class="img-fluid user-pict-img" alt="Askbootstrap">
+                                        <img src="images/@Model.user.Image"
+                                             class="img-fluid user-pict-img" alt="">
                                         <a href="#"
                                            class="user-badge-round user-badge-round-med locale-en-us top-rated-seller"></a>
                                     </label>
@@ -29,21 +29,21 @@
                             </div>
                             <div class="user-profile-label">
                                 <div class="username-line">
-                                    <a href="#" class="seller-link">@Html.DisplayFor(x => x.UserName)</a>
+                                    <a href="#" class="seller-link">@Html.DisplayFor(x => x.user.UserName)</a>
                                 </div>
                                 <div class="oneliner-wrapper">
                                     <small class="oneliner">Professional Voice Actress</small>
                                 </div>
                             </div>
                         </div>
-                     
-                       
+
+
                         @*
-                            ***************Information****************
+                    ***************Information****************
                         *@
                         <div class="user-stats-desc">
                             <ul class="user-stats">
-                                <li class="location">From<strong>@Html.DisplayFor(x => x.Address)</strong></li>
+                                <li class="location">From<strong>@Html.DisplayFor(x => x.user.Address)</strong></li>
                                 <li class="member-since">Member since<strong>Dec 2012</strong></li>
                                 <li class="response-time">Avg. Response Time<strong>2 hours</strong></li>
                                 <li class="recent-delivery">Recent Delivery<strong>about&nbsp;15</strong></li>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 @*
-                    *************Description**********
+            *************Description**********
                 *@
                 <div class="seller-profile">
 
@@ -67,16 +67,16 @@
                         <form method="post">
 
                             <p id="descriptions">
-                                @Html.DisplayFor(x => x.Description)
+                                @Html.DisplayFor(x => x.user.Description)
                             </p>
-                           
+
                             <input id="updateD" class="btn btn-success" style="display:none" type="submit" asp-action="updateDescription" asp-controller="Profile" value="Update" />
                         </form>
 
                     </div>
 
                     @*
-                        *************Language**********
+                *************Language**********
                     *@
                     <div class="languages">
                         <h3 class="d-flex row justify-content-between">
@@ -85,10 +85,10 @@
                         </h3>
                         <div style="display:none" id="AddLanguage">
 
-                           
+
                         </div>
                         <ul>
-                            @foreach (var language in Model.Language)
+                            @foreach (var language in Model.user.Language)
                             {
                                 <li>@language.LanguageName - <span>@language.LanguageLevel</span></li>
                             }
@@ -98,7 +98,7 @@
                     </div>
 
                     @*
-                        *************Skils**********
+                *************Skils**********
                     *@
                     <div class="skills">
                         <h3 class="d-flex row justify-content-between">
@@ -106,10 +106,10 @@
                             <a class="addnew" id="addnew" onclick="viewskills()">Add Skills</a>
 
                         </h3>
-                   
+
                         @* ***ListSkills*** *@
                         <ul>
-                            @foreach (var skill in Model.Skills)
+                            @foreach (var skill in Model.user.Skills)
                             {
                                 <li class=""><a href="#">@skill.SkillName</a></li>
 
@@ -119,9 +119,253 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-8 right">
-                <h3>Make YourService</h3>
-                <a asp-action="Create" asp-controller="Services">Click Here</a>
+                <h2>Askbootstrap's Gigs</h2>
+                <div class="recommended">
+                    <div class="row">
+                        @foreach (var service in Model.Services) {
+
+                        <div class="col-md-4">
+                            <div>
+                                <a href="#">
+                                    <img class="img-fluid" src="~/imageSce/@service.Photos[0].ImageUrl" />
+                                </a>
+                                <div class="inner-slider">
+                                    <div class="inner-wrapper">
+                                        <div class="d-flex align-items-center">
+                                            <span class="seller-image">
+                                                <img class="img-fluid" src="images/@Model.user.Image" alt='' />
+                                            </span>
+                                            <span class="seller-name">
+                                                <a href="profile.html">@Model.user.UserName</a>
+                                                <span class="level hint--top level-one-seller">
+                                                    Level 1 Seller
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <h3>@service.Description</h3>
+                                        <div class="content-info">
+                                            <div class="rating-wrapper">
+                                                <span class="gig-rating text-body-2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15"
+                                                         height="15">
+                                                        <path fill="currentColor"
+                                                              d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                                                        </path>
+                                                    </svg>
+                                                    5.0
+                                                    <span>(7)</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="footer">
+                                            <i class="fa fa-heart" aria-hidden="true"></i>
+                                            <div class="price">
+                                                <a href="#">
+                                                    Starting At <span> $@service.Price</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <div class="review-section">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h4 class="m-0">
+                            Reviews as Seller <small>
+                                <span class="star-rating-s15"></span><span>
+                                    <span class="total-rating-out-five header-average-rating"
+                                          data-impression-collected="true">5</span>
+                                </span><span>
+                                    <span class="total-rating header-total-rating"
+                                          data-impression-collected="true">(28051)</span>
+                                </span>
+                            </small>
+                        </h4>
+                        <select class="custom-select custom-select-sm border-0 shadow-sm ml-2">
+                            <option>Most Relevant</option>
+                            <option>Most Recent</option>
+                        </select>
+                    </div>
+                    <div class="breakdown">
+                        <ul class="header-stars">
+                            <li>
+                                Seller communication level
+                                <small>
+                                    <span class="star-rating-s15"></span>
+                                    <span class="total-rating-out-five">5</span>
+                                </small>
+                            </li>
+                            <li>
+                                Recommend to a friend
+                                <small>
+                                    <span class="star-rating-s15"></span>
+                                    <span class="total-rating-out-five">5</span>
+                                </small>
+                            </li>
+                            <li>
+                                Service as described
+                                <small>
+                                    <span class="star-rating-s15"></span>
+                                    <span class="total-rating-out-five">5</span>
+                                </small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="review-list">
+                    <ul>
+                        <li>
+                            <div class="d-flex">
+                                <div class="left">
+                                    <span>
+                                        <img src="images/user/s9.png" class="profile-pict-img img-fluid" alt="">
+                                    </span>
+                                </div>
+                                <div class="right">
+                                    <h4>
+                                        Askbootstrap
+                                        <span class="gig-rating text-body-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15"
+                                                 height="15">
+                                                <path fill="currentColor"
+                                                      d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                                                </path>
+                                            </svg>
+                                            5.0
+                                        </span>
+                                    </h4>
+                                    <div class="country d-flex align-items-center">
+                                        <span>
+                                            <img class="country-flag img-fluid" src="images/flag/india.png">
+                                        </span>
+                                        <div class="country-name font-accent">India</div>
+                                    </div>
+                                    <div class="review-description">
+                                        <p>
+                                            The process was smooth, after providing the required info,
+                                            Pragyesh sent me an outstanding packet of wireframes. Thank you a lot!
+                                        </p>
+                                    </div>
+                                    <span class="publish py-3 d-inline-block w-100">Published 4 weeks ago</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex">
+                                <div class="left">
+                                    <span>
+                                        <img src="images/user/s8.png" class="profile-pict-img img-fluid" alt="">
+                                    </span>
+                                </div>
+                                <div class="right">
+                                    <h4>
+                                        Askbootstrap
+                                        <span class="gig-rating text-body-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15"
+                                                 height="15">
+                                                <path fill="currentColor"
+                                                      d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                                                </path>
+                                            </svg>
+                                            5.0
+                                        </span>
+                                    </h4>
+                                    <div class="country d-flex align-items-center">
+                                        <span>
+                                            <img class="country-flag img-fluid" src="images/flag/flag.png">
+                                        </span>
+                                        <div class="country-name font-accent">Germany</div>
+                                    </div>
+                                    <div class="review-description">
+                                        <p>
+                                            The process was smooth, after providing the required info,
+                                            Pragyesh sent me an outstanding packet of wireframes. Thank you a lot!
+                                        </p>
+                                    </div>
+                                    <span class="publish py-3 d-inline-block w-100">Published 4 weeks ago</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex">
+                                <div class="left">
+                                    <span>
+                                        <img src="images/user/s7.png" class="profile-pict-img img-fluid" alt="">
+                                    </span>
+                                </div>
+                                <div class="right">
+                                    <h4>
+                                        Askbootstrap
+                                        <span class="gig-rating text-body-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15"
+                                                 height="15">
+                                                <path fill="currentColor"
+                                                      d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                                                </path>
+                                            </svg>
+                                            5.0
+                                        </span>
+                                    </h4>
+                                    <div class="country d-flex align-items-center">
+                                        <span>
+                                            <img class="country-flag img-fluid" src="images/flag/uk.png">
+                                        </span>
+                                        <div class="country-name font-accent">UK</div>
+                                    </div>
+                                    <div class="review-description">
+                                        <p>
+                                            The process was smooth, after providing the required info,
+                                            Pragyesh sent me an outstanding packet of wireframes. Thank you a lot!
+                                        </p>
+                                    </div>
+                                    <span class="publish py-3 d-inline-block w-100">Published 4 weeks ago</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="d-flex">
+                                <div class="left">
+                                    <span>
+                                        <img src="images/user/s6.png" class="profile-pict-img img-fluid" alt="">
+                                    </span>
+                                </div>
+                                <div class="right">
+                                    <h4>
+                                        Askbootstrap
+                                        <span class="gig-rating text-body-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15"
+                                                 height="15">
+                                                <path fill="currentColor"
+                                                      d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                                                </path>
+                                            </svg>
+                                            5.0
+                                        </span>
+                                    </h4>
+                                    <div class="country d-flex align-items-center">
+                                        <span>
+                                            <img class="country-flag img-fluid" src="images/flag/australia.png">
+                                        </span>
+                                        <div class="country-name font-accent">Australia</div>
+                                    </div>
+                                    <div class="review-description">
+                                        <p>
+                                            The process was smooth, after providing the required info,
+                                            Pragyesh sent me an outstanding packet of wireframes. Thank you a lot!
+                                        </p>
+                                    </div>
+                                    <span class="publish py-3 d-inline-block w-100">Published 4 weeks ago</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
