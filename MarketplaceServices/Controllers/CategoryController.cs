@@ -1,7 +1,6 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
-using MarketplaceServices.ViewModel.Home;
-using MarketplaceServices.ViewModel.subcategory;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -43,11 +42,8 @@ namespace MarketplaceServices.Controllers
 
                          ).ToList();
 
-            HomeViewModel Home = new HomeViewModel()
-            {
-                categories = cat
-            };
-            return View(Home);
+          
+            return View(cat);
           
         }
 

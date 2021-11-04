@@ -1,4 +1,4 @@
-﻿@model MarketplaceServices.ViewModel.Home.HomeViewModel
+﻿@model List<MarketplaceServices.Models.Categories>
 
 
 
@@ -10,24 +10,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
-                @foreach (var item in Model.categories)
+                @foreach (var item in Model)
                 {
 
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @item.CategoryName
-                    </a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @item.CategoryName
+                        </a>
 
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownPortfolio">
-                        @foreach (var i in item.subCategories)
-                        {
-                            <a class="dropdown-item" href="index.html">@i.SubCategoryName</a>
-                        }
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownPortfolio">
+                            @foreach (var i in item.subCategories)
+                            {
+                                <a class="dropdown-item" href="index.html">@i.SubCategoryName</a>
+                            }
 
                         </div>
 
-                    
+
 
                     </li>
                 }
@@ -35,11 +35,11 @@
         </div>
         <ul class="navbar-nav ml-auto">
             @*<li class="nav-item">
-                <a class="nav-link" href="become-a-seller.html">
-                    <i class="fa fa-fw fa-trophy"></i>
-                    <span>Become A Seller</span>
-                </a>
-            </li>*@
+                    <a class="nav-link" href="become-a-seller.html">
+                        <i class="fa fa-fw fa-trophy"></i>
+                        <span>Become A Seller</span>
+                    </a>
+                </li>*@
             <li class="nav-item">
                 <a class="nav-link">
                     <img class="country-flag img-fluid" src="images/flag/india.png">

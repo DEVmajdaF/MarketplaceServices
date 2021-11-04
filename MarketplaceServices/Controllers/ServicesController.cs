@@ -1,6 +1,6 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
-using MarketplaceServices.ViewModel;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

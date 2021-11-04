@@ -1,4 +1,4 @@
-﻿@model MarketplaceServices.ViewModel.Home.HomeViewModel
+﻿@model List<MarketplaceServices.Models.Categories>
 
 
 @{
@@ -12,7 +12,7 @@
     <a asp-action="Create">Create New</a>
 </p>
 
-@foreach (var item in Model.categories)
+@foreach (var item in Model)
 {
 
 
