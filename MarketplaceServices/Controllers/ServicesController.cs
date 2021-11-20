@@ -1,6 +1,6 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
-
+using MarketplaceServices.ViewModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +54,7 @@ namespace MarketplaceServices.Controllers
         }
 
 
-        public async Task<ActionResult> CreateReview(string comment, string userid, string serviceid)
+        public async Task<ActionResult> CreateReview(string comment, string userid, string serviceid , int rating)
         {
             Reviews review = new Reviews()
             {
@@ -62,7 +62,7 @@ namespace MarketplaceServices.Controllers
                 Comment = comment,
                 ServiceId = serviceid,
                 PublishDate = DateTime.Now,
-                rating = 5,
+                rating = rating,
 
             };
              Context.Reviews.Add(review);
@@ -80,6 +80,12 @@ namespace MarketplaceServices.Controllers
             return View();
         }   
 
+
+        public async Task<ActionResult> GetComment()
+        {
+
+            return View();
+        }
 
         // POST: ServicesController/Create
         [HttpPost]
@@ -136,9 +142,18 @@ namespace MarketplaceServices.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewBag.userId = userId;
 
-            var service = await Context.Services.Include(x=>x.user).SingleOrDefaultAsync(m=>m.Id==id);
+            var service =  Context.Services.Include(x => x.user).SingleOrDefault(m => m.Id == id);
+            var Reviews = Context.Reviews.Include(u => u.User).Where(a => a.ServiceId == id).ToList();
 
-            return View(service);
+            ServiceViewModel svm = new ServiceViewModel()
+            {
+                Service = service,
+                Reviews= Reviews
+
+
+
+            };
+            return View(svm);
         }
         // GET: ServicesController/Delete/5
         public ActionResult Delete(int id)
