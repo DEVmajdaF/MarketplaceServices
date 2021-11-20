@@ -1,38 +1,58 @@
 ﻿
 @model IEnumerable<MarketplaceServices.ViewModel.UserRoleViewModel>;
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Email</th>
-            <th scope="col">RoleName</th>
-            <th scope="col">Actions</th>
+@{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml";}
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
 
-        <tr>
-
-            <th scope="row">@item.Id</th>
-            <td>@item.Email</td>
-
-            <td> @Html.DisplayFor(modelItem => item.RoleName)</td>
-            <td>
-                <a class="btn btn-primary" asp-action="Edit" asp-controller="User" asp-route-id="@item.Id">Edit</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            
-            </td>
-        </tr>
-
-        }
-
-    </tbody>
-
-</table>
 <div>
     <a class="btn btn-danger" asp-action="Create"> Create Admin</a>
 </div>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">User List Table</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">RoleName</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+
+                        <th scope="row">@item.Id</th>
+                        <td>@item.Email</td>
+
+                        <td> @Html.DisplayFor(modelItem => item.RoleName)</td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="Edit" asp-controller="User" asp-route-id="@item.Id">Edit</a> |
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+        <ul class="pagination pagination-sm m-0 float-right">
+            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+        </ul>
+    </div>
+</div>
+

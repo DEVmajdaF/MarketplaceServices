@@ -3,65 +3,74 @@
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Bordered Table</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10px">#</th>
+                                            <th>CategoryName</th>
+                                            <th>Sous-CatgoryName</th>
+                                            <th style="width: 40px">add sous-Catgory</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-@foreach (var item in Model)
-{
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td></td>
+
+                                                <td>  @item.CategoryName</td>
+
+                                                <td>
+                                                    @foreach (var i in item.subCategories)
+                                                    {
+                                                        <Ul>
+                                                            <li>
+                                                                @i.SubCategoryName
+                                                            </li>
+                                                        </Ul>
 
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    CatgoryName
-                </th>
+                                                    }
+                                                </td>
 
-            </tr>
-        </thead>
-        <tbody>
+                                                <td>
+                                                    <form method="post" id="form" class="d-flex flex-row justify-content-between">
+                                                       
+                                                            <input class="form-control" name="SubCategoryName" />
+                                                            <input hidden name="CatgoriesId" value="@item.Id" />
+                                                        
+                                                       
+                                                        <input type="submit" class="btn btn-info" asp-action="Edit" asp-controller="Category" />
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        }
 
-            <tr>
-                <td>
-                    @item.CategoryName
-                </td>
-            </tr>
-            <tr>
-                @*<td>
-                        <button Onclick="AddSubCategory()">AddSubCategory</button>
-                    </td>*@
-                <td>
-                    <form method="post" id="form">
-                        <input name="SubCategoryName" />
-                        <input hidden name="CatgoriesId" value="@item.Id" />
-                        <input type="submit" asp-action="Edit" asp-controller="Category" />
-                    </form>
-                </td>
-
-            </tr>
-            @foreach (var i in item.subCategories)
-            {
-                <tr>
-                    <td>
-                        @i.SubCategoryName
-                    </td>
-                    @*<td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>*@
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                            @*<div class="card-footer clearfix">
+                    <ul class="pagination pagination-sm m-0 float-right">
+                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                    </ul>
+                </div>*@
+                        </div>
 
 <script>
     function AddSubCategory() {
@@ -75,3 +84,4 @@
 
     }
 </script>
+

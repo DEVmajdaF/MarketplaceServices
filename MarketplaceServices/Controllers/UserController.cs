@@ -1,6 +1,7 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
 using MarketplaceServices.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace MarketplaceServices.Controllers
 {
-    
-   
+
+    [Authorize(Roles = "Admin")]
 
     public class UserController : Controller
     {

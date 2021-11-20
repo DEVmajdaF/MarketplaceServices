@@ -1,6 +1,6 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace MarketplaceServices.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
 

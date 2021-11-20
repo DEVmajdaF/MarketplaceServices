@@ -1,4 +1,6 @@
 ﻿
+
+@{ Layout = "~/Views/Shared/_LayoutAdmin.cshtml";}
 <div class="container">
     <h1 class=" text-black-50">Update The Role</h1>
     <div asp-validation-summary="All" class="text-danger"></div>
@@ -14,7 +16,7 @@
         </div>
         <div class="form-group">
             <label for="roleName"> </label>
-            <input id="roleName"  name="roleName" value="@ViewBag.RoleName" class="form-control" />
+            <input id="roleName" name="roleName" value="@ViewBag.RoleName" class="form-control" />
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
