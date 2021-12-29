@@ -14,6 +14,7 @@ namespace MarketplaceServices.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public string Id { get; set; }
+        [Required]
         public string CategoryName { get; set; }
         public List<SubCategory> subCategories { get; set; }
 

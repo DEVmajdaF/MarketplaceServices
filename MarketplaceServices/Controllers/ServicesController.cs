@@ -21,6 +21,10 @@ namespace MarketplaceServices.Controllers
         AuthDbContext Context;
         private readonly IWebHostEnvironment _hostEnvironment;
 
+        [BindProperty]
+        public ServiceViewModel ServiceVM{ get; set; }
+        
+
 
         public ServicesController(AuthDbContext context , IWebHostEnvironment hostEnvironment)
         {
@@ -54,20 +58,21 @@ namespace MarketplaceServices.Controllers
         }
 
 
-        public async Task<ActionResult> CreateReview(string comment, string userid, string serviceid , int rating)
+        public async Task<ActionResult> CreateReview(Reviews Review , int Rating)
         {
             Reviews review = new Reviews()
             {
-                UserId = userid,
-                Comment = comment,
-                ServiceId = serviceid,
+                UserId = Review.UserId,
+                Comment = Review.Comment,
+                ServiceId = Review.ServiceId,
                 PublishDate = DateTime.Now,
-                rating = rating,
+                rating = Rating,
 
             };
-             Context.Reviews.Add(review);
+           
+            Context.Reviews.Add(review);
             await Context.SaveChangesAsync();
-            return RedirectToAction("Edit", new { id = serviceid });
+            return RedirectToAction("Edit", new { id = Review.ServiceId });
         
         }
 
@@ -144,6 +149,7 @@ namespace MarketplaceServices.Controllers
 
             var service =  Context.Services.Include(x => x.user).SingleOrDefault(m => m.Id == id);
             var Reviews = Context.Reviews.Include(u => u.User).Where(a => a.ServiceId == id).ToList();
+           
 
             ServiceViewModel svm = new ServiceViewModel()
             {
@@ -155,6 +161,7 @@ namespace MarketplaceServices.Controllers
             };
             return View(svm);
         }
+       
         // GET: ServicesController/Delete/5
         public ActionResult Delete(int id)
         {

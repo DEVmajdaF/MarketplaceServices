@@ -11,13 +11,13 @@
                     <div class="osahan-login py-4">
                         <div class="text-center mb-4">
                             <a href="index.html"><img src="images/fav.svg" alt=""></a>
-                            <h5 class="font-weight-bold mt-3">Join Miver</h5>
+                            <h5 class="font-weight-bold mt-3">Join ServiceKom</h5>
                             <p class="text-muted">Make the most of your professional life</p>
                         </div>
                         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
                             <h4>Create a new account.</h4>
                             <hr />
-                            <div asp-validation-summary="All" class="text-danger"></div>
+                            @*<div asp-validation-summary="All" class="text-danger"></div>*@
                             <div class="form-group">
                                 <label asp-for="Input.Email"></label>
                                 <input asp-for="Input.Email" class="form-control" />
@@ -72,6 +72,6 @@
     </div>*@
 
 
-@section Scripts {
+@*@section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+}*@

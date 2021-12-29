@@ -14,12 +14,17 @@ namespace MarketplaceServices.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
         public string Id { get; set; }
+        [Required(ErrorMessage = "Comment is required")]
         public string Comment { get; set; }
+
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
+
         public DateTime PublishDate { get; set; }
+
         public string ServiceId { get; set; }
         public Services Service { get; set; }
+      
         public int rating { get; set; }
     }
 }

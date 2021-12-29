@@ -32,20 +32,20 @@ namespace MarketplaceServices.Controllers
         // GET: Profile
         public ActionResult Index()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            ViewBag.userId = userId;
-            var user = Context.ApplicationUser.Include(s => s.Skills).Include(L => L.Language).Where(x => x.Id == userId).SingleOrDefault();
+           
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+                ViewBag.userId = userId;
+                var user = Context.ApplicationUser.Include(s => s.Skills).Include(L => L.Language).Where(x => x.Id == userId).SingleOrDefault();
+                var service = Context.Services.Include(s => s.SubCategory).Include(p => p.Photos).Where(x => x.userId == userId).ToList();
 
-            var service = Context.Services.Include(s => s.SubCategory).Include(p => p.Photos).Where(x=>x.userId==userId).ToList();
+                ProfileViewModel profile = new ProfileViewModel()
+                {
+                    User = user,
+                    Services = service
 
-            ProfileViewModel profile = new ProfileViewModel()
-            {
-                User = user,
-                Services = service
-
-            };
-            return View(profile);
+                };
+                return View(profile);
         }
 
 
