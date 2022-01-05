@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,68 +50,93 @@ namespace MarketplaceServices.Controllers
 
         }
 
-        // GET: ChatController
-        //public async Task<ActionResult> Room()
-        //{
-
-        //    var currentUser = await _userManager.GetUserAsync(User);
-        //    ViewBag.currentUserName = currentUser.UserName;
-        //    var messages = _Context.Message.ToList();
-        //    return View(messages);
+      
 
 
-        //}
-
-        //// GET: ChatController
-       
+        //Get The Id of the user that i will chat with;
+        //Create a chatRoom
         public async Task<ActionResult> CreateRoom(string id)
         {
-
+            //Get the user authentified 
             var thisUser = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            //var result = from p in _Context.roomUsers
-            //             group p.UsersId by p.roomsId into newGroup
-            //             select newGroup;
-
-
-            //foreach (var item in result)
-            //{
-            //    foreach (var p in item)
-            //    {
-            //        Console.WriteLine($"{p.}{p.roomsId}");
-            //    }
-                
-            //}
-            ChatRooms room = new ChatRooms()
+            var myuserList = new string[]
+                   {
+                        thisUser ,
+                        id,
+        
+                   };
+           
+           
+                //******Created A Chat Room******//
+                ChatRooms room = new ChatRooms()
                 {
                     Type = ChatType.Private,
 
                 };
+                //Add The first user in the room 
                 room.Users.Add(new RoomUser
                 {
 
                     UsersId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
                 });
-
+                //Add The first user in the room 
                 room.Users.Add(new RoomUser
                 {
 
                     UsersId = id,
                 });
+
+                {
+
+                }
+
                 _Context.chatrooms.Add(room);
+
                 await _Context.SaveChangesAsync();
+
                 return RedirectToAction("Room", new { id = room.Id });
+            
+
+            
            
         }
 
 
         public async  Task<ActionResult> Room(string id)
         {
-            var room = _Context.chatrooms
-                .Include(x => x.Messages)
-                .SingleOrDefault(x => x.Id == id);
 
-            return View(room);
+
+
+            var thisUser = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            //Retrieve Room Id
+            var existRoom = _Context.chatrooms.Find(id);
+            //
+            if (existRoom != null)
+            {
+                //******if the user authentified exist in this chatRoom******//
+                var user = _Context.roomUsers.Where(u => u.roomsId == id).ToList();
+                foreach (var userid in user)
+                {
+                        if (userid.UsersId.Contains(thisUser))
+                        {
+                            ViewBag.roomId = id;
+                            var room = _Context.chatrooms
+                             .Include(x => x.Messages)
+                             .SingleOrDefault(x => x.Id == id);
+
+                            return View(room);
+                        }
+                      
+                }
+
+                return NotFound();
+                
+
+            }
+            return NotFound();
+         
+           
         }
 
 
@@ -119,31 +145,6 @@ namespace MarketplaceServices.Controllers
         {
             return View();
         }
-
-       
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> SendMessage(string text)
-        //{
-        //    if (text != null)
-        //    {
-        //        Message msg = new Message();
-        //        msg.UserName = User.Identity.Name;
-        //        var sender = await _userManager.GetUserAsync(User);
-        //        msg.UserId = sender.Id;
-        //        msg.Text = text;
-        //        await _Context.Message.AddAsync(msg);
-        //        await _Context.SaveChangesAsync();
-        //        await _hubContext.Clients.All.SendAsync("receiveMessage", sender.UserName, text);
-        //        return RedirectToAction(nameof(Index));
-
-
-        //    }
-        //    return NotFound();
-           
-        //}
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -1,0 +1,18 @@
+﻿@model List<MarketplaceServices.Models.RoomUser>;
+
+
+
+
+<div>
+    <ul>
+
+
+        @foreach (var user in Model)
+        {
+
+            <li>
+                @user.UsersId
+            </li>
+        }
+    </ul>
+</div>

@@ -1,8 +1,8 @@
 ﻿@model MarketplaceServices.Models.ChatRooms ;
 
-@*@{
+@{
 var roomID =  ViewBag.roomId;
-}*@
+}
 
 
 <h2>ChatBox</h2>
@@ -21,6 +21,17 @@ var roomID =  ViewBag.roomId;
             }
         </ul>
 
+    </div>
+    <div>
+        <p>
+            Get Users in this Room : @roomID
+
+        </p>
+        <form method="post"  >
+            <input hidden value="@roomID" name="roomid" />
+            <input type="submit" asp-action="ifUserExist" asp-controller="Chat" class="btn btn-default" value="click here"> 
+        </form>
+       
     </div>
     @*onsubmit="SendMessage(event)"*@
     <form method="post" onsubmit="SendMessage(event)">

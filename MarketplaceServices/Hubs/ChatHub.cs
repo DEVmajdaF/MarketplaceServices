@@ -12,8 +12,6 @@ namespace MarketplaceServices.Hubs
 
         public async Task JoinGroup(string roomName)
         {
-
-          
             await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
            await  Clients.Group(roomName).SendAsync(Context.User.Identity.Name + " joined.");
         }

@@ -488,7 +488,7 @@
                         @*********************************************************
                             Review
                             *******************************************************@
-                        <form>
+                        @*<form>
                             <div class="form-group">
                                 <label>Leave Your Review </label>
                                 <div class="stars-container">
@@ -511,7 +511,7 @@
                                 <input asp-for="Reviews[0].ServiceId" value="@Model.Service.Id" hidden />
                             </div>
                             <button class="btn btn-info" asp-controller="Services" asp-action="CreateReview">Leave a Review </button>
-                        </form>
+                        </form>*@
                     </div>
                     <div class="tags">
                         <h3>Related tags</h3>
@@ -533,7 +533,6 @@
                 </div>
                 <div class="col-lg-4 right">
                     <div class="sticky">
-                       
                         <div class="contact-seller-wrapper">
                             <a class="fit-button" asp-action="CreateRoom" asp-controller="Chat"asp-route-id="@Model.Service.user.Id">Contact Seller</a>
                         </div>
