@@ -29,6 +29,7 @@ namespace MarketplaceServices.Data
         public DbSet<ChatMessages> Messages { get; set; }
         public DbSet<ChatRooms> chatrooms { get; set; }
         public DbSet<RoomUser> roomUsers { get; set; }
+        public DbSet<Experience> Experiences { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

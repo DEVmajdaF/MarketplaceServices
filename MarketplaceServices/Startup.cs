@@ -47,6 +47,8 @@ namespace MarketplaceServices
                           .AddRoles<IdentityRole>()
                           .AddEntityFrameworkStores<AuthDbContext>();
 
+            
+
 
             services.AddSignalR(options =>
             {

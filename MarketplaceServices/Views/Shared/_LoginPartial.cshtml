@@ -8,11 +8,20 @@
     {
 
 
-        <li class="hm-wishlist">
+        @*<li class="hm-wishlist">
             <a href="wishlist.html">
                 <span class="cart-item-count wishlist-item-count">0</span>
                 <i class="fa fa-heart-o"></i>
             </a>
+        </li>*@
+
+        <li>
+            <form>
+                <a asp-action="Index" asp-controller="chat" type="submit">
+                    chat
+                   <i class="fa-comment"></i>
+                </a>
+            </form>
         </li>
 
         <div class="dropdown">

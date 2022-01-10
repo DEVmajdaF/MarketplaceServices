@@ -3,14 +3,24 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatter").build();
 
 
 connection.on("ReceiveMessage", (user, message, time) => {
+    //var thisUser = document.getElementById("thisuser");
+    //let iscurrentUserName = user === thisUser;
+    //let container = document.getElementById("container");
+    //container.className = iscurrentUserName ? "chat-message-right" : "chat-message-left";
+    var cont = document.createElement("div");
+     
 
-    console.log(user, message);
-    var li = document.createElement("li");
-    document.getElementById("list").appendChild(li);
-    // We can assign user-supplied strings to an element's textContent because it
-    // is not interpreted as markup. If you're assigning in any other way, you 
-    // should be aware of possible script injection concerns.
-    li.textContent = `${user} says ${message} At ${time}`;
+    cont.innerHTML=` <div>
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                                                <div class="text-muted small text-nowrap mt-2"> ${ time }</div>
+                                            </div>
+                                            <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                                                <div class="font-weight-bold mb-1">${ user }</div>
+                                                ${ message }
+                                            </div>`;
+
+    document.getElementById("chatmessage").appendChild(cont);
+                
 });
 
 var groupname = document.getElementById("roomid").value;
@@ -41,6 +51,7 @@ var SendMessage = function (event) {
         data: data,
         success: function (result) {
             //console.log(result);
+           
         },
         failure: function (response) {
             alert(response);

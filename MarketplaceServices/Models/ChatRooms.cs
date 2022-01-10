@@ -23,6 +23,7 @@ namespace MarketplaceServices.Models
         public string Id { get; set; }
         public string Name { get; set; }
         public ChatType Type { get; set; }
+        public DateTime Time { get; set; }
         public List<ChatMessages> Messages { get; set; }
         public List<RoomUser> Users { get; set; }
     }

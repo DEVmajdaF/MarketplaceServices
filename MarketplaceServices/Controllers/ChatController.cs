@@ -41,13 +41,18 @@ namespace MarketplaceServices.Controllers
         // GET: ChatController
         public async  Task<ActionResult> Index()
         {
+            var thisUser = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var allRoomsThisUser = _Context.roomUsers.Where(r=>r.UsersId==thisUser).Select(r=>r.roomsId).ToList();
+            var getAllChatRoom = _Context.chatrooms.ToList();
+            List<ApplicationUser> getUsersid = new List<ApplicationUser>();
 
-            var currentUser = await _userManager.GetUserAsync(User);
-            ViewBag.currentUserName = currentUser.UserName;
-            var messages = _Context.Message.ToList();
-            return View(messages);
-          
+            foreach (var room in allRoomsThisUser)
+            {
+                var getUsers= _Context.ApplicationUser.Include(p => p.Rooms).Where(p => p.Rooms.Any(a => a.roomsId == room && a.UsersId != thisUser)).FirstOrDefault();
+                getUsersid.Add(getUsers);
+            }
 
+            return View(getUsersid);
         }
 
       
@@ -59,44 +64,73 @@ namespace MarketplaceServices.Controllers
         {
             //Get the user authentified 
             var thisUser = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var myuserList = new string[]
-                   {
-                        thisUser ,
-                        id,
-        
-                   };
-           
-           
-                //******Created A Chat Room******//
-                ChatRooms room = new ChatRooms()
+
+            var checkroom = _Context.roomUsers.ToList();
+
+            RoomUser oldroom = new RoomUser();
+
+            List<RoomUser> checkroomid =  new List<RoomUser> ();
+
+            checkroomid = _Context.roomUsers.Where(r => r.UsersId == id).ToList();
+
+            foreach (var item in checkroom)
+            {
+                //check if the id in the ckeckroom
+                if (id == item.UsersId)
                 {
-                    Type = ChatType.Private,
+
+                    foreach (var room1 in checkroomid)
+                    {
+                       
+
+                        foreach (var users in checkroom)
+                        {
+
+
+                            if (thisUser == users.UsersId && room1.roomsId == users.roomsId)
+                            {
+
+                                oldroom = _Context.roomUsers.Where(r => r.UsersId == thisUser && r.roomsId == users.roomsId).FirstOrDefault();
+                                break;
+                            }
+                        }
+                    }
+                }    
+            }
+
+
+           
+            if (oldroom.roomsId != null)
+            {
+                var roomid = oldroom.roomsId;
+                return RedirectToAction("Room", new { id = roomid });
+            }
+
+            //******Created A Chat Room******//
+            ChatRooms room = new ChatRooms()
+            {
+                Type = ChatType.Private,
+                Time = DateTime.Now,
 
                 };
-                //Add The first user in the room 
-                room.Users.Add(new RoomUser
-                {
+            //Add The first user in the room 
+            room.Users.Add(new RoomUser
+                        {
 
-                    UsersId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
-                });
-                //Add The first user in the room 
-                room.Users.Add(new RoomUser
-                {
+                            UsersId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                        });
+                        //Add The first user in the room 
+                        room.Users.Add(new RoomUser
+                        {
 
-                    UsersId = id,
-                });
-
-                {
-
-                }
+                            UsersId = id,
+            });
 
                 _Context.chatrooms.Add(room);
 
                 await _Context.SaveChangesAsync();
 
                 return RedirectToAction("Room", new { id = room.Id });
-            
-
             
            
         }
@@ -105,9 +139,18 @@ namespace MarketplaceServices.Controllers
         public async  Task<ActionResult> Room(string id)
         {
 
-
-
+            //Check The Contact
             var thisUser = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var allRoomsThisUser = _Context.roomUsers.Where(r => r.UsersId == thisUser).Select(r => r.roomsId).ToList();
+            List<ApplicationUser> getUsersid = new List<ApplicationUser>();
+
+            foreach (var room in allRoomsThisUser)
+            {
+                var getUsers = _Context.ApplicationUser.Include(p => p.Rooms).Where(p => p.Rooms.Any(a => a.roomsId == room && a.UsersId != thisUser)).FirstOrDefault();
+                getUsersid.Add(getUsers);
+            }
+            ViewBag.Contacts = getUsersid;
+            ViewBag.thisuser = thisUser;
 
             //Retrieve Room Id
             var existRoom = _Context.chatrooms.Find(id);
@@ -122,7 +165,7 @@ namespace MarketplaceServices.Controllers
                         {
                             ViewBag.roomId = id;
                             var room = _Context.chatrooms
-                             .Include(x => x.Messages)
+                             .Include(x => x.Messages.OrderBy(t=>t.time))
                              .SingleOrDefault(x => x.Id == id);
 
                             return View(room);
@@ -146,8 +189,8 @@ namespace MarketplaceServices.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> SendMessage(string text, string roomid)
         {
             if (text != null)

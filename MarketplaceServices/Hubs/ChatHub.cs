@@ -16,6 +16,8 @@ namespace MarketplaceServices.Hubs
            await  Clients.Group(roomName).SendAsync(Context.User.Identity.Name + " joined.");
         }
 
+       
+
         public string GetConnectionId() => Context.ConnectionId;
 
 

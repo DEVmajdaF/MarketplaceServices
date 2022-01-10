@@ -1,38 +1,64 @@
-﻿@model List<MarketplaceServices.Models.Message>;
+﻿@model List<MarketplaceServices.Models.ApplicationUser>;
 
 @{
-    var Userid = ViewBag.currentUserName;
+    var roomID = ViewBag.roomId;
+    var thisUser = ViewBag.thisuser;
 }
 
 
-<h2>ChatBox</h2>
-<div class="chat-panel panel panel-default">
-    <div class="panel-heading">
-        ChatBox using SingalR
-        <i class="fa fa-paper-plane fa-fw"></i>
-    </div>
-    <!-- /.panel-heading -->
-    <div class="panel-body" id="chat" style="height:250px;">
-        <input type="hidden" id="displayname" />
-        <ul id="list">
-            @foreach (var message in Model )
-            {
 
-                <li id="discussion">@message.UserName Says:  @message.Text</li>             
-            }
-        </ul>
+<main class="content">
+    <div class="container-fluid p-0">
 
-    </div>
+        <h1 class="h3 mb-3">Messages</h1>
 
-    <form method="post">
+        <div class="card min-vh-100">
+            <div class="row g-0 min-vh-100">
+                <div class="col-12 col-lg-5 col-xl-3 border-right">
 
-        <input id="txtuser" value="@Userid" hidden />
-        <div class="col-6"><span id="connectionId" /></div>
-        <input type="text" id="receiverId" />
-        <input id="txtmessage" type="text" name="text" class="form-control input-sm" placeholder="Type your message here..." />
-        <input type="submit" class="btn btn-warning btn-sm" id="submitbutton" value="Send" />
-        <input type="submit" class="btn btn-warning btn-sm" id="submitbutton2" value="SendTo a specific user" />
-    </form>
-</div>
+                    <div class="px-4 d-none d-md-block">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <input type="text" class="form-control my-3" placeholder="Search...">
+                            </div>
+                        </div>
+                    </div>
+
+                    @foreach (var i in Model)
+                    {
+                        <a asp-action="CreateRoom" asp-controller="Chat" asp-route-id="@i.Id" class="list-group-item list-group-item-action border-0">
+                            <div class="badge bg-success float-right">5</div>
+                            <div class="d-flex align-items-start">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                <div class="flex-grow-1 ml-3">
+                                    @i.UserName
+                                    <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
+                                </div>
+                            </div>
+                        </a>
+                    }
 
 
+
+
+                    <hr class="d-block d-lg-none mt-1 mb-0">
+                </div>
+                <div class="col-12 col-lg-7 col-xl-9">
+                   
+                    <div class="position-relative">
+                        <div class="chat-messages p-4 min-vh-100">
+                           
+
+                            <h6 class="text-center">Welcome To Your message page</h6>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</main>
+<script>
+            var thisUser = ViewBag.thisuser;
+</script>

@@ -78,12 +78,22 @@ namespace MarketplaceServices.Controllers
 
             // GET: ServicesController/Create
             public ActionResult Create()
-        {
-            var result = Context.SubCategory.Select(s => new { s.Id, s.SubCategoryName }).ToList();
+            {
+            var thisUser = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var completeInfo = Context.ApplicationUser.Where(u=>u.Id==thisUser).FirstOrDefault();
+            if(completeInfo.FirstName==null && completeInfo.LastName == null)
+            {
+                return RedirectToAction("CompleteInformation", "Profile");
+            }
+           
+                var result = Context.SubCategory.Select(s => new { s.Id, s.SubCategoryName }).ToList();
 
-            ViewBag.subCat = result;
-            return View();
-        }   
+                ViewBag.subCat = result;
+                return View();
+
+          
+          
+            }   
 
 
         public async Task<ActionResult> GetComment()

@@ -41,12 +41,15 @@
                                 </div>
                             </div>
                             <div class="user-profile-label">
-                                @*<div class="username-line">
-                                    <a href="#" class="seller-link">@Html.DisplayFor(x => x.User.UserName)</a>
-                                </div>*@
-                                <div class="oneliner-wrapper">
-                                    <small class="oneliner">web developer</small>>
-                                </div>
+                                
+                                <form method="post">
+                                    
+                                        <a  class="seller-link" id="username" onclick="changeUsername()">@Html.DisplayFor(x => x.User.UserName)  </a>
+                                    
+                                    <input hidden value="@userId" name="UserId" />
+                                    <input type="submit" asp-action="updateName" style="display:none" asp-controller="Profile" class=" btn btn-success m-0" id="userUpdate"/>
+                                </form>
+                                
                             </div>
                         </div>
                         @*
@@ -221,6 +224,18 @@
         } else {
             x.style.display = "none";
         }
+    }
+
+    function changeUsername() {
+        const username = document.getElementById("username");
+        const input = document.createElement("input");
+        input.setAttribute("name", "UserName");
+        input.setAttribute("Value", username.textContent);
+        username.replaceWith(input);
+        const update = document.getElementById("userUpdate");
+        update.style.display = "block";
+
+
     }
 
     function viewlanguage() {

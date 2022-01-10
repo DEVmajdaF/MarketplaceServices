@@ -103,7 +103,7 @@ namespace MarketplaceServices.Controllers
             {
                 var app = Context.ApplicationUser.FirstOrDefault(x => x.Id == UserId);
 
-                app.FirstName = UserName;
+                app.UserName = UserName;
                 await Context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -207,24 +207,33 @@ namespace MarketplaceServices.Controllers
         }
 
         // GET: Profile/Create
-        public ActionResult Create()
+        public ActionResult CompleteInformation()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.userid = userId;
+            var user = Context.ApplicationUser.Include(s => s.Skills).Include(L => L.Language).Include(e => e.experiences).Where(x => x.Id == userId).SingleOrDefault();
+            return View(user);
         }
 
         // POST: Profile/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> AddExperience(Experience experience)
         {
-            try
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Experience exp = new Experience()
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+                Position = experience.Position,
+                CompanyName= experience.CompanyName,
+                From= experience.From,
+                To= experience.To,
+                UserId= userId,
+
+
+            };
+            var result = Context.Experiences.Add(exp);
+            await Context.SaveChangesAsync();
+            return RedirectToAction("CompleteInformation");
         }
 
         // GET: Profile/Edit/5
