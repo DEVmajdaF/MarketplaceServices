@@ -45,6 +45,7 @@ namespace MarketplaceServices.Models
         public List<Skills> Skills { get; set; }
         public List<Message> Messages { get; set; }
         public List<RoomUser> Rooms { get; set; }
+        public List<ChatMessages> Message { get; set; }
         public List<Experience> experiences { get; set; }
 
     }

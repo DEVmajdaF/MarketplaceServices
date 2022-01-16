@@ -21,6 +21,8 @@ namespace MarketplaceServices.Models
 
         public string RoomId { get; set; }
         public ChatRooms Room { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
 
     }
 }

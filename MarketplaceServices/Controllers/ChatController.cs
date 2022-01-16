@@ -167,7 +167,7 @@ namespace MarketplaceServices.Controllers
                         {
                             ViewBag.roomId = id;
                             var room = _Context.chatrooms
-                             .Include(x => x.Messages.OrderBy(t=>t.time)).Include(u=>u.Users)
+                             .Include(x => x.Messages.OrderBy(t=>t.time)).ThenInclude(p=>p.User)
                              .SingleOrDefault(x => x.Id == id);
 
                             return View(room);
@@ -197,12 +197,15 @@ namespace MarketplaceServices.Controllers
         {
             if (text != null)
             {
+                var thisUser = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 ChatMessages msg = new ChatMessages();
                 msg.Name = User.Identity.Name;
                 var sender = await _userManager.GetUserAsync(User);
                 msg.Text = text;
                 msg.RoomId = roomid;
                 msg.time = DateTime.Now;
+                msg.UserId= thisUser;
+               
                 await _Context.Messages.AddAsync(msg);
                 await _Context.SaveChangesAsync();
                 await _hubContext.Clients.Group(roomid).SendAsync("ReceiveMessage", sender.UserName, msg.Text,  msg.time);
