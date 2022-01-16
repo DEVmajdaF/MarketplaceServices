@@ -1352,7 +1352,7 @@ header {
 }
 /* get started */
 .get-started {
-    background: url(../images/get-started.jpg) center top no-repeat;
+    background: lightgrey center top no-repeat;
     background-size: cover;
     text-align: center;
     padding: 60px 0;
@@ -1508,6 +1508,9 @@ header {
 
     .user-profile-image label img {
         border-radius: 50%;
+        object-fit: cover;
+        width: 90px;
+        height: 90px;
     }
 
 .profile-card .user-profile-image label img {
@@ -2126,7 +2129,7 @@ header {
     font-weight: 300;
     margin-top: 13px;
     cursor: pointer;
-    padding: 0;
+   /* padding: 0;*/
     line-height: 21px;
 }
 
@@ -2136,6 +2139,7 @@ header {
 
 .recommended .inner-slider .inner-wrapper .content-info {
     padding: 12px 0 15px;
+    margin-bottom:47px;
 }
 
     .recommended .inner-slider .inner-wrapper .content-info .gig-rating {
@@ -2247,6 +2251,9 @@ header {
 
     .review-list ul li .left span img {
         border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        object-fit:cover;
     }
 
 .review-list ul li .right h4 {
@@ -2692,7 +2699,7 @@ footer div ul li {
         }
 
         .seller-card .user-stats li.location::before {
-            content: "\f041";
+            content: "\f3c5";
             font-size: 15px;
             left: 1px;
         }

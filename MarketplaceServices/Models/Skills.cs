@@ -16,9 +16,9 @@ namespace MarketplaceServices.Models
         [Required(ErrorMessage = "Please Enter You Skill Name")]
         public string SkillName { get; set; }
         [Required(ErrorMessage = "Please Enter You Skill Level")]
-
         public string SkillLevel { get; set; }
         public string UserId { get; set; }
+        public DateTime Time { get; set; }
         public ApplicationUser User { get; set; }
 
     }

@@ -1,9 +1,10 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
-
+using MarketplaceServices.ViewModel.Home;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,33 +26,57 @@ namespace MarketplaceServices.Controllers
 
         public IActionResult Index()
         {
-            var result = (from c in Context.Categories
 
-                          select new Categories
-                          {
-                              Id = c.Id,
-                              CategoryName = c.CategoryName,
-                              subCategories = (from subCatgory in Context.SubCategory
-                                               where subCatgory.CatgoriesId == c.Id
-                                               select new SubCategory
-                                               {
-                                                   Id = subCatgory.Id,
-                                                   SubCategoryName = subCatgory.SubCategoryName,
-                                                   CatgoriesId = c.Id
-                                               }
-                                               ).ToList()
-
-                          }
-
-                       ).ToList();
-            //var result = Context.Categories.Include(x => x.subCategories).Where(c=>x.).ToList();
-
-          
-            return View(result);
+            var result = Context.Categories.ToList();
+            var services = Context.Services.Include(c=>c.SubCategory).Include(p=>p.Photos).Take(10).ToList();
+            HomeViewModel home = new HomeViewModel()
+            {
+                Services = services,
+                Categories = result,
+            };
+            return View(home);
             
         }
 
-        public IActionResult Privacy()
+        // POST: 
+       
+        public ActionResult SearchByCatgory(string CategoryName)
+        {
+            if(CategoryName != null)
+            {
+                var services = Context.Services.Include(s => s.SubCategory).Include(p => p.Photos).Where(c=>c.SubCategory.Catgories.CategoryName== CategoryName).ToList();
+                return RedirectToAction("GetService", "Home");
+            }
+            return View("Index");
+            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FindService(string search)
+        {
+            List<Services> services = new List<Services>();
+ 
+          if (search != null)
+            {
+                
+                services = Context.Services.Include(s => s.SubCategory).Include(x => x.user).Include(p => p.Photos).Where(c =>c.Title.Contains(search) || c.Description.Contains(search)).ToList();
+                var settings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                TempData["Services"] = JsonConvert.SerializeObject(services, settings);
+
+                //TempData["Services"] = services.ToList();
+                //ViewBag.services = services;
+                return RedirectToAction("Index", "Services");
+            }
+            return View("Index");
+        }
+
+
+
+            public IActionResult Privacy()
         {
             return View();
         }
@@ -61,5 +86,26 @@ namespace MarketplaceServices.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        // GET: CategoryController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        //// POST: CategoryController/Delete/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }

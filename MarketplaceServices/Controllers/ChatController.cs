@@ -149,8 +149,10 @@ namespace MarketplaceServices.Controllers
                 var getUsers = _Context.ApplicationUser.Include(p => p.Rooms).Where(p => p.Rooms.Any(a => a.roomsId == room && a.UsersId != thisUser)).FirstOrDefault();
                 getUsersid.Add(getUsers);
             }
+            var getUser = _Context.ApplicationUser.Include(p => p.Rooms).Where(p => p.Rooms.Any(a => a.roomsId == id && a.UsersId != thisUser)).FirstOrDefault();
             ViewBag.Contacts = getUsersid;
             ViewBag.thisuser = thisUser;
+            ViewBag.getuser = getUser;
 
             //Retrieve Room Id
             var existRoom = _Context.chatrooms.Find(id);
@@ -165,7 +167,7 @@ namespace MarketplaceServices.Controllers
                         {
                             ViewBag.roomId = id;
                             var room = _Context.chatrooms
-                             .Include(x => x.Messages.OrderBy(t=>t.time))
+                             .Include(x => x.Messages.OrderBy(t=>t.time)).Include(u=>u.Users)
                              .SingleOrDefault(x => x.Id == id);
 
                             return View(room);

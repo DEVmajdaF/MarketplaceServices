@@ -19,6 +19,7 @@ namespace MarketplaceServices.Models
         public string LanguageName { get; set; }
         [Required(ErrorMessage = "Please Enter You Language Level")]
         public string LanguageLevel { get; set; }
+        public DateTime Time { get; set; }
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
     }

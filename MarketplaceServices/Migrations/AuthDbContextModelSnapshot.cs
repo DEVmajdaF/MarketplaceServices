@@ -94,6 +94,9 @@ namespace MarketplaceServices.Migrations
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("To")
                         .HasColumnType("datetime2");
 
@@ -120,6 +123,9 @@ namespace MarketplaceServices.Migrations
                     b.Property<string>("LanguageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -233,6 +239,7 @@ namespace MarketplaceServices.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Price")
@@ -248,6 +255,7 @@ namespace MarketplaceServices.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("userId")
@@ -275,6 +283,9 @@ namespace MarketplaceServices.Migrations
                     b.Property<string>("SkillName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -536,6 +547,9 @@ namespace MarketplaceServices.Migrations
                     b.Property<DateTime>("MemberDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Profession")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
@@ -551,7 +565,7 @@ namespace MarketplaceServices.Migrations
             modelBuilder.Entity("MarketplaceServices.Models.Experience", b =>
                 {
                     b.HasOne("MarketplaceServices.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("experiences")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -723,6 +737,8 @@ namespace MarketplaceServices.Migrations
 
             modelBuilder.Entity("MarketplaceServices.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("experiences");
+
                     b.Navigation("Language");
 
                     b.Navigation("Messages");

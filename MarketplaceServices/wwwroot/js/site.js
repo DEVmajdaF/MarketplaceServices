@@ -1,181 +1,378 @@
 ﻿
 
+// Experience POst and get data 
+var sendexperiences = function (event) {
+    event.preventDefault();
+    //form
+    var data = new FormData(event.target);
+    console.log(data);
+    console.log(event.target);
+    $.ajax({
+        url: '/Profile/AddExperience',
+        type: "post",
+        processData: false,
+        contentType: false,
+        //contentType: 'application/x-www-form-urlencoded',
+        data: data,
+        success: function (result) {
+            getExperience();
+
+        },
+        failure: function (response) {
+            alert("Failure");
+        },
+        error: function (response) {
+            alert(response.error);
+        },
+    });
+};
+function getExperience() {
+   
+    $.ajax({
+        type: 'POST',
+        url: '/Profile/getExperiences',
+        dataType: 'json',
+        data: { id: '' },
+        success: function (data) {
+            var item = "";
+            console.log(data);
+            data = data.data;
+            var tbodyRef = document.getElementById('exp-table').getElementsByTagName('tbody')[0];
+            var newRow = tbodyRef.insertRow();
+            newRow.innerHTML= `<td><span>${data.position}</span></td>
+                                        <td class="">${data.companyName}</td>
+                                        <td class="">${data.from}</td>
+                                        <td class="">${data.to}</td>
+                                        <td class="manage">
+                                            <div class="animate">
+                                              
+  <button  type="submit" class="delete btn btn-default">
+                                                        <svg width="15" height="15" viewBox="0 0 16 16">
+                                                            <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
+                                                        </svg>
+                                                        
+                                                    </button>
+                                               
+                                            </div>
+                                        </td>`;  
+        },
+        error: function (ex) {
+            alert(ex.error)
+        }
+    });
+    return false;
+}
 
 
+
+
+// Language POst and get data 
+var sendLanguage = function (event) {
+    event.preventDefault();
+    //form
+    var data = new FormData(event.target);
+    console.log(data);
+    console.log(event.target);
+    $.ajax({
+        url: '/Profile/AddLanguagecomplete',
+        type: "post",
+        processData: false,
+        contentType: false,
+        //contentType: 'application/x-www-form-urlencoded',
+        data: data,
+        success: function (result) {
+            getLanguage();
+
+        },
+        failure: function (response) {
+            alert("Failure");
+        },
+        error: function (response) {
+            alert(response.error);
+        },
+    });
+};
+function getLanguage() {
+
+    $.ajax({
+        type: 'POST',
+        url: '/Profile/getLanguage',
+        dataType: 'json',
+        data: { id: '' },
+        success: function (data) {
+            var item = "";
+            console.log(data);
+            data = data.data;
+            var tbodylng = document.getElementById('lng-table').getElementsByTagName('tbody')[0];
+
+            var newRows = tbodylng.insertRow();
+            newRows.innerHTML = `<td><span>${data.languageName}</span></td>
+                                        <td class="">${data.languageLevel}</td>
+                                        
+                                        <td class="manage">
+                                            <div class="animate">
+                                                <span class="hint--top" data-hint="Delete">
+                                                    <button class="delete btn btn-default">
+                                                        <svg width="15" height="15" viewBox="0 0 16 16">
+                                                            <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
+                                                        </svg>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </td>`;
+        },
+        error: function (ex) {
+            alert(ex.error)
+        }
+    });
+    return false;
+}
+
+
+
+
+// Language POst and get data 
+var sendSkills = function (event) {
+    event.preventDefault();
+    //form
+    var data = new FormData(event.target);
+    console.log(data);
+    console.log(event.target);
+    $.ajax({
+        url: '/Profile/AddskillsProfile',
+        type: "post",
+        processData: false,
+        contentType: false,
+        //contentType: 'application/x-www-form-urlencoded',
+        data: data,
+        success: function (result) {
+            getSkills();
+
+        },
+        failure: function (response) {
+            alert("Failure");
+        },
+        error: function (response) {
+            alert(response.error);
+        },
+    });
+};
+function getSkills() {
+
+    $.ajax({
+        type: 'POST',
+        url: '/Profile/getSkills',
+        dataType: 'json',
+        data: { id: '' },
+        success: function (data) {
+            var item = "";
+            console.log(data);
+            data = data.data;
+            var tbodyskl = document.getElementById('skltable').getElementsByTagName('tbody')[0];
+            var newRowskl = tbodyskl.insertRow();
+            newRowskl.innerHTML = `<td><span>${data.skillName}</span></td>
+                                        <td class="">${data.skillLevel}</td>
+                                        
+                                        <td class="manage">
+                                            <div class="animate">
+                                                <span class="hint--top" data-hint="Delete">
+                                                    <button class="delete btn btn-default">
+                                                        <svg width="15" height="15" viewBox="0 0 16 16">
+                                                            <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
+                                                        </svg>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </td>`;
+        },
+        error: function (ex) {
+            alert(ex.error)
+        }
+    });
+    return false;
+}
+
+
+//Delete exp, skills, Language deleteexp
+
+
+
+
+
+///Summernote
+
+    $(document).ready(function () {
+        $('.summernote').summernote({
+
+            tabsize: 2,
+            height: 120,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'hr']],
+                ['view', ['fullscreen', 'codeview']],
+                ['help', ['help']]
+            ],
+           
+
+        });
+    });
+
+
+
+//$(document).ready(function () {
+//    $('.description').summernote({
+
+//        tabsize: 2,
+//        height: 120,
+//        toolbar: [
+//            ['style', ['style']],
+//            ['font', ['bold', 'italic', 'underline', 'clear']],
+//            ['fontname', ['fontname']],
+//            ['color', ['color']],
+//            ['para', ['ul', 'ol', 'paragraph']],
+//            ['height', ['height']],
+//            ['table', ['table']],
+//            ['insert', ['link', 'picture', 'hr']],
+//            ['view', ['fullscreen', 'codeview']],
+//            ['help', ['help']]
+//        ],
+
+
+//    });
+//});
+//Summernote end 
 
 
 //.............................................................................
 
-//DOM elements
-const DOMstrings = {
-    stepsBtnClass: 'multisteps-form__progress-btn',
-    stepsBtns: document.querySelectorAll(`.multisteps-form__progress-btn`),
-    stepsBar: document.querySelector('.multisteps-form__progress'),
-    stepsForm: document.querySelector('.multisteps-form__form'),
-    stepsFormTextareas: document.querySelectorAll('.multisteps-form__textarea'),
-    stepFormPanelClass: 'multisteps-form__panel',
-    stepFormPanels: document.querySelectorAll('.multisteps-form__panel'),
-    stepPrevBtnClass: 'js-btn-prev',
-    stepNextBtnClass: 'js-btn-next'
-};
+////DOM elements
+//const DOMstrings = {
+//    stepsBtnClass: 'multisteps-form__progress-btn',
+//    stepsBtns: document.querySelectorAll(`.multisteps-form__progress-btn`),
+//    stepsBar: document.querySelector('.multisteps-form__progress'),
+//    stepsForm: document.querySelector('.multisteps-form__form'),
+//    stepsFormTextareas: document.querySelectorAll('.multisteps-form__textarea'),
+//    stepFormPanelClass: 'multisteps-form__panel',
+//    stepFormPanels: document.querySelectorAll('.multisteps-form__panel'),
+//    stepPrevBtnClass: 'js-btn-prev',
+//    stepNextBtnClass: 'js-btn-next'
+//};
 
 
-//remove class from a set of items
-const removeClasses = (elemSet, className) => {
+////remove class from a set of items
+//const removeClasses = (elemSet, className) => {
 
-    elemSet.forEach(elem => {
+//    elemSet.forEach(elem => {
 
-        elem.classList.remove(className);
+//        elem.classList.remove(className);
 
-    });
+//    });
 
-};
+//};
 
-//return exect parent node of the element
-const findParent = (elem, parentClass) => {
+////return exect parent node of the element
+//const findParent = (elem, parentClass) => {
 
-    let currentNode = elem;
+//    let currentNode = elem;
 
-    while (!currentNode.classList.contains(parentClass)) {
-        currentNode = currentNode.parentNode;
-    }
+//    while (!currentNode.classList.contains(parentClass)) {
+//        currentNode = currentNode.parentNode;
+//    }
 
-    return currentNode;
+//    return currentNode;
 
-};
+//};
 
-//get active button step number
-const getActiveStep = elem => {
-    return Array.from(DOMstrings.stepsBtns).indexOf(elem);
-};
+////get active button step number
+//const getActiveStep = elem => {
+//    return Array.from(DOMstrings.stepsBtns).indexOf(elem);
+//};
 
-//set all steps before clicked (and clicked too) to active
-const setActiveStep = activeStepNum => {
+////set all steps before clicked (and clicked too) to active
+//const setActiveStep = activeStepNum => {
 
-    //remove active state from all the state
-    removeClasses(DOMstrings.stepsBtns, 'js-active');
+//    //remove active state from all the state
+//    removeClasses(DOMstrings.stepsBtns, 'js-active');
 
-    //set picked items to active
-    DOMstrings.stepsBtns.forEach((elem, index) => {
+//    //set picked items to active
+//    DOMstrings.stepsBtns.forEach((elem, index) => {
 
-        if (index <= activeStepNum) {
-            elem.classList.add('js-active');
-        }
+//        if (index <= activeStepNum) {
+//            elem.classList.add('js-active');
+//        }
 
-    });
-};
+//    });
+//};
 
-//get active panel
-const getActivePanel = () => {
+////get active panel
+//const getActivePanel = () => {
 
-    let activePanel;
+//    let activePanel;
 
-    DOMstrings.stepFormPanels.forEach(elem => {
+//    DOMstrings.stepFormPanels.forEach(elem => {
 
-        if (elem.classList.contains('js-active')) {
+//        if (elem.classList.contains('js-active')) {
 
-            activePanel = elem;
+//            activePanel = elem;
 
-        }
+//        }
 
-    });
+//    });
 
-    return activePanel;
+//    return activePanel;
 
-};
+//};
 
-//open active panel (and close unactive panels)
-const setActivePanel = activePanelNum => {
+////open active panel (and close unactive panels)
+//const setActivePanel = activePanelNum => {
 
-    //remove active class from all the panels
-    removeClasses(DOMstrings.stepFormPanels, 'js-active');
+//    //remove active class from all the panels
+//    removeClasses(DOMstrings.stepFormPanels, 'js-active');
 
-    //show active panel
-    DOMstrings.stepFormPanels.forEach((elem, index) => {
-        if (index === activePanelNum) {
+//    //show active panel
+//    DOMstrings.stepFormPanels.forEach((elem, index) => {
+//        if (index === activePanelNum) {
 
-            elem.classList.add('js-active');
+//            elem.classList.add('js-active');
 
-            setFormHeight(elem);
+//            setFormHeight(elem);
 
-        }
-    });
+//        }
+//    });
 
-};
+//};
 
-//set form height equal to current panel height
-const formHeight = activePanel => {
+////set form height equal to current panel height
+//const formHeight = activePanel => {
 
-    const activePanelHeight = activePanel.offsetHeight;
+//    const activePanelHeight = activePanel.offsetHeight;
 
-    DOMstrings.stepsForm.style.height = `${activePanelHeight}px`;
+//    DOMstrings.stepsForm.style.height = `${activePanelHeight}px`;
 
-};
+//};
 
-const setFormHeight = () => {
-    const activePanel = getActivePanel();
+//const setFormHeight = () => {
+//    const activePanel = getActivePanel();
 
-    formHeight(activePanel);
-};
-
-//STEPS BAR CLICK FUNCTION
-DOMstrings.stepsBar.addEventListener('click', e => {
-
-    //check if click target is a step button
-    const eventTarget = e.target;
-
-    if (!eventTarget.classList.contains(`${DOMstrings.stepsBtnClass}`)) {
-        return;
-    }
-
-    //get active button step number
-    const activeStep = getActiveStep(eventTarget);
-
-    //set all steps before clicked (and clicked too) to active
-    setActiveStep(activeStep);
-
-    //open active panel
-    setActivePanel(activeStep);
-});
-
-//PREV/NEXT BTNS CLICK
-DOMstrings.stepsForm.addEventListener('click', e => {
-
-    const eventTarget = e.target;
-
-    //check if we clicked on `PREV` or NEXT` buttons
-    if (!(eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`) || eventTarget.classList.contains(`${DOMstrings.stepNextBtnClass}`))) {
-        return;
-    }
-
-    //find active panel
-    const activePanel = findParent(eventTarget, `${DOMstrings.stepFormPanelClass}`);
-
-    let activePanelNum = Array.from(DOMstrings.stepFormPanels).indexOf(activePanel);
-
-    //set active step and active panel onclick
-    if (eventTarget.classList.contains(`${DOMstrings.stepPrevBtnClass}`)) {
-        activePanelNum--;
-
-    } else {
-
-        activePanelNum++;
-
-    }
-
-    setActiveStep(activePanelNum);
-    setActivePanel(activePanelNum);
-
-});
-
-//SETTING PROPER FORM HEIGHT ONLOAD
-window.addEventListener('load', setFormHeight, false);
-
-//SETTING PROPER FORM HEIGHT ONRESIZE
-window.addEventListener('resize', setFormHeight, false);
+//    formHeight(activePanel);
+//};
 
 
-//....................................................;
+
+////SETTING PROPER FORM HEIGHT ONLOAD
+//window.addEventListener('load', setFormHeight, false);
+
+////SETTING PROPER FORM HEIGHT ONRESIZE
+//window.addEventListener('resize', setFormHeight, false);
+
+
+////....................................................;
 
 
 

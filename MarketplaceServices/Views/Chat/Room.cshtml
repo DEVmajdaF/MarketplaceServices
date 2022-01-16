@@ -3,7 +3,8 @@
 @{
     var roomID = ViewBag.roomId;
     var thisUser = ViewBag.thisuser;
-    var contacts = ViewBag.Contacts ;
+    var contacts =   ViewBag.Contacts;
+    var user = ViewBag.getuser;
 }
 
 
@@ -29,9 +30,9 @@
                  
                         
                         <a asp-action="CreateRoom" asp-controller="Chat" asp-route-id="@contact.Id" type="submit" class="list-group-item list-group-item-action border-0">
-                            <div class="badge bg-success float-right">5</div>
+                            <div class="badge bg-success float-right" id="notif"></div>
                             <div class="d-flex align-items-start">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                <img src="~/images/@contact.Image" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
                                 <div class="flex-grow-1 ml-3">
                                     @contact.UserName
                                     <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
@@ -48,11 +49,12 @@
                     <div class="col-12 col-lg-7 col-xl-9">
                         <div class="py-2 px-4 border-bottom d-none d-lg-block">
                             <div class="d-flex align-items-center py-1">
+
                                 <div class="position-relative">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
+                                    <img src="~/images/@user.Image" class="rounded-circle mr-1" alt="Sharon Lessman" width="40" height="40">
                                 </div>
                                 <div class="flex-grow-1 pl-3">
-                                    <strong>Sharon Lessman</strong>
+                                    <strong>@user.UserName</strong>
                                     <div class="text-muted small"><em>Typing...</em></div>
                                 </div>
                                 <div>
@@ -67,17 +69,23 @@
                             <div class="chat-messages p-4 min-vh-100" id="chatmessage">
                                 @foreach (var message in Model.Messages)
                                 {
+                                   
+                                       
+                                            <div id="container" class=" mb-4">
+                                                <div>
+                                                   
+                                                    <img src="" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                                                    <div class="text-muted small text-nowrap mt-2">@message.time</div>
+                                                </div>
+                                                <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                                                    <div class="font-weight-bold mb-1">@message.Name</div>
+                                                    @message.Text
+                                                </div>
+                                            </div>
+                                      
+
+
                                     
-                                        <div id="container" class=" mb-4">
-                                            <div>
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
-                                                <div class="text-muted small text-nowrap mt-2">@message.time</div>
-                                            </div>
-                                            <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                                                <div class="font-weight-bold mb-1">@message.Name</div>
-                                                @message.Text
-                                            </div>
-                                        </div>
 
                                 }
                             </div>

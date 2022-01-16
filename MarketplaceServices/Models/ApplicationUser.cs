@@ -32,10 +32,14 @@ namespace MarketplaceServices.Models
         public string Address { get; set; }
 
         public string Description { get; set; }
+        public string Profession { get; set; }
+        
+
 
         [NotMapped]
         [Display(Name = "Profile Picture")]
         public IFormFile ProfileImage { get; set; }
+        [DisplayFormat(DataFormatString = "{0:Y}", ApplyFormatInEditMode = true)]
         public DateTime MemberDate { get; set; }
         public List<Languages> Language { get; set; }
         public List<Skills> Skills { get; set; }

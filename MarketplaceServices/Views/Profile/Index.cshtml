@@ -33,23 +33,33 @@
                             <div>
                                 <div class="user-profile-image">
                                     <label class="user-pict">
-                                        <img src="images/@Model.User.Image"
-                                             class="img-fluid user-pict-img" alt="ProfileImage">
+                                        @if (@Model.User.Image == null)
+                                        {
+                                            <img src="~/images/noProfile.png"
+                                                 class="img-fluid user-pict-img" alt="ProfileImage">
+
+            }
+            else
+            {
+                                    <img src="images/@Model.User.Image"
+                                         class="img-fluid user-pict-img" alt="ProfileImage">
+            }
+
                                         <a href="#"
                                            class="user-badge-round user-badge-round-med locale-en-us top-rated-seller"></a>
                                     </label>
                                 </div>
                             </div>
                             <div class="user-profile-label">
-                                
+
                                 <form method="post">
-                                    
-                                        <a  class="seller-link" id="username" onclick="changeUsername()">@Html.DisplayFor(x => x.User.UserName)  </a>
-                                    
+
+                                    <a class="seller-link" id="username" onclick="changeUsername()">@Html.DisplayFor(x => x.User.UserName)  </a>
+
                                     <input hidden value="@userId" name="UserId" />
-                                    <input type="submit" asp-action="updateName" style="display:none" asp-controller="Profile" class=" btn btn-success m-0" id="userUpdate"/>
+                                    <input type="submit" asp-action="updateName" style="display:none" asp-controller="Profile" class=" btn btn-success m-0" id="userUpdate" />
                                 </form>
-                                
+
                             </div>
                         </div>
                         @*
@@ -71,9 +81,7 @@
                         <div class="user-stats-desc">
                             <ul class="user-stats">
                                 <li class="location">From<strong>@Html.DisplayFor(x => x.User.Address)</strong></li>
-                                <li class="member-since">Member since<strong>Dec 2012</strong></li>
-                                <li class="response-time">Avg. Response Time<strong>2 hours</strong></li>
-                                <li class="recent-delivery">Recent Delivery<strong>about&nbsp;15</strong></li>
+                                <li class="member-since">Member since<strong>@Html.DisplayFor(m => m.User.MemberDate)</strong></li>
                             </ul>
                         </div>
                     </div>
@@ -136,7 +144,11 @@
                         <ul>
                             @foreach (var language in Model.User.Language)
                             {
-                                <li>@language.LanguageName - <span>@language.LanguageLevel</span></li>
+                            <li>
+                                @language.LanguageName - <span>@language.LanguageLevel</span>
+                                <a class="" style="color:black" asp-route-id="@language.Id"  asp-action="deleteLang" asp-controller="Profile"><i class="far fa-trash-alt"></i></a>
+
+                            </li>
                             }
 
 
@@ -175,7 +187,10 @@
                         <ul>
                             @foreach (var skill in Model.User.Skills)
                             {
-                                <li class=""><a href="#">@skill.SkillName</a></li>
+                                <li class="">
+                                    <a href="#">@skill.SkillName</a>
+                                    <a class=""  asp-route-id="@skill.Id" asp-action="deleteSkill" asp-controller="Profile"><i class="far fa-trash-alt"></i></a>
+                                </li>
 
                             }
                         </ul>
@@ -183,11 +198,147 @@
                     </div>
                 </div>
             </div>
+            <!-- Services -->
+
+
             <div class="col-lg-8 right">
-                <h3>Make YourService</h3>
-                <a asp-action="Create" asp-controller="Services">Click Here</a>
+                <h2>@Html.DisplayFor(x => x.User.UserName) Gigs</h2>
+                <div class="recommended">
+                    <div class="row">
+                        @foreach (var item in Model.Services)
+                        {
+                            <div class="col-md-4">
+                                <div>
+                                    <a asp-action="Edit" asp-controller="Services" asp-route-id="@item.Id">
+
+                                        @*<img class="img-fluid" src="~/imageSce/@item.Photos[0].ImageUrl" />*@
+
+
+                                    </a>
+                                    <div class="inner-slider">
+                                        <div class="inner-wrapper">
+                                            <div class="d-flex align-items-center">
+                                                <span class="seller-image">
+                                                    <img class="img-fluid" src="images/@item.user.Image" alt='' />
+                                                </span>
+                                                <span class="seller-name">
+                                                    <a href="profile.html">@item.user.UserName</a>
+                                                </span>
+                                            </div>
+                                            <h3>@item.Title</h3>
+                                            <div class="content-info">
+                                                <div class="rating-wrapper">
+                                                    <span class="gig-rating text-body-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15"
+                                                             height="15">
+                                                            <path fill="currentColor"
+                                                                  d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                                                            </path>
+                                                        </svg>
+                                                        5.0
+                                                        <span>(7)</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="footer">
+                                                <i class="fa fa-heart" aria-hidden="true"></i>
+                                                <div class="price">
+                                                    <a href="#">
+                                                        Starting At <span> $@item.Price</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="col-md-4 card p-0" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Create Your Service</h5>
+                                <a asp-action="Create" class="align-center" asp-controller="Services">Click Here</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="review-section">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h4 class="m-0">
+                            Reviews as Seller <small>
+                                <span class="star-rating-s15"></span><span>
+                                    <span class="total-rating-out-five header-average-rating"
+                                          data-impression-collected="true">5</span>
+                                </span><span>
+                                    <span class="total-rating header-total-rating"
+                                          data-impression-collected="true"></span>
+                                </span>
+                            </small>
+                        </h4>
+                        <select class="custom-select custom-select-sm border-0 shadow-sm ml-2">
+                            <option>Most Relevant</option>
+                            <option>Most Recent</option>
+                        </select>
+                    </div>
+                    <div class="breakdown">
+                        <ul class="header-stars">
+                          
+                            <li>
+                                Service as described
+                                <small>
+                                    <span class="star-rating-s15"></span>
+                                    <span class="total-rating-out-five">5</span>
+                                </small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="review-list">
+                    <ul>
+                        @foreach (var r in Model.Reviews)
+                        {
+                            <li>
+                                <div class="d-flex">
+                                    <div class="left">
+                                        <span>
+                                            <img src="~/images/@r.User.Image" class="profile-pict-img img-fluid" alt="">
+                                        </span>
+                                    </div>
+                                    <div class="right">
+                                        <h4>
+                                            @r.User.UserName
+                                            <span class="gig-rating text-body-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15"
+                                                     height="15">
+                                                    <path fill="currentColor"
+                                                          d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                                                    </path>
+                                                </svg>
+                                                5.0
+                                            </span>
+                                        </h4>
+                                        <div class="country d-flex align-items-center">
+                                            <span>
+                                                <img class="country-flag img-fluid" src="images/flag/india.png">
+                                            </span>
+                                            <div class="country-name font-accent">@r.User.Address</div>
+                                        </div>
+                                        <div class="review-description">
+                                            <p>
+                                                @r.Comment
+                                            </p>
+                                        </div>
+                                        <span class="publish py-3 d-inline-block w-100"> Published @r.PublishDate</span>
+                                    </div>
+                                </div>
+                            </li>
+
+                        }
+                    </ul>
+                </div>
             </div>
-            </div>
+        </div>
         </div>
 </div>
 
@@ -208,8 +359,8 @@
         const text = document.getElementById("descriptions");
         const area = document.createElement("textarea");
         area.setAttribute("name", "Description");
-        area.setAttribute("class", "form-control");
-        area.setAttribute("rows", "4");
+        area.setAttribute("class", "form-control summernote");
+       /* area.setAttribute("rows", "4");*/
         area.innerHTML = text.textContent;
         /*area.setAttribute("Value", text.textContent);*/
         text.replaceWith(area);
@@ -226,17 +377,17 @@
         }
     }
 
-    function changeUsername() {
-        const username = document.getElementById("username");
-        const input = document.createElement("input");
-        input.setAttribute("name", "UserName");
-        input.setAttribute("Value", username.textContent);
-        username.replaceWith(input);
-        const update = document.getElementById("userUpdate");
-        update.style.display = "block";
+    //function changeUsername() {
+    //    const username = document.getElementById("username");
+    //    const input = document.createElement("input");
+    //    input.setAttribute("name", "UserName");
+    //    input.setAttribute("Value", username.textContent);
+    //    username.replaceWith(input);
+    //    const update = document.getElementById("userUpdate");
+    //    update.style.display = "block";
 
 
-    }
+    
 
     function viewlanguage() {
         var x = document.getElementById("AddLanguage");

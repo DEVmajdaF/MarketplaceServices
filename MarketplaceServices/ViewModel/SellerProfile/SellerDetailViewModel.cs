@@ -10,5 +10,6 @@ namespace MarketplaceServices.ViewModel.SellerProfile
     {
         public ApplicationUser user { get; set; }
         public List<Services> Services { get; set; }
+        public List<Reviews> Reviews { get; set; }
     }
 }

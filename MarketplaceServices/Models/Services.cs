@@ -16,8 +16,13 @@ namespace MarketplaceServices.Models
         public string Id { get; set; }
         [Required]
         public DateTime Date { get; set; }
+        [Required]
+        [MinLength(80)]
         public string Title { get; set; }
+        [Required]
+        [MinLength(200)]
         public string Description { get; set; }
+        [Required]
         public double Price { get; set; }
         public int SalesNumber { get; set; }
         public int Rating { get; set; }

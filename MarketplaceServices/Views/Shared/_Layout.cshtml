@@ -7,14 +7,20 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/profile.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/301ecdaf47.js" crossorigin="anonymous"></script>
+    
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+    <!-- Slick -->
+    <link rel="stylesheet" href="~/css/slick.css" />
+    <link rel="stylesheet" href="~/css/slick-theme.css" />
+    <!-- summernote -->
+    <link rel="stylesheet"  href="/css/summernote-bs4.css"/>
+    <!-- Navbar -->
     <link rel="stylesheet" href="~/css/Nav.css" />
     <link rel="stylesheet" href="~/css/Rating.css" />
     @*<link rel="stylesheet" href="/fonts/icomoon/style.css">*@
@@ -54,13 +60,23 @@
         </main>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/popper.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    
+    @* summernote *@
+    <script src="~/js/summernote-bs4.js"></script>
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/chat.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
+    @*//Slick*@
+    <script src="~/js/slick.min.js"></script>
+    <script src="~/js/slick.js"></script>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+
 </body>
 
 </html>

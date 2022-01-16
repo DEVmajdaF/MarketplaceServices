@@ -74,6 +74,22 @@ namespace MarketplaceServices.Controllers
             return View("Index");
         }
 
+        // POST: CategoryController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Deletesub(string subcategoryid)
+        {
+            if (subcategoryid != null)
+            {
+                var result = Context.SubCategory.Where(s => s.Id == subcategoryid).FirstOrDefault();
+
+                Context.SubCategory.Remove(result);
+                await Context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return NoContent();
+        }
+
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]

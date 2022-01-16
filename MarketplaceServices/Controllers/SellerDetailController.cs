@@ -27,13 +27,12 @@ namespace MarketplaceServices.Controllers
         {
             var userinfo = Context.ApplicationUser.Include(s => s.Skills).Include(L => L.Language).Where(x => x.Id == id).SingleOrDefault();
             var services = Context.Services.Include(p=>p.Photos).Where(x=>x.userId==id).ToList();
-
-         
-
+            var reviews = Context.Reviews.Include(u => u.User).Include(s => s.Service).Where(s => s.Service.userId == id).ToList();
             SellerDetailViewModel selerdetail = new SellerDetailViewModel()
             {
                 Services= services,
-                user=userinfo
+                user=userinfo,
+                Reviews=reviews,
             };
 
             return View(selerdetail);

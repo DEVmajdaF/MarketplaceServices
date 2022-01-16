@@ -39,6 +39,7 @@ namespace MarketplaceServices.Areas.Identity.Pages.Account
             {
                 return NotFound($"Unable to load user with email '{email}'.");
             }
+          
 
             Email = email;
             // Once you add a real email sender, you should remove this code that lets you confirm the account

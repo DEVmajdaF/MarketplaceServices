@@ -13,20 +13,26 @@ using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using MarketplaceServices.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MarketplaceServices.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly AuthDbContext Context;
         private readonly UserManager<IdentityUser> UserManager;
         private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly IProfile Prof;
 
-        public ProfileController(AuthDbContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment hostEnvironment)
+        public ProfileController(AuthDbContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment hostEnvironment, IProfile prof)
         {
             Context = context;
             UserManager = userManager;
             _hostEnvironment = hostEnvironment;
+            Prof = prof;
         }
 
         // GET: Profile
@@ -37,12 +43,14 @@ namespace MarketplaceServices.Controllers
 
                 ViewBag.userId = userId;
                 var user = Context.ApplicationUser.Include(s => s.Skills).Include(L => L.Language).Where(x => x.Id == userId).SingleOrDefault();
-                var service = Context.Services.Include(s => s.SubCategory).Include(p => p.Photos).Where(x => x.userId == userId).ToList();
+                var service = Context.Services.Include(s => s.SubCategory).Include(p => p.Photos).Include(r=>r.Reviews).Where(x => x.userId == userId).ToList();
+                var reviews = Context.Reviews.Include(u => u.User).Include(s => s.Service).Where(s => s.Service.userId == userId).ToList();
 
                 ProfileViewModel profile = new ProfileViewModel()
                 {
                     User = user,
-                    Services = service
+                    Services = service,
+                    Reviews=reviews,
 
                 };
           
@@ -54,17 +62,63 @@ namespace MarketplaceServices.Controllers
         // POST: Profile/Addskills
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public async Task<ActionResult> updateCompleteinfo(ApplicationUser user , IFormFile img)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var app = Context.ApplicationUser.FirstOrDefault(x => x.Id == userId);
+            app.Id = userId;
+            
+            app.FirstName = user.FirstName;
+            app.LastName = user.LastName;
+            app.Profession = user.Profession;
+            app.Address = user.Address;
+            app.PhoneNumber = user.PhoneNumber;
+            app.Description = user.Description;
+            app.UserName = user.UserName;
+            await Prof.addimage(img, userId);
+            //var result = Context.ApplicationUser.Update(u);
+
+            await Context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(CompleteInformation));
+        }
+
+
+
+
+
+
+
+
+        // POST: Profile/Addskills
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Addskills(Skills skill)
         {
-            Skills Skill = new Skills()
-            {
-                SkillName = skill.SkillName,
-                SkillLevel = skill.SkillLevel
-            };
-            var result = Context.Add(skill);
-            await Context.SaveChangesAsync();
+            await Prof.Addskills(skill);
             return RedirectToAction(nameof(Index));
         }
+
+        // POST: Profile/Addskills
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddskillsProfile(Skills skill)
+        {
+            await Prof.Addskills(skill);
+            return Json("Succeess");
+        }
+
+
+        // GET: Profile/Details/5
+        public JsonResult getSkills()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var Skills = Context.Skills.Where(u => u.UserId == userId).OrderByDescending(t => t.Time).FirstOrDefault();
+
+            return new JsonResult(new { data = Skills });
+
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -86,12 +140,14 @@ namespace MarketplaceServices.Controllers
                 app.Image = fileName;
                 await Context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+             
 
             }
 
             return View("Index");
 
         }
+
 
 
 
@@ -126,10 +182,9 @@ namespace MarketplaceServices.Controllers
             }
             return View("Index");
         }
-        // POST: Profile/deleteSkill/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> deleteSkill(string Id , Skills skill)
+        // Get: Profile/deleteSkill/5
+     
+        public async Task<ActionResult> deleteSkill(string Id )
         {
 
                 if (Id != null)
@@ -147,12 +202,9 @@ namespace MarketplaceServices.Controllers
 
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+       //Get
         public async Task<ActionResult> deleteLang(string Id)
         {
-
-
             if (Id != null)
             {
 
@@ -169,42 +221,41 @@ namespace MarketplaceServices.Controllers
 
         }
 
-
-
-
-
-
-
-
-
-
         // POST: Profile/Addskills
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task< ActionResult> AddLanguage(Languages language)
         {
-            
 
-            Languages languages = new Languages()
-            {
-                LanguageName = language.LanguageName,
-                LanguageLevel = language.LanguageLevel,
-                UserId= language.UserId
-            };
-            var result =  Context.Add(languages);
-            await Context.SaveChangesAsync();
+            await Prof.AddLanguage(language);
             return RedirectToAction(nameof(Index));
         }
 
 
-        //Tableau Skills 
-
-        //Tableau Languages 
-        // GET: Profile/Details/5
-        public ActionResult Details(int id)
+        // POST: Profile/AddLanguage
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddLanguagecomplete(Languages language)
         {
-            return View();
+
+            await Prof.AddLanguage(language);
+            string message = "SUCCESS";
+            return Json(new { Message = message });
         }
+
+        // GET: Profile/Details/5
+        public JsonResult getLanguage()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var Language = Context.Languages.Where(u => u.UserId == userId).OrderByDescending(t => t.Time).FirstOrDefault();
+
+            return new JsonResult(new { data = Language });
+
+        }
+
+
+
+      
 
         // GET: Profile/Create
         public ActionResult CompleteInformation()
@@ -218,28 +269,50 @@ namespace MarketplaceServices.Controllers
         // POST: Profile/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddExperience(Experience experience)
+        public async Task<ActionResult> AddExperience(string Position, string CompanyName, DateTime From, DateTime To)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Experience exp = new Experience()
-            {
-                Position = experience.Position,
-                CompanyName= experience.CompanyName,
-                From= experience.From,
-                To= experience.To,
-                UserId= userId,
+            Experience exp = new Experience();
 
+            exp.Position = Position;
+            exp.CompanyName = CompanyName;
+            exp.From = From;
+            exp.To = To;
+            exp.UserId = userId;
+            exp.Time = DateTime.Now;
 
-            };
             var result = Context.Experiences.Add(exp);
             await Context.SaveChangesAsync();
-            return RedirectToAction("CompleteInformation");
+            string message = "SUCCESS";
+            return Json(new { Message = message });
+        }
+
+        // GET: Profile/Details/5
+        public JsonResult getExperiences()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var experiences = Context.Experiences.Where(u => u.UserId == userId).OrderByDescending(t=>t.Time).FirstOrDefault();
+
+            return new JsonResult(new { data = experiences });
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult>  deleteExperience(string id)
+        {
+            var result = Context.Experiences.Where(x => x.Id == id).SingleOrDefault();
+            Context.Experiences.Remove(result);
+            await Context.SaveChangesAsync();
+            return NoContent();
         }
 
         // GET: Profile/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult getdeleteexp()
         {
-            return View();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var experiences = Context.Experiences.Where(u => u.UserId == userId);
+            return new JsonResult(new { data = experiences });
         }
 
         // POST: Profile/Edit/5

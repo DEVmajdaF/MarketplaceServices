@@ -1,7 +1,5 @@
-﻿
-@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model MarketplaceServices.ViewModel.Home.HomeViewModel;
+
 
 
 <style>
@@ -25,45 +23,40 @@
                     </h5>
                 </div>
                 <div class="homepage-search-form">
-                    <form class="form-noborder">
+                    <form class="form-noborder" method="post">
                         <div class="form-row">
                             <div class="col-lg-3 col-md-3 col-sm-12 form-group">
                                 <div class="location-dropdown text-left">
                                     <i class="icofont-location-arrow"></i>
-                                    @* 
+                                    @*
 
                                         List Of Categories On The website
-                                        
+
                                     *@
-                                    <select class="custom-select form-control border-0 shadow-sm form-control-lg">
+                                    <select class="custom-select form-control border-0 shadow-sm form-control-lg mySelect " id="mySelect" onchange="search()">
                                         <option> All </option>
-                                        <option> Graphics & Design </option>
-                                        <option> Digital Marketing </option>
-                                        <option> Writing & Translation </option>
-                                        <option> Video & Animation </option>
-                                        <option> Music & Audio </option>
-                                        <option> Programming & Tech </option>
-                                        <option> Business </option>
-                                        <option> Lifestyle </option>
-                                        <option> Industries </option>
+
+
                                     </select>
                                 </div>
                             </div>
+
                             <div class="col-lg-7 col-md-7 col-sm-12 form-group">
-                                <input type="text" placeholder="Find Services..."
+                                <input name="search" type="text" placeholder="Find Services..."
                                        class="form-control border-0 form-control-lg shadow-sm">
                             </div>
                             <div class="col-lg-2 col-md-2 col-sm-12 form-group">
-                                @*  
+                                @*
 
                                     A form OF SEARCHING
-                                    
+
                                 *@
-                                <button type="submit"
+                                <button type="submit" asp-controller="Home" asp-action="FindService"
                                         class="btn btn-success btn-block btn-lg btn-gradient shadow-sm">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
+
                         </div>
                     </form>
                 </div>
@@ -77,136 +70,448 @@
 </section>
 
 
-
-
-
-
-
-
-
-@* Latest Services  *@
-<!--<div class="latest-products">
+<!--       services-->
+<div class="services-wrapper bg-white py-5">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-heading">
-                    <h2>Latest Services</h2>
-                    <a href="products.html">view all products <i class="fa fa-angle-right"></i></a>
+        <h2>Popular Professional Services</h2>
+        <div class="row service-slider">
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-01.jpg">
+                    <h3><span>Build Your Brand</span> Logo Design</h3>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="#"><img src="/images/sweet-crepe-with-powder-and-strawberries.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$25.75</h6>
-                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                        <ul class="stars">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (24)</span>
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-02.jpg">
+                    <h3><span>Customize your site</span> wordpress</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-03.jpg">
+                    <h3><span>share your message</span> voice over</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-04.jpg">
+                    <h3><span>engage your audience</span> whiteboard</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-05.jpg">
+                    <h3><span>reach more customers</span> social media</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-01.jpg">
+                    <h3><span>Build Your Brand</span> Logo Design</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-02.jpg">
+                    <h3><span>Customize your site</span> wordpress</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-03.jpg">
+                    <h3><span>share your message</span> voice over</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-04.jpg">
+                    <h3><span>engage your audience</span> whiteboard</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="service">
+                    <img src="images/service-05.jpg">
+                    <h3><span>reach more customers</span> social media</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--       services-->
+<!--    about section -->
+<div class="container">
+    <div class="about-section py-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2>
+                    Get Work Done fater On ServiceKom
+                    , <br>With Confidence
+                </h2>
+                <ul>
+                    <li>
+                        <span><img src="images/checkmark.svg"> Payment Protection, Guaranteed</span>
+                        Payment is released to the freelancer once you’re pleased and approve the work you get.
+                    </li>
+                    <li>
+                        <span>
+                            <img src="images/checkmark.svg"> Know The Price Upfront
+                        </span>Find any service within minutes and know exactly what you’ll pay. No hourly rates, just a fixed price.
+                    </li>
+                    <li>
+                        <span><img src="images/checkmark.svg"> We’re Here For You 24/7</span>ServiceKom
+                        is here for you, anything from answering any questions to resolving any issues, at any time.
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <img src="images/video.svg" class="video-img w-100">
+            </div>
+        </div>
+    </div>
+</div>
+<!--    about section -->
+<div class="market-wrapper py-5 bg-white">
+    <div class="container">
+        <h2 class="text-center">Explore the marketplace</h2>
+        <ul class="categories-list mb-0">
+            <li>
+                <a href="#">
+                    <img src="images/graphics.svg" alt="" loading="lazy">Graphics &amp; Design
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/online-marketing.svg" alt="Digital Marketing" loading="lazy">Digital Marketing
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/writing-translation.svg" alt="Writing &amp; Translation" loading="lazy">Writing &amp; Translation
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/video-animation.svg" alt="Video &amp; Animation" loading="lazy">Video &amp; Animation
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/music-audio.svg" alt="Music &amp; Audio" loading="lazy">Music &amp; Audio
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/programming.svg" alt="Programming &amp; Tech" loading="lazy">Programming &amp; Tech
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/business.svg" alt="Business" loading="lazy">Business
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="images/lifestyle.svg" alt="Lifestyle" loading="lazy">Lifestyle
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--     market   -->
+<!--       freelancer projects -->
+<div class="freelance-projects py-5">
+    <div class="container">
+        <h2>
+            Get Inspired With Projects Made By Our Freelancers
+            <a href="#" class="float-right">See More ></a>
+        </h2>
+        <div class="row freelance-slider">
+            <div class="col">
+                <div class="freelancer">
+                    <img src="images/senatopcustudio.jpg">
+                    <div class="freelancer-footer">
+                        <img src="images/user/s7.png">
+                        <h5>
+                            Logo Design
+                            <span>by <i>John</i></span>
+                        </h5>
                     </div>
                 </div>
             </div>
-
-
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="#"><img src="/images/sweet-crepe-with-powder-and-strawberries.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$25.75</h6>
-                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                        <ul class="stars">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (24)</span>
+            <div class="col">
+                <div class="freelancer">
+                    <img src="images/vnuggz.jpg">
+                    <div class="freelancer-footer">
+                        <img src="images/user/s8.png">
+                        <h5>
+                            Web &amp; Mobile Design
+                            <span>by <i>John</i></span>
+                        </h5>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="product-item">
-                    <a href="#"><img src="/images/sweet-crepe-with-powder-and-strawberries.jpg" alt=""></a>
-                    <div class="down-content">
-                        <a href="#"><h4>Tittle goes here</h4></a>
-                        <h6>$25.75</h6>
-                        <p>Lorem ipsume dolor sit amet, adipisicing elite. Itaque, corporis nulla aspernatur.</p>
-                        <ul class="stars">
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                            <li><i class="fa fa-star"></i></li>
-                        </ul>
-                        <span>Reviews (24)</span>
+            <div class="col">
+                <div class="freelancer">
+                    <img src="images/digitalgeria.jpg">
+                    <div class="freelancer-footer">
+                        <img src="images/user/s1.png">
+                        <h5>
+                            Packaging Design
+                            <span>by <i>John</i></span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="freelancer">
+                    <img src="images/artsi3d.jpg">
+                    <div class="freelancer-footer">
+                        <img src="images/user/s2.png">
+                        <h5>
+                            Brand Style Guides
+                            <span>by <i>John</i></span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="freelancer">
+                    <img src="images/designerheather.jpg">
+                    <div class="freelancer-footer">
+                        <img src="images/user/s3.png">
+                        <h5>
+                            Illustration
+                            <span>by <i>John</i></span>
+                        </h5>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>-->
-
-
-
-
+</div>
+<!--       freelancer projects -->
+<!--       testimonials -->
+<div class="testi-wrap py-5 border-top border-bottom">
+    <div class="container">
+        <div class="testimonial">
+            <div class="video-modal">
+                <div class="picture-wrapper">
+                    <img src="images/1440-haerfest-2x.jpg">
+                </div>
+            </div>
+            <div class="text-content">
+                <p>
+                    "Being a small but growing brand, we have to definitely do a lot more with less. And when you want to create a business bigger than yourself, you’re going to need help. And that’s what ServiceKom
+                    does"
+                </p>
+                <span>Tim and Dan Joo, Co-founders</span>
+                <img alt="Company logo" src="images/haerfest-logo.png" loading="lazy">
+            </div>
+        </div>
+    </div>
+</div>
+<!--       testimonials -->
+<!--       guides  -->
+<div class="guide-wrapper py-5">
+    <div class="container">
+        <h2>
+            ServiceKom
+            Guides
+            <a href="#" class="float-right">See More guides></a>
+        </h2>
+        <div class="row">
+            <div class="col-md-4">
+                <a href="#" class="guide">
+                    <img src="images/entrepreneur-expansion-goals-target.jpg">
+                    <div class="content">
+                        <h6>Create a Website</h6>
+                        <p>Building a stunning website from A to Z</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="guide">
+                    <img src="images/entrepreneur-expansion-goals-target.jpg">
+                    <div class="content">
+                        <h6>Grow With Digital Marketing</h6>
+                        <p>Promoting your business online</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="#" class="guide">
+                    <img src="images/entrepreneur-expansion-goals-target.jpg">
+                    <div class="content">
+                        <h6>Build a Strong Brand</h6>
+                        <p>Differentiating yourself from the competition</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--       guides  -->
+<!-- get started -->
+<div>
+    <div class="get-started">
+        <div class="content">
+            <h2>Find Freelance Services For Your Business Today</h2>
+            <p>We've got you covered for all your business needs</p>
+            <a href="#" class="c-btn c-fill-color-btn">Get Started</a>
+        </div>
+    </div>
+</div>
+<!-- get started -->
+<!--       footer -->
+<footer class="bg-white">
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <div class="footer-list">
+                <h2>Categories</h2>
+                <ul class="list">
+                    <li><a href="#">Graphics &amp; Design</a></li>
+                    <li><a href="#">Digital Marketing</a></li>
+                    <li><a href="#">Writing &amp; Translation</a></li>
+                    <li><a href="#">Video &amp; Animation</a></li>
+                    <li><a href="#">Music &amp; Audio</a></li>
+                    <li><a href="#">Programming &amp; Tech</a></li>
+                    <li><a href="#">Business</a></li>
+                    <li><a href="#">Lifestyle</a></li>
+                    <li><a href="#">Sitemap</a></li>
+                </ul>
+            </div>
+            <div class="footer-list">
+                <h2>About</h2>
+                <ul class="list">
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press &amp; News</a></li>
+                    <li><a href="#">Partnerships</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Intellectual Property Claims</a></li>
+                    <li><a href="#" target="_blank">Investor Relations</a></li>
+                </ul>
+            </div>
+            <div class="footer-list">
+                <h2>Support</h2>
+                <ul class="list">
+                    <li><a href="#">Help &amp; Support</a></li>
+                    <li><a href="#">Trust &amp; Safety</a></li>
+                    <li>
+                        <a href="#">
+                            Selling on Servicekom
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Buying on ServiceKom
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-list">
+                <h2>Community</h2>
+                <ul class="list">
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Forum</a></li>
+                    <li><a href="#">Community Standards</a></li>
+                    <li><a href="#">Podcast</a></li>
+                    <li><a href="#">Affiliates</a></li>
+                    <li><a href="#">Invite a Friend</a></li>
+                    <li><a href="#">Become a Seller</a></li>
+                    <li>
+                        <a href="#">
+                            ServiceKom
+                            Elevate<small>Exclusive Benefits</small>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-list">
+                <h2>More From ServiceKom</h2>
+                <ul class="list">
+                    <li>
+                        <a href="#">
+                            ServiceKom
+                            Pro
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            ServiceKom
+                            Studios
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            ServiceKom
+                            Logo Maker
+                        </a>
+                    </li>
+                    <li><a href="#">Get Inspired</a></li>
+                    <li><a href="#">ClearVoice<small>Content Marketing</small></a></li>
+                    <li><a href="#">AND CO<small>Invoice Software</small></a></li>
+                    <li><a href="#">Learn<small>Online Courses</small></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="logo">
+                <a href="index.html">
+                    ServiceKom
+                </a>
+            </div>
+            <p>
+                © Copyright 2022.  All Rights Reserved
+            </p>
+            <ul class="social">
+                <li>
+                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
+<!--       footer-->
 
 <script>
+    function search() {
+        let idcate = $(".mySelect option:selected").val();
+        alert(idcate);
+        $.ajax({
+            url: '@Url.Action("SearchByCatgory", "Home")/' + idcate  ,
+            type: "Get",
+            processData: false,
+            //contentType: false,
+            contentType: 'application/x-www-form-urlencoded',
+           /* data: { CategoryName: idcate },*/
 
-    $('.carousel').carousel()
+            success: function (result) {
+                alert("done");
+
+
+            },
+            failure: function (response) {
+                alert("Failure");
+            },
+            error: function (response) {
+                alert("error");
+
+            },
+        });
+    }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-    </nav>*@
-
-
-
-
-<!-- Header Bottom Area End Here -->
-@*<div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            @foreach (var item in Model.categories)
-            {
-                <li class="nav-item active">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        @item.CategoryName
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @foreach (var i in item.subCategories)
-                        {
-                            <a class="dropdown-item" href="#">@i.SubCategoryName</a>
-                        }
-                    </div>
-                </li>
-            }
-
-        </ul>
-    </div>*@
-
-

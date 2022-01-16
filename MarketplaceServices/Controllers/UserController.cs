@@ -1,5 +1,6 @@
 ﻿using MarketplaceServices.Data;
 using MarketplaceServices.Models;
+using MarketplaceServices.Repository;
 using MarketplaceServices.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,13 +21,18 @@ namespace MarketplaceServices.Controllers
         AuthDbContext Context;
         UserManager<IdentityUser> userManager;
         RoleManager<IdentityRole> roleManager;
+        private readonly IProfile Prof;
+        public readonly IPasswordHasher<IdentityUser> _passwordHasher;
 
 
-        public UserController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, AuthDbContext Context)
+
+        public UserController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, AuthDbContext Context, IProfile prof, IPasswordHasher<IdentityUser> _passwordHasher)
         {
             this.userManager = userManager;
             this.roleManager= roleManager;
             this.Context = Context;
+            Prof = prof;
+            this._passwordHasher = _passwordHasher;
         }
         // GET: UserController
         public ActionResult Index()
@@ -50,11 +56,7 @@ namespace MarketplaceServices.Controllers
             return View(userwithrole);
         }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+       
 
         // GET: UserController/Create
         public ActionResult Create()
@@ -65,16 +67,30 @@ namespace MarketplaceServices.Controllers
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> CreateAdmin(ApplicationUser user, IFormFile img)
         {
-            try
+            if(user != null)
             {
+                ApplicationUser s = new ApplicationUser();
+                s.FirstName = user.FirstName;
+                s.LastName = user.LastName;
+                s.Email = user.Email;
+                s.NormalizedUserName = user.Email;
+                s.Profession = user.Profession;
+                s.Address = user.Address;
+               s.PhoneNumber = user.PhoneNumber;
+               s.Description = user.Description;
+                s.UserName = user.UserName;
+                Context.ApplicationUser.Add(s);
+                var hashedPassword = _passwordHasher.HashPassword(s, "YourPassword");
+                s.SecurityStamp = Guid.NewGuid().ToString();
+                s.PasswordHash = hashedPassword;
+                await Context.SaveChangesAsync();
+                await userManager.AddToRoleAsync(s, "Admin");
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return NoContent();
         }
 
         // GET: UserController/Edit/5

@@ -23,202 +23,39 @@
 <div class="main-page second py-5">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 left">
-                <div class="profile_info">
-                    <div class="seller-card">
-                        <div>
-                            <div class="user-online-indicator is-online " data-user-id="1152855">
-                                <i class="fa fa-circle"></i>online
-                            </div>
-                        </div>
-                        @*<div><a href="#" class="ambassadors-badge">Ambassador</a></div>*@
-                        <div class="user-profile-info">
-                            <div>
-                                <div class="user-profile-image">
-                                    <label class="user-pict">
-                                        <img src="images/@Html.DisplayFor(x => x.Image)"
-                                             class="img-fluid user-pict-img" alt="ProfileImage">
-                                        <a href="#"
-                                           class="user-badge-round user-badge-round-med locale-en-us top-rated-seller"></a>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="user-profile-label">
-
-                                <form method="post">
-
-                                    <a class="seller-link" id="username" onclick="changeUsername()">@Html.DisplayFor(x => x.UserName)  </a>
-
-                                    <input hidden value="@userId" name="UserId" />
-                                    <input type="submit" asp-action="updateName" style="display:none" asp-controller="Profile" class=" btn btn-success m-0" id="userUpdate" />
-                                </form>
-
-                            </div>
-                        </div>
-                        @*
-                    Upload Images
-                        *@
-                        <div class="p-4">
-                            <form method="post" enctype="multipart/form-data">
-                                <label class=" btn btn-info m-0">
-                                    <i class="mdi mdi-image"></i> Choose file
-                                    <input class="imageuploade d-none" type="file" name="filename" accept="image/*" />
-                                </label>
-                                <Input hidden name="UserId" value="@userId" />
-                                <input type="submit" asp-action="addimage" asp-controller="Profile" class="add btn btn-success m-0" value="Upload" />
-                            </form>
-                        </div>
-                        @*
-                    ***************Information****************
-                        *@
-                        <div class="user-stats-desc">
-                            <ul class="user-stats">
-                                <li class="location">From<strong>@Html.DisplayFor(x => x.Address)</strong></li>
-                                <li class="member-since">Member since<strong>Dec 2012</strong></li>
-                                <li class="response-time">Avg. Response Time<strong>2 hours</strong></li>
-                                <li class="recent-delivery">Recent Delivery<strong>about&nbsp;15</strong></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                @*
-            *************Description**********
-                *@
-                <div class="seller-profile">
-
-                    <div class="description">
-
-                        <h3 class="d-flex row justify-content-between">
-                            Description
-                            <a onclick="changeDescription()"> Edit Description</a>
-                        </h3>
-
-
-                        <form method="post">
-
-                            <p id="descriptions">
-                                @Html.DisplayFor(x => x.Description)
-                            </p>
-                            <Input hidden name="UserId" value="@userId" />
-                            <input id="updateD" class="btn btn-success" style="display:none" type="submit" asp-action="updateDescription" asp-controller="Profile" value="Update" />
-                        </form>
-
-                    </div>
-
-                    @*
-                *************Language**********
-                    *@
-                    <div class="languages">
-                        <h3 class="d-flex row justify-content-between">
-                            Languages
-                            <a class="addnew" onclick="viewlanguage()">Add Language</a>
-                        </h3>
-                        <div style="display:none" id="AddLanguage">
-
-                            <form method="post">
-
-                                <div class="d-flex flex-column">
-                                    <div class="">
-                                        <label for="LanguageName" id="skill">Language</label>
-                                        <Input class="form-control " name="LanguageName" id="LanguageName" />
-                                        <span></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <select required="required" name="LanguageLevel" asp-items="@level" id="level" class="form-control custom-select">
-                                            <option disabled selected>- Level -</option>
-                                        </select>
-                                        <span></span>
-                                    </div>
-                                    <Input hidden name="UserId" value="@userId" />
-
-                                    <button asp-action="AddLanguage" class="btn btn-primary mb-2" asp-controller="Profile">Add Language</button>
-
-                                </div>
-                            </form>
-                        </div>
-                        <ul>
-                            @foreach (var language in Model.Language)
-                            {
-                                <li>@language.LanguageName - <span>@language.LanguageLevel</span></li>
-                            }
-
-
-                        </ul>
-                    </div>
-
-                    @*
-                *************Skils**********
-                    *@
-                    <div class="skills">
-                        <h3 class="d-flex row justify-content-between">
-                            Skills
-                            <a class="addnew" id="addnew" onclick="viewskills()">Add Skills</a>
-
-                        </h3>
-                        <div style="display:none" id="Addskill">
-                            <form method="post">
-                                <div class="d-flex flex-column">
-                                    <div class="form-group">
-                                        <label for="SkillName" id="skill">Skill</label>
-                                        <Input class="form-control" name="SkillName" id="SkillName" />
-                                        <span asp-validation-for="@Model.Skills[0].SkillName" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <select required="required" name="SkillLevel" asp-items="@level" id="level" class="form-control custom-select">
-                                            <option disabled selected>- Level -</option>
-                                        </select>
-                                        <span asp-validation-for="@Model.Skills[0].SkillLevel" class="text-danger"></span>
-                                    </div>
-                                    <Input hidden name="UserId" value="@userId" />
-                                    <button asp-action="Addskills" class="btn btn-primary mb-2" asp-controller="Profile">Add Skill</button>
-                                </div>
-                            </form>
-                        </div>
-                        @* ***ListSkills*** *@
-                        <ul>
-                            @foreach (var skill in Model.Skills)
-                            {
-                                <li class=""><a href="#">@skill.SkillName</a></li>
-
-                            }
-                        </ul>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-8 right">
+            <div class="col-lg-12 right">
                 <div class="shadow-sm rounded bg-white mb-3">
                     <div class="box-title border-bottom p-3">
                         <h6 class="m-0">Edit Basic Info</h6>
                         <p class="mb-0 mt-0 small">
-                            Lorem ipsum dolor sit amet, consecteturs.
+                            Tell us a bit about yourself.
                         </p>
                     </div>
                     <div class="box-body p-3">
-                        <form class="js-validate" novalidate="novalidate">
+                        <form asp-action="updateCompleteinfo" asp-controller="Profile" method="post" enctype="multipart/form-data" >
                             <div class="row">
                                 <!-- Input -->
                                 <div class="col-sm-6 mb-2">
-                                    <div class="js-form-message">
+                                    <div class="">
                                         <label id="nameLabel" class="form-label">
                                             FirstName
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="FirstName" value="@Model.FirstName" placeholder="Enter your name" aria-label="Enter your name" required="" aria-describedby="nameLabel" data-msg="Please enter your name." data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <input type="text" class="form-control" name="FirstName"  placeholder="Enter your name" aria-label="Enter your name" required >
                                         </div>
                                     </div>
                                 </div>
                                 <!-- End Input -->
                                 <!-- Input -->
                                 <div class="col-sm-6 mb-2">
-                                    <div class="js-form-message">
+                                    <div class="">
                                         <label id="usernameLabel" class="form-label">
                                             LastName
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="LastName" value="@Model.LastName" placeholder="Enter your username" aria-label="Enter your username" required="" aria-describedby="usernameLabel" data-msg="Please enter your username." data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <input type="text" class="form-control" name="LastName"  placeholder="Enter your username"  required >
                                         </div>
                                     </div>
                                 </div>
@@ -227,26 +64,26 @@
                             <div class="row">
                                 <!-- Input -->
                                 <div class="col-sm-6 mb-2">
-                                    <div class="js-form-message">
+                                    <div class="">
                                         <label id="locationLabel" class="form-label">
                                             Location
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="location" value="@Model.Address" placeholder="Enter your location" aria-label="Enter your location" required="" aria-describedby="locationLabel" data-msg="Please enter your location." data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <input type="text" class="form-control" name="Address" placeholder="Enter your location" required >
                                         </div>
                                     </div>
                                 </div>
                                 <!-- End Input -->
                                 <!-- Input -->
                                 <div class="col-sm-6 mb-2">
-                                    <div class="js-form-message">
+                                    <div class="">
                                         <label id="locationLabel" class="form-label">
                                             Phone Number
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Enter your location" aria-label="Enter your location" required="" aria-describedby="locationLabel" data-msg="Please enter your location." data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <input type="text" class="form-control" name="PhoneNumber"  placeholder="Enter your location"  required aria-describedby="locationLabel" >
                                         </div>
                                     </div>
                                 </div>
@@ -255,34 +92,145 @@
                             <div class="row">
                                 <!-- Input -->
                                 <div class="col-sm-6 mb-2">
-                                    <div class="js-form-message">
-                                        <label id="organizationLabel" class="form-label">
-                                            Organization
+                                    <div class="">
+                                        <label id="Profession" class="form-label">
+                                            Profession
                                             <span class="text-danger"></span>
                                         </label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="organization" value="" placeholder="Enter your organization name" aria-label="Enter your organization name" required="" aria-describedby="organizationLabel" data-msg="Please enter your organization name" data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <input type="text" class="form-control" name="Profession" placeholder="Enter your organization name"  required >
                                         </div>
                                     </div>
                                 </div>
                                 <!-- End Input -->
                                 <!-- Input -->
                                 <div class="col-sm-6 mb-2">
-                                    <div class="js-form-message">
-                                        <label id="websiteLabel" class="form-label">
-                                            Website
+                                    <div class="">
+                                        <label id="" class="form-label">
+                                            Profile Pictures
                                             <span class="text-danger">*</span>
                                         </label>
                                         <div class="form-group">
-                                            <input class="form-control" type="url" name="website" value="" placeholder="Enter your website" aria-label="Enter your website" required="" aria-describedby="websiteLabel" data-msg="Password enter a valid website" data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <label class=" btn btn-info m-0">
+                                                <i class="mdi mdi-image"></i> Choose file
+                                                <input class="imageuploade d-none" type="file" name="img" accept="image/*" />
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- End Input -->
                             </div>
+                            <div class="row ">
+                                <div class="col-sm-6">
+                                    <label class="form-label">
+                                        Description
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="form-group">
+                                        <textarea type="text" class="form-control summernote" name="Description"  placeholder="Enter your organization description" required></textarea>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6 mb-2">
+                                    <div class="">
+                                        <label id="Username" class="form-label">
+                                            Username
+                                            <span class="text-danger"></span>
+                                        </label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="Username"  placeholder="Enter your organization username" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                           
+                            <button type="submit" class="btn btn-success" > Update</button>
                         </form>
                     </div>
                 </div>
+
+
+
+                <!--Language -->
+                <div class="shadow-sm rounded bg-white mb-3">
+                    <div class="box-title border-bottom p-3">
+                        <h6 class="m-0">
+                            Language
+                        </h6>
+                        <p class="mb-0 mt-0 small">
+                            Tell about your Language.
+                        </p>
+                    </div>
+                    <div class="box-body px-3 pt-3 pb-3">
+
+                        <form method="post" onsubmit="sendLanguage(event)">
+
+                            <div class="row">
+                                <div class=" col-md-5">
+                                    <label for="LanguageName" id="skill">Language</label>
+                                    <Input class="form-control " name="LanguageName" id="LanguageName" />
+                                    <span></span>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="level">Level</label>
+                                    <select required="required" name="LanguageLevel" asp-items="@level" id="level" class="form-control custom-select">
+                                        <option disabled selected>- Level -</option>
+                                    </select>
+                                    <span></span>
+                                </div>
+                                <Input hidden name="UserId" value="@userId" />
+
+                                <button  class="btn btn-info mb-3 col-md-2 align-self-end" >Add Language</button>
+
+                            </div>
+                        </form>
+
+                        <div class="row">
+                            <div class="education-list list col-md-12">
+                                <table class="table" id="lng-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="main">Language</th>
+                                            <th scope="col" class="secondary">Level</th>
+                                            <th scope="col" class="manage">Manage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var lng in Model.Language)
+                                        {
+
+                                            <tr>
+                                                <td><span>@lng.LanguageName</span></td>
+                                                <td class="language-level">@lng.LanguageLevel</td>
+                                                <td class="manage">
+                                                    <div class="animate">
+                                                        <form method="post" >
+                                                            <span class="hint--top" data-hint="Delete">
+                                                                <input hidden value="@lng.Id" />
+                                                                <button class="delete btn btn-default" >
+                                                                    <svg width="15" height="15" viewBox="0 0 16 16">
+                                                                        <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
+                                                                    </svg>
+                                                                </button>
+                                                        </span>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+                                        }
+                                    </tbody>
+                                    </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Experience -->
                 <div class="shadow-sm rounded bg-white mb-3">
                     <div class="box-title border-bottom p-3">
                         <h6 class="m-0">
@@ -293,13 +241,13 @@
                         </p>
                     </div>
                     <div class="box-body px-3 pt-3 pb-0">
-                        <form method="post" id="experience">
+                        <form method="post" id="experience" onsubmit="sendexperiences(event)">
                             <div class="row">
                                 <div class="col-sm-6 mb-4">
                                     <label id="FROM" class="form-label">FROM</label>
                                     <!-- Input -->
                                     <div class="input-group">
-                                        <input type="date" required class="form-control" placeholder="From" name="From" aria-label="FROM" aria-describedby="FROM">
+                                        <input type="date" required class="form-control" placeholder="From" id="From" name="From" aria-label="FROM" aria-describedby="FROM">
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -307,7 +255,7 @@
                                     <label id="TO" class="form-label">TO</label>
                                     <!-- Input -->
                                     <div class="input-group">
-                                        <input type="date" required class="form-control" placeholder="TO" name="To" aria-label="TO" aria-describedby="TO">
+                                        <input type="date" required class="form-control" placeholder="TO" name="To" id="To" aria-label="TO" aria-describedby="TO">
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -317,7 +265,7 @@
                                     <label id="companyLabel" class="form-label">Company</label>
                                     <!-- Input -->
                                     <div class="input-group">
-                                        <input type="text" required class="form-control" placeholder="Enter your company title" name="CompanyName" aria-label="Enter your company title" aria-describedby="companyLabel">
+                                        <input type="text" required class="form-control" placeholder="Enter your company title" name="CompanyName" id="CompanyName" aria-label="Enter your company title" aria-describedby="companyLabel">
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -325,13 +273,13 @@
                                     <label id="positionLabel" class="form-label">Position</label>
                                     <!-- Input -->
                                     <div class="input-group">
-                                        <input type="text" required class="form-control" placeholder="Enter your position" name="Position" aria-label="Enter your position" aria-describedby="positionLabel">
+                                        <input type="text" required class="form-control" placeholder="Enter your position" id="Position" name="Position" aria-label="Enter your position" aria-describedby="positionLabel">
                                     </div>
                                     <!-- End Input -->
                                 </div>
 
                                 <div class="row col-md-12">
-                                    <button type="submit"  class="btn btn-dark ml-auto">Add Experience</button>
+                                    <button type="submit" class="btn btn-info ml-auto  mb-3">Add Experience</button>
                                 </div>
                             </div>
                         </form>
@@ -339,43 +287,128 @@
 
                     <div class="row">
                         <div class="education-list list col-md-12">
-                            <ul id="experience-list">
-                            </ul>
+                            <table class="table" id="exp-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="main">Position</th>
+                                        <th scope="col" class="secondary">CompanyName</th>
+                                        <th scope="col" class="">From</th>
+                                        <th scope="col" class="">To</th>
+                                        <th scope="col" class="manage">Manage</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="experience-list">
+                                    @foreach (var exp in Model.experiences)
+                                    {
+
+                                    <tr>
+                                        <td><span>@exp.Position</span></td>
+                                        <td class="">@exp.CompanyName</td>
+                                        <td class="">@exp.From</td>
+                                        <td class="">@exp.To</td>
+                                        <td class="manage">
+                                            <div class="animate">
+                                                    <input hidden value="@exp.Id"  name="id"/>
+                                                    <button  type="submit" class="delete btn btn-default">
+                                                        <svg width="15" height="15" viewBox="0 0 16 16">
+                                                            <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
+                                                        </svg>
+                                                       
+                                                    </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    }
+                                </tbody>
+                                </table>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-3 text-right col-md-12">
-                <button type="submit" class="btn btn-outline-success">Cancel</button>
-                <button type="submit" class="btn btn-success">Submit</button>
+
+
+                <!--   Skills -->
+                <div class="shadow-sm rounded bg-white mb-3">
+                    <div class="box-title border-bottom p-3">
+                        <h6 class="m-0">
+                            Skills
+                        </h6>
+                        <p class="mb-0 mt-0 small">
+                            Tell about your Skills
+                        </p>
+                    </div>
+                    <div class="box-body px-3 pt-3 pb-3">
+
+                        <form method="post" onsubmit="sendSkills(event)" >
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label for="SkillName" id="skill">Skill</label>
+                                    <Input class="form-control" name="SkillName" id="SkillName" />
+                                    <span  class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="level" id="skill">Level</label>
+                                    <select required="required" name="SkillLevel" asp-items="@level" id="level" class="form-control custom-select">
+                                        <option disabled selected>- Level -</option>
+                                    </select>
+                                    <span class="text-danger"></span>
+                                </div>
+                                <Input hidden name="UserId" value="@userId" />
+                                <button  class="btn btn-info mb-3 align-self-end  col-md-2" >Add Skill</button>
+                            </div>
+                        </form>
+
+                        <div class="row">
+                            <div class="education-list list col-md-12">
+                                <table class="table" id="skltable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="main">Skills</th>
+                                            <th scope="col" class="secondary">Level</th>
+                                            <th scope="col" class="manage">Manage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var skl in Model.Skills)
+                                        {
+
+                                            <tr>
+                                                <td><span>@skl.SkillName</span></td>
+                                                <td class="language-level">@skl.SkillLevel</td>
+                                                <td class="manage">
+                                                    <div class="animate">
+                                                        <span class="hint--top" data-hint="Delete">
+                                                            <button class="delete btn btn-default">
+                                                                <svg width="15" height="15" viewBox="0 0 16 16">
+                                                                    <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
+                                                                </svg>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+
+                                        }
+                                    </tbody>
+
+
+
+                                    </table>
+                               
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 text-right col-md-12">
+                    <a asp-action="Create" asp-controller="Services" type="submit" class="btn btn-outline-success">Complete</a>
+                    @*<button asp-action="updateCompleteinfo" asp-controller="Profile" type="submit" class="btn btn-success">Submit</button>*@
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
-
-
-<script>
-
-    $(document).ready(function () {
-        $(document).on('submit', '#experience', function () {
-            let userinfo = $(this).serialize();
-
-
-            var ul = document.getElementById("experience-list");
-            var li = document.createElement(
-                "<li class='m-4'>" +
-                "<p style='color: #555; font-weight:700'>" + userinfo.valueOf("Position") + "</p > " +
-                "<p>From To  </p>" + "</li>")
-            ul.appendChild(li);
-
-
-        });
-
-
-            return false;
-    });
-    
-
-</script>

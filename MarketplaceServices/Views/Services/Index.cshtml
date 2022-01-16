@@ -1,6 +1,7 @@
-﻿@model List<MarketplaceServices.Models.Services>
-
+﻿
 @{
+
+    var services = ViewData["Service"] as IEnumerable<Services>;
 
 }
 
@@ -9,9 +10,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1 class="mt-0 mb-3 text-white">Product</h1>
+                <h1 class="mt-0 mb-3 text-white">Our Services</h1>
                 <div class="breadcrumbs">
-                    <p class="mb-0 text-white"><a class="text-white" href="#">Home</a>  /  <span class="text-success">Product</span></p>
+                   
                 </div>
             </div>
         </div>
@@ -213,30 +214,29 @@
 
         <div class="container">
             <div class="row">
-                @foreach (var item in Model)
+              
+                @foreach (var item in services)
                 {
+
+
                     <div class="col-md-3">
                         <a asp-action="Edit" asp-route-id="@item.Id">
-                            <img class="img-fluid" src="images/@item.Photos" />
+                           <img class="img-fluid" src="~/imageSce/@item.Photos[0].ImageUrl" />
                         </a>
                         <div class="inner-slider">
                             <div class="inner-wrapper">
                                 <div class="d-flex align-items-center">
                                     <span class="seller-image">
                                         <img class="img-fluid"
-                                             src="images/@item.user.Image"
+                                             src="images/@item.user.Image."
                                              alt='' />
                                     </span>
                                     <span class="seller-name">
                                         <a href="#">@item.user.UserName</a>
-                                        <span class="level hint--top level-one-seller">
-                                            Level 1 Seller
-                                        </span>
-
                                     </span>
                                 </div>
-                                <h3>
-                                    @item.Description
+                                <h3 class="service-title">
+                                    @item.Title
                                 </h3>
                                 <div class="content-info">
                                     <div class="rating-wrapper">
@@ -288,6 +288,10 @@
             </ul>
         </nav>
     </div>
+
+
+
+
 </div>
 
 

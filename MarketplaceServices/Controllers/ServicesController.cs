@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,23 +35,16 @@ namespace MarketplaceServices.Controllers
         // GET: ServicesController
         public ActionResult Index()
         {
-            //var result = (from s in Context.Services
-            //              select new ServiceViewModel
-            //              {
-            //                  Title = s.Title,
-            //                  Description = s.Description,
-            //                  Price = s.Price,
-            //                  Date = s.Date,
-            //                  SubCategoryId = s.SubCategory.Id,
-            //                  SubCategoryName = s.SubCategory.SubCategoryName
 
-            //              });
+            Services services = TempData["Services"] as Services;
 
-            var result = Context.Services.Include(x => x.user).Include(s=>s.SubCategory).Include(p=>p.Photos).ToList();
-            
-            return View(result);
+
+            ViewData["Service"] = JsonConvert.DeserializeObject<List<Services>>((string)TempData["Services"]);
+            return View();
+          
         }
 
+       
         // GET: ServicesController/Details/5
         public ActionResult Details(int id)
         {
@@ -81,26 +75,22 @@ namespace MarketplaceServices.Controllers
             {
             var thisUser = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var completeInfo = Context.ApplicationUser.Where(u=>u.Id==thisUser).FirstOrDefault();
-            if(completeInfo.FirstName==null && completeInfo.LastName == null)
+            if (completeInfo.FirstName == null && completeInfo.LastName == null)
             {
                 return RedirectToAction("CompleteInformation", "Profile");
             }
-           
-                var result = Context.SubCategory.Select(s => new { s.Id, s.SubCategoryName }).ToList();
+
+            var result = Context.SubCategory.Select(s => new { s.Id, s.SubCategoryName }).ToList();
 
                 ViewBag.subCat = result;
-                return View();
-
-          
-          
-            }   
-
-
-        public async Task<ActionResult> GetComment()
-        {
-
             return View();
-        }
+            //return RedirectToAction("CompleteInformation", "Profile");
+
+
+
+        }   
+
+
 
         // POST: ServicesController/Create
         [HttpPost]
@@ -140,10 +130,10 @@ namespace MarketplaceServices.Controllers
 
                 }
                 await Context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Profile");
 
             }
-            return View("Index");
+            return View("Create");
         }
 
         // GET: ServicesController/Edit/5
@@ -157,7 +147,7 @@ namespace MarketplaceServices.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewBag.userId = userId;
 
-            var service =  Context.Services.Include(x => x.user).SingleOrDefault(m => m.Id == id);
+            var service =  Context.Services.Include(x => x.user).Include(p=>p.Photos).Where(m => m.Id == id).SingleOrDefault();
             var Reviews = Context.Reviews.Include(u => u.User).Where(a => a.ServiceId == id).ToList();
            
 
@@ -165,9 +155,6 @@ namespace MarketplaceServices.Controllers
             {
                 Service = service,
                 Reviews= Reviews
-
-
-
             };
             return View(svm);
         }

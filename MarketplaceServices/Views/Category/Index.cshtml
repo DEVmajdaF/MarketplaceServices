@@ -19,7 +19,7 @@
                                             <th style="width: 10px">#</th>
                                             <th>CategoryName</th>
                                             <th>Sous-CatgoryName</th>
-                                            <th style="width: 40px">add sous-Catgory</th>
+                                            <th style="width: 472px">add sous-Catgory</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -36,7 +36,12 @@
                                                     {
                                                         <Ul>
                                                             <li>
-                                                                @i.SubCategoryName
+                                                                <p class="d-inline">@i.SubCategoryName</p>
+                                                                <form method="post" id="form" class="d-inline">
+                                                                    <input hidden name="subcategoryid" value="@i.Id"/>
+                                                                    <input type="submit" class="btn btn-danger d-inline" asp-action="Deletesub" asp-controller="Category" value="delete"  />
+                                                                </form>
+
                                                             </li>
                                                         </Ul>
 
@@ -47,7 +52,7 @@
                                                 <td>
                                                     <form method="post" id="form" class="d-flex flex-row justify-content-between">
                                                        
-                                                            <input class="form-control" name="SubCategoryName" />
+                                                            <input class="form-control mr-2" name="SubCategoryName" />
                                                             <input hidden name="CatgoriesId" value="@item.Id" />
                                                         
                                                        
@@ -60,16 +65,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- /.card-body -->
-                            @*<div class="card-footer clearfix">
-                    <ul class="pagination pagination-sm m-0 float-right">
-                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                    </ul>
-                </div>*@
+                         
                         </div>
 
 <script>

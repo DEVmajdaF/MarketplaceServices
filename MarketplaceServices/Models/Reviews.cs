@@ -20,6 +20,7 @@ namespace MarketplaceServices.Models
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:Y}", ApplyFormatInEditMode = true)]
         public DateTime PublishDate { get; set; }
 
         public string ServiceId { get; set; }

@@ -14,6 +14,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MarketplaceServices.Hubs;
+using MarketplaceServices.Repository;
+using Microsoft.AspNetCore.Mvc;
+using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace MarketplaceServices
 {
@@ -47,8 +51,16 @@ namespace MarketplaceServices
                           .AddRoles<IdentityRole>()
                           .AddEntityFrameworkStores<AuthDbContext>();
 
-            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+           .AddSessionStateTempDataProvider();
+            services.AddMvc().AddSessionStateTempDataProvider();
+            services.AddSession();
 
+
+
+            services.AddScoped<IProfile, Profile>();
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = (Newtonsoft.Json.ReferenceLoopHandling)Newtonsoft.Json.PreserveReferencesHandling.Objects);
 
             services.AddSignalR(options =>
             {
@@ -74,6 +86,7 @@ namespace MarketplaceServices
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseRouting();
             app.UseAuthentication();
