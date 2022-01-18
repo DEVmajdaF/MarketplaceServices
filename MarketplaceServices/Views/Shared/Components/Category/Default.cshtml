@@ -22,7 +22,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownPortfolio">
                             @foreach (var i in item.subCategories)
                             {
-                                <a class="dropdown-item" href="index.html">@i.SubCategoryName</a>
+                                <a class="dropdown-item" asp-action="SearchByCatgory" asp-controller="Home" asp-route-id="@i.SubCategoryName">@i.SubCategoryName</a>
                             }
 
                         </div>

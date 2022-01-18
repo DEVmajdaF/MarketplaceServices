@@ -208,7 +208,8 @@ namespace MarketplaceServices.Controllers
                
                 await _Context.Messages.AddAsync(msg);
                 await _Context.SaveChangesAsync();
-                await _hubContext.Clients.Group(roomid).SendAsync("ReceiveMessage", sender.UserName, msg.Text,  msg.time);
+                var img = _Context.ApplicationUser.FirstOrDefault(x => x.Id == thisUser);
+                await _hubContext.Clients.Group(roomid).SendAsync("ReceiveMessage", sender.UserName, msg.Text,  msg.time, img.Image );
                 return RedirectToAction("Room", new { id = roomid });
             }
             return NotFound();

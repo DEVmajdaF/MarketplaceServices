@@ -1,8 +1,8 @@
-﻿
+﻿@model List<MarketplaceServices.Models.Services>
 @{
 
     var services = ViewData["Service"] as IEnumerable<Services>;
-
+    var search = ViewBag.searching;
 }
 
 <!-- Inner Header -->
@@ -194,17 +194,12 @@
     <div class="view_slider recommended pt-5">
         <div class="container">
             <div class="sorting-div d-flex align-items-center justify-content-between">
-                <p class="mb-2">463 Services available</p>
                 <div class="sorting d-flex align-items-center">
-                    <p>Sortby</p>
-                    <select class="custom-select custom-select-sm border-0 shadow-sm ml-2">
-                        <option>Best Selling</option>
-                        <option>Recommended</option>
-                        <option>Newest Arrivals</option>
-                    </select>
+                    
                 </div>
             </div>
-            <h3>Services In Web &amp; Mobile Design</h3>
+            
+            <h3>Services</h3>
         </div>
 
 
@@ -214,54 +209,59 @@
 
         <div class="container">
             <div class="row">
-              
-                @foreach (var item in services)
+                @if (Model.Count() == 0)
                 {
+                <h3 class="text-center d-inline">No Result for your searching </h3>
+                } else { 
+
+                    @foreach (var item in Model)
+                    {
 
 
-                    <div class="col-md-3">
-                        <a asp-action="Edit" asp-route-id="@item.Id">
-                           <img class="img-fluid" src="~/imageSce/@item.Photos[0].ImageUrl" />
-                        </a>
-                        <div class="inner-slider">
-                            <div class="inner-wrapper">
-                                <div class="d-flex align-items-center">
-                                    <span class="seller-image">
-                                        <img class="img-fluid"
-                                             src="images/@item.user.Image."
-                                             alt='' />
-                                    </span>
-                                    <span class="seller-name">
-                                        <a href="#">@item.user.UserName</a>
-                                    </span>
-                                </div>
-                                <h3 class="service-title">
-                                    @item.Title
-                                </h3>
-                                <div class="content-info">
-                                    <div class="rating-wrapper">
-                                        <span class="gig-rating text-body-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
-                                                <path fill="currentColor"
-                                                      d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
-                                                </path>
-                                            </svg>
-                                            5.0
-                                            <span>(7)</span>
+                        <div class="col-md-3">
+                            <a asp-action="Edit" asp-route-id="@item.Id">
+                                <img class="img-fluid" src="~/imageSce/@item.Photos[0].ImageUrl" />
+                            </a>
+                            <div class="inner-slider">
+                                <div class="inner-wrapper">
+                                    <div class="d-flex align-items-center">
+                                        <span class="seller-image">
+                                            <img class="img-fluid"
+                                                 src="/images/@item.user.Image"
+                                                 alt='' />
+                                        </span>
+                                        <span class="seller-name">
+                                            <a href="#">@item.user.UserName</a>
                                         </span>
                                     </div>
-                                </div>
-                                <div class="footer">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                    <div class="price">
-                                        <a href="#">
-                                            Starting At <span> $@item.Price</span>
-                                        </a>
+                                    <h3 class="service-title">
+                                        @item.Title
+                                    </h3>
+                                    <div class="content-info">
+                                        <div class="rating-wrapper">
+                                            <span class="gig-rating text-body-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1792 1792" width="15" height="15">
+                                                    <path fill="currentColor"
+                                                          d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z">
+                                                    </path>
+                                                </svg>
+                                                5.0
+                                                <span>(7)</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="footer">
+                                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                        <div class="price">
+                                            <a href="#">
+                                                Starting At <span> $@item.Price</span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
             </div>
         </div>
@@ -275,8 +275,8 @@
                         <!--                    <span class="sr-only"></span>-->
                     </a>
                 </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item "><a class="page-link" href="#">2</a></li>
                 <li class="page-item"><a class="page-link" href="#">4</a></li>
                 <li class="page-item"><a class="page-link" href="#">5</a></li>
                 <li class="page-item">

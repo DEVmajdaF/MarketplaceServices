@@ -39,13 +39,18 @@ namespace MarketplaceServices.Controllers
         }
 
         // POST: 
-       
-        public ActionResult SearchByCatgory(string CategoryName)
+       [HttpGet]
+        public ActionResult SearchByCatgory(string id)
         {
-            if(CategoryName != null)
+            if(id != null)
             {
-                var services = Context.Services.Include(s => s.SubCategory).Include(p => p.Photos).Where(c=>c.SubCategory.Catgories.CategoryName== CategoryName).ToList();
-                return RedirectToAction("GetService", "Home");
+                var services = Context.Services.Include(s => s.SubCategory).Include(u=>u.user).Include(p => p.Photos).Where(c=>c.SubCategory.SubCategoryName == id).ToList();
+                var settings = new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                };
+                TempData["Services"] = JsonConvert.SerializeObject(services, settings);
+                return RedirectToAction("Index", "Services");
             }
             return View("Index");
             
@@ -56,6 +61,7 @@ namespace MarketplaceServices.Controllers
         public ActionResult FindService(string search)
         {
             List<Services> services = new List<Services>();
+            ViewBag.search = search;
  
           if (search != null)
             {

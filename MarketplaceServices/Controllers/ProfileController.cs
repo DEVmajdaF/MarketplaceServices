@@ -189,10 +189,7 @@ namespace MarketplaceServices.Controllers
 
                 if (Id != null)
                 {
-                    var result = Context.Skills.Where(x => x.Id == Id).SingleOrDefault();
-
-                    Context.Skills.Remove(result);
-                    await Context.SaveChangesAsync();
+                await Prof.deleteSkill(Id);
                     return RedirectToAction(nameof(Index));
                 }
             
@@ -208,17 +205,43 @@ namespace MarketplaceServices.Controllers
             if (Id != null)
             {
 
-
-                var result = Context.Languages.Where(x => x.Id == Id).SingleOrDefault();
-
-                Context.Languages.Remove(result);
-                await Context.SaveChangesAsync();
+                await Prof.deleteLang(Id);
                 return RedirectToAction(nameof(Index));
             }
 
 
             return View("Index");
 
+        }
+
+        //Get
+        public async Task<ActionResult> deleteLangComplete(string Id)
+        {
+            if (Id != null)
+            {
+                await Prof.deleteLang(Id);
+                return RedirectToAction(nameof(CompleteInformation));
+            }
+            return View("CompleteInformation");
+        }
+
+        public async Task<ActionResult> deleteskillComplete(string Id)
+        {
+            if (Id != null)
+            {
+                await Prof.deleteSkill(Id);
+                return RedirectToAction(nameof(CompleteInformation));
+            }
+            return View("CompleteInformation");
+        }
+        public async Task<ActionResult> deleteExpComplete(string Id)
+        {
+            if (Id != null)
+            {
+                await Prof.deleteExperience(Id);
+                return RedirectToAction(nameof(CompleteInformation));
+            }
+            return View("CompleteInformation");
         }
 
         // POST: Profile/Addskills

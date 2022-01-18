@@ -12,7 +12,7 @@
 
 
 <!-- Begin Page Content -->
-<section class="py-5 homepage-search-block text-center homepage-search-block-2 bg-dark position-relative">
+<section class="py-5 homepage-search-block text-center homepage-search-block-2 bg-dark  position-relative">
     <div class="container">
         <div class="row py-lg-5">
             <div class="col-lg-8 mx-auto">
@@ -52,7 +52,7 @@
 
                                 *@
                                 <button type="submit" asp-controller="Home" asp-action="FindService"
-                                        class="btn btn-success btn-block btn-lg btn-gradient shadow-sm">
+                                        class="btn btn-info btn-block btn-lg btn-gradient shadow-sm">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
@@ -71,13 +71,13 @@
 
 
 <!--       services-->
-<div class="services-wrapper bg-white py-5">
+@*<div class="services-wrapper bg-white py-5">
     <div class="container">
         <h2>Popular Professional Services</h2>
         <div class="row service-slider">
             <div class="col">
                 <div class="service">
-                    <img src="images/service-01.jpg">
+                    <img src="images/1440-haerfest-2x.jpg">
                     <h3><span>Build Your Brand</span> Logo Design</h3>
                 </div>
             </div>
@@ -137,7 +137,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <!--       services-->
 <!--    about section -->
 <div class="container">
@@ -177,7 +177,7 @@
         <ul class="categories-list mb-0">
             <li>
                 <a href="#">
-                    <img src="images/graphics.svg" alt="" loading="lazy">Graphics &amp; Design
+                    <img src="images/graphics.svg" style="fill: blue" alt="" loading="lazy">Graphics &amp; Design
                 </a>
             </li>
             <li>
@@ -219,78 +219,7 @@
     </div>
 </div>
 <!--     market   -->
-<!--       freelancer projects -->
-<div class="freelance-projects py-5">
-    <div class="container">
-        <h2>
-            Get Inspired With Projects Made By Our Freelancers
-            <a href="#" class="float-right">See More ></a>
-        </h2>
-        <div class="row freelance-slider">
-            <div class="col">
-                <div class="freelancer">
-                    <img src="images/senatopcustudio.jpg">
-                    <div class="freelancer-footer">
-                        <img src="images/user/s7.png">
-                        <h5>
-                            Logo Design
-                            <span>by <i>John</i></span>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="freelancer">
-                    <img src="images/vnuggz.jpg">
-                    <div class="freelancer-footer">
-                        <img src="images/user/s8.png">
-                        <h5>
-                            Web &amp; Mobile Design
-                            <span>by <i>John</i></span>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="freelancer">
-                    <img src="images/digitalgeria.jpg">
-                    <div class="freelancer-footer">
-                        <img src="images/user/s1.png">
-                        <h5>
-                            Packaging Design
-                            <span>by <i>John</i></span>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="freelancer">
-                    <img src="images/artsi3d.jpg">
-                    <div class="freelancer-footer">
-                        <img src="images/user/s2.png">
-                        <h5>
-                            Brand Style Guides
-                            <span>by <i>John</i></span>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="freelancer">
-                    <img src="images/designerheather.jpg">
-                    <div class="freelancer-footer">
-                        <img src="images/user/s3.png">
-                        <h5>
-                            Illustration
-                            <span>by <i>John</i></span>
-                        </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--       freelancer projects -->
+
 <!--       testimonials -->
 <div class="testi-wrap py-5 border-top border-bottom">
     <div class="container">
@@ -358,17 +287,17 @@
         <div class="content">
             <h2>Find Freelance Services For Your Business Today</h2>
             <p>We've got you covered for all your business needs</p>
-            <a href="#" class="c-btn c-fill-color-btn">Get Started</a>
+            <a href="#" class=" btn btn-info">Get Started</a>
         </div>
     </div>
 </div>
 <!-- get started -->
 <!--       footer -->
-<footer class="bg-white">
+<footer class="bg-dark">
     <div class="container">
         <div class="d-flex justify-content-between">
             <div class="footer-list">
-                <h2>Categories</h2>
+                <h2 class="text-light">Categories</h2>
                 <ul class="list">
                     <li><a href="#">Graphics &amp; Design</a></li>
                     <li><a href="#">Digital Marketing</a></li>
@@ -382,8 +311,8 @@
                 </ul>
             </div>
             <div class="footer-list">
-                <h2>About</h2>
-                <ul class="list">
+                <h2 class="text-light">About</h2>
+                <ul class="list ">
                     <li><a href="#">Careers</a></li>
                     <li><a href="#">Press &amp; News</a></li>
                     <li><a href="#">Partnerships</a></li>
@@ -394,7 +323,7 @@
                 </ul>
             </div>
             <div class="footer-list">
-                <h2>Support</h2>
+                <h2 class="text-light">Support</h2>
                 <ul class="list">
                     <li><a href="#">Help &amp; Support</a></li>
                     <li><a href="#">Trust &amp; Safety</a></li>
@@ -411,7 +340,7 @@
                 </ul>
             </div>
             <div class="footer-list">
-                <h2>Community</h2>
+                <h2 class="text-light">Community</h2>
                 <ul class="list">
                     <li><a href="#">Events</a></li>
                     <li><a href="#">Blog</a></li>
@@ -430,7 +359,7 @@
                 </ul>
             </div>
             <div class="footer-list">
-                <h2>More From ServiceKom</h2>
+                <h2 class="text-light">More From ServiceKom</h2>
                 <ul class="list">
                     <li>
                         <a href="#">
@@ -457,16 +386,8 @@
                 </ul>
             </div>
         </div>
-        <div class="copyright">
-            <div class="logo">
-                <a href="index.html">
-                    ServiceKom
-                </a>
-            </div>
-            <p>
-                © Copyright 2022.  All Rights Reserved
-            </p>
-            <ul class="social">
+        <div class="copyright text-light">
+            <ul class="social" >
                 <li>
                     <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                 </li>

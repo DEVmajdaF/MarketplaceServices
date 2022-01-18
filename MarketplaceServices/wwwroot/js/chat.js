@@ -2,7 +2,7 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatter").build();
 
 
-connection.on("ReceiveMessage", (user, message, time) => {
+connection.on("ReceiveMessage", (user, message, time, img) => {
     //var thisUser = document.getElementById("thisuser");
     //let iscurrentUserName = user === thisUser;
     //let container = document.getElementById("container");
@@ -11,7 +11,7 @@ connection.on("ReceiveMessage", (user, message, time) => {
      
 
     cont.innerHTML=` <div>
-                                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
+                                                <img src="/images/${img}" class="rounded-circle mr-1" alt="Chris Wood" width="40" height="40">
                                                 <div class="text-muted small text-nowrap mt-2"> ${ time }</div>
                                             </div>
                                             <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">

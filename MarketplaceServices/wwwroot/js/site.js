@@ -16,6 +16,7 @@ var sendexperiences = function (event) {
         data: data,
         success: function (result) {
             getExperience();
+          
 
         },
         failure: function (response) {
@@ -37,8 +38,18 @@ function getExperience() {
             var item = "";
             console.log(data);
             data = data.data;
+            var from = document.getElementById("From");
+            from.value = "";
+            var to = document.getElementById("To");
+            to.value = "";
+            var CompanyName = document.getElementById("CompanyName");
+            CompanyName.value = "";
+            var Position = document.getElementById("Position");
+            Position.value = "";
+
             var tbodyRef = document.getElementById('exp-table').getElementsByTagName('tbody')[0];
             var newRow = tbodyRef.insertRow();
+
             newRow.innerHTML= `<td><span>${data.position}</span></td>
                                         <td class="">${data.companyName}</td>
                                         <td class="">${data.from}</td>
@@ -46,12 +57,16 @@ function getExperience() {
                                         <td class="manage">
                                             <div class="animate">
                                               
-  <button  type="submit" class="delete btn btn-default">
-                                                        <svg width="15" height="15" viewBox="0 0 16 16">
-                                                            <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
-                                                        </svg>
-                                                        
-                                                    </button>
+  <form method="post">
+                                                    <span class="hint--top" data-hint="Delete">
+                                                        <input hidden value="${data.id}" name="Id" />
+                                                        <button class="delete btn btn-default" formaction="/Profile/deleteExpComplete">
+                                                            <svg width="15" height="15" viewBox="0 0 16 16">
+                                                                <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
+                                                            </svg>
+                                                        </button>
+                                                    </span>
+                                                </form>
                                                
                                             </div>
                                         </td>`;  
@@ -82,6 +97,7 @@ var sendLanguage = function (event) {
         data: data,
         success: function (result) {
             getLanguage();
+          
 
         },
         failure: function (response) {
@@ -103,6 +119,10 @@ function getLanguage() {
             var item = "";
             console.log(data);
             data = data.data;
+            var LanguageName = document.getElementById("LanguageName");
+            LanguageName.value = "";
+            var level = document.getElementById("level");
+            level.value = "";
             var tbodylng = document.getElementById('lng-table').getElementsByTagName('tbody')[0];
 
             var newRows = tbodylng.insertRow();
@@ -111,13 +131,16 @@ function getLanguage() {
                                         
                                         <td class="manage">
                                             <div class="animate">
-                                                <span class="hint--top" data-hint="Delete">
-                                                    <button class="delete btn btn-default">
-                                                        <svg width="15" height="15" viewBox="0 0 16 16">
-                                                            <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
-                                                        </svg>
-                                                    </button>
-                                                </span>
+                                                <form method="post" >
+                                                            <span class="hint--top" data-hint="Delete">
+                                                                <input hidden value="${data.id}" name="Id" />
+                                                                <button class="delete btn btn-default" formaction="/Profile/deleteLangComplete" >
+                                                                    <svg width="15" height="15" viewBox="0 0 16 16">
+                                                                        <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
+                                                                    </svg>
+                                                                </button>
+                                                        </span>
+                                                        </form>
                                             </div>
                                         </td>`;
         },
@@ -131,7 +154,7 @@ function getLanguage() {
 
 
 
-// Language POst and get data 
+// Skills POst and get data 
 var sendSkills = function (event) {
     event.preventDefault();
     //form
@@ -147,6 +170,7 @@ var sendSkills = function (event) {
         data: data,
         success: function (result) {
             getSkills();
+           
 
         },
         failure: function (response) {
@@ -169,19 +193,26 @@ function getSkills() {
             console.log(data);
             data = data.data;
             var tbodyskl = document.getElementById('skltable').getElementsByTagName('tbody')[0];
+            var SkillName = document.getElementById("SkillName");
+            SkillName.Value = "";
+            var level = document.getElementById("level");
+            level.Value = "";
             var newRowskl = tbodyskl.insertRow();
             newRowskl.innerHTML = `<td><span>${data.skillName}</span></td>
                                         <td class="">${data.skillLevel}</td>
                                         
                                         <td class="manage">
                                             <div class="animate">
-                                                <span class="hint--top" data-hint="Delete">
-                                                    <button class="delete btn btn-default">
-                                                        <svg width="15" height="15" viewBox="0 0 16 16">
-                                                            <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
-                                                        </svg>
-                                                    </button>
-                                                </span>
+                                                <form method="post">
+                                                            <span class="hint--top" data-hint="Delete">
+                                                                <input hidden value="${data.id}" name="Id" />
+                                                                <button class="delete btn btn-default" formaction="/Profile/deleteskillComplete">
+                                                                    <svg width="15" height="15" viewBox="0 0 16 16">
+                                                                        <g fill="#B2B2B2"><path d="M2.198 9.948l7.686-7.536 3.655 3.583-7.687 7.536zM5.318 13.894L1.826 10.47l-.636 1.688-1.17 3.105a.311.311 0 0 0 .074.331.325.325 0 0 0 .337.073l3.135-1.137 1.752-.636zM15.555 1.754L14.211.436c-.638-.626-1.733-.568-2.44.126l-1.434 1.405L13.99 5.55l1.433-1.405c.709-.694.767-1.768.131-2.391"></path></g>
+                                                                    </svg>
+                                                                </button>
+                                                            </span>
+                                                        </form>
                                             </div>
                                         </td>`;
         },

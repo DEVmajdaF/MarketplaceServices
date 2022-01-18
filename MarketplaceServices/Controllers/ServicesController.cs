@@ -40,7 +40,9 @@ namespace MarketplaceServices.Controllers
 
 
             ViewData["Service"] = JsonConvert.DeserializeObject<List<Services>>((string)TempData["Services"]);
-            return View();
+           
+
+            return View(ViewData["Service"]);
           
         }
 

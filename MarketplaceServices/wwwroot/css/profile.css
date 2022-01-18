@@ -64,17 +64,12 @@ a {
 }
 
 .btn-success {
-    background: #2cdd9b;
-    background: -webkit-linear-gradient(legacy-direction(to right), #2cdd9b 0%, #1dc8cc 100%);
-    background: -webkit-gradient(linear, left top, right top, from(#2cdd9b), to(#1dc8cc));
-    background: -webkit-linear-gradient(left, #2cdd9b 0%, #1dc8cc 100%);
-    background: -o-linear-gradient(left, #2cdd9b 0%, #1dc8cc 100%);
-    background: linear-gradient(to right, #2cdd9b 0%, #1dc8cc 100%);
+    background: blue;
     border-color: #2cdd9b;
 }
 
 .btn-outline-success {
-    color: #2cdd9b;
+    color: white;
     border-color: #2cdd9b;
 }
 
@@ -1336,13 +1331,9 @@ header {
 }
 
 .c-fill-color-btn {
-    background: #2cdd9b;
-    background: -webkit-linear-gradient(legacy-direction(to right), #2cdd9b 0%, #1dc8cc 100%);
-    background: -webkit-gradient(linear, left top, right top, from(#2cdd9b), to(#1dc8cc));
-    background: -webkit-linear-gradient(left, #2cdd9b 0%, #1dc8cc 100%);
-    background: -o-linear-gradient(left, #2cdd9b 0%, #1dc8cc 100%);
-    background: linear-gradient(to right, #2cdd9b 0%, #1dc8cc 100%);
-    color: #fff !important;
+    background: blue;
+    color:white;
+   
 }
 
 .c-border-btn {
@@ -1352,7 +1343,7 @@ header {
 }
 /* get started */
 .get-started {
-    background: lightgrey center top no-repeat;
+    background: #a1d5fb center top no-repeat;
     background-size: cover;
     text-align: center;
     padding: 60px 0;
@@ -3671,6 +3662,7 @@ section.related-links {
         display: none;
     }
 
+   
     .trusted-by {
         display: none;
     }

@@ -29,7 +29,7 @@
                         <a asp-action="CreateRoom" asp-controller="Chat" asp-route-id="@i.Id" class="list-group-item list-group-item-action border-0">
                             <div class="badge bg-success float-right">5</div>
                             <div class="d-flex align-items-start">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar5.png" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
+                                <img src="~/images/@i.Image" class="rounded-circle mr-1" alt="Vanessa Tucker" width="40" height="40">
                                 <div class="flex-grow-1 ml-3">
                                     @i.UserName
                                     <div class="small"><span class="fas fa-circle chat-online"></span> Online</div>
